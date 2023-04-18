@@ -1,11 +1,9 @@
-import React, { useState} from 'react';
-import './App.css';
+import React, { useState } from 'react';
 
-import data from './data.json'
+import data from './mock_data.json';
 
-function App() {
+function HonzaTable() {
   const [tableData] = useState(data);
-
 
   return (
     <div className="App">
@@ -36,4 +34,4 @@ function App() {
   );
 }
 
-export default App;
+export default HonzaTable;
