@@ -9,3 +9,33 @@
 3. 7. 2023 počátek zkouškového období,
 ?. 7. 2023 konec zkouškového období. 
 
+
+## Úkol
+
+    WORKFLOW 
+    	https://github.com/hrbolek/_uois/blob/v2.1/gql_workflow/gql_workflow/DBFeeder.py
+    	
+    	Zobrazení grafu stavů a přechodů mezi nimi ve formě svg. - zobrazit graf - seznam vrcholu a prechodu mezi nimi (svg. "obrazek")
+    		- mam nazvy uzlu - seznam nasledovniku kazdeho vrcholu (uzlu)
+    		- zobrazeni seznamu stavu (vrcholu) - komponenta (poduloha) - tabulka (seznam) "Button pro vložení nového stavu" - textbox ...
+    		
+    	Zobrazení seznamu stavů, zobrazení následujících stavů k danému stavu.
+    		 - zobrazuje vrchol a nasledovniky - komponenta - textova reprezentace subgrafu "kam se muzu posunout z vrcholu"
+    		
+    	editace názvů stavů, Zobrazení (uživatele + skupina) pro stav, 
+    		- "Input box pro přejmenování stavu"
+    	
+    	editace (uživatel + skupina) pro daný stav,
+    		- "stavovy automat"
+    		- umozni priradit prava k dokumentu v zavislosti na tom v jakem stavu se dokument nachazi
+    			
+    	zobrazení rolí ke stavu, editace rolí pro daný stav. 2 studenti
+        	- reseno pozdeji v semestru
+        
+        Input box pro přejmenování stavu
+        Input box pro přejmenování přechodu
+        Button pro vložení nového stavu
+        Button pro vložení nového přechodu
+        Button (+select) pro vložení nové role ke stavu
+        Button (+user+group) pro připojení ke stavu
+
