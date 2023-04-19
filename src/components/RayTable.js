@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Table = () => {
+const RayTable = () => {
     //console.log(group.memberships)
     return (
         <div>
             <table className="table table-hover table-stripped">
-                <thead>
+                <thead className="table-dark">
                     <tr>
                         <th>ID</th>
                         <th>State</th>
@@ -22,4 +22,4 @@ const Table = () => {
     );
 }
 
-export default Table
+export default RayTable
