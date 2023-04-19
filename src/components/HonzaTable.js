@@ -6,13 +6,9 @@ function HonzaTable() {
   const [tableData] = useState(data);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>My Simple Table</h1>
-      </header>
-      <main>
-        <table>
-          <thead>
+      <div>
+        <table className="table table-hover table-stripped">
+          <thead className='table-dark'>
             <tr>
               <th>ID</th>
               <th>Name</th>
@@ -29,9 +25,8 @@ function HonzaTable() {
             ))}
           </tbody>
         </table>
-      </main>
     </div>
   );
-}
+            }
 
 export default HonzaTable;
