@@ -7,13 +7,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <h1>Workflow</h1>
+        <h1>Workflow</h1>
       </header>
       <div className="container">
-      <h2>Honza Table</h2>
-      <HonzaTable />
-      <h2>Ray Table</h2>
-      <RayTable />
+        <h2>Honza Table</h2>
+        <HonzaTable />
+        <h2>Ray Table</h2>
+        <RayTable />
       </div>
     </div>
   );
