@@ -1,7 +1,6 @@
 {
     "name": "another workflow",
     "states": [
-        
         {
             "_id": 0,
             "name": "Student",
