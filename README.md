@@ -13,9 +13,10 @@
 ## Úkol
 
     WORKFLOW 
-    	https://github.com/hrbolek/_uois/blob/v2.1/gql_workflow/gql_workflow/DBFeeder.py
+    	https://github.com/hrbolek/_uois/blob/v2.1/gql_workflow/gql_workflow/DBFeeder.py - odkaz na datovou strukturu
     	
-    	Zobrazení grafu stavů a přechodů mezi nimi ve formě svg. - zobrazit graf - seznam vrcholu a prechodu mezi nimi (svg. "obrazek")
+    	Zobrazení grafu stavů a přechodů mezi nimi ve formě svg. - https://www.w3schools.com/graphics/svg_intro.asp
+            - zobrazit graf - seznam vrcholu a prechodu mezi nimi (svg. "obrazek")
     		- mam nazvy uzlu - seznam nasledovniku kazdeho vrcholu (uzlu)
     		- zobrazeni seznamu stavu (vrcholu) - komponenta (poduloha) - tabulka (seznam) "Button pro vložení nového stavu" - textbox ...
     		
