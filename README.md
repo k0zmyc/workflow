@@ -40,3 +40,37 @@
         Button (+select) pro vložení nové role ke stavu
         Button (+user+group) pro připojení ke stavu
 
+
+
+## požadavek na server
+
+query {
+  workflowPage {
+    id
+    name
+    lastchange
+    states {
+      id
+      name
+      lastchange
+      nextTransitions {
+        id
+        name
+      }
+    }
+    transitions {
+      id
+      name
+      lastchange
+      source {
+        id
+        name
+      }
+      destination {
+        id
+        name
+      }
+    }   
+  }
+}
+

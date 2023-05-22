@@ -1,0 +1,118 @@
+{
+  "data": {
+    "workflowPage": [
+      {
+        "id": "8299eeeb-99e7-4364-8cc2-88b83f900d32",
+        "name": "another workflow",
+        "lastchange": "2023-05-03 09:43:22.455179",
+        "states": [],
+        "transitions": [
+          {
+            "id": "22b0aec9-a0d4-4a8b-a34d-6481fe45f14b",
+            "name": "Podat",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "eb46ece6-be1b-4142-a5c5-0aac31e681f0",
+              "name": "Student"
+            },
+            "destination": {
+              "id": "31b95aba-4de0-43f5-91ec-ba69183b1ffe",
+              "name": "VK"
+            }
+          },
+          {
+            "id": "a4ebc241-73eb-4a93-b939-be77d891d92a",
+            "name": "Vrátit",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "31b95aba-4de0-43f5-91ec-ba69183b1ffe",
+              "name": "VK"
+            },
+            "destination": {
+              "id": "eb46ece6-be1b-4142-a5c5-0aac31e681f0",
+              "name": "Student"
+            }
+          },
+          {
+            "id": "8c16f48f-7984-478e-a833-60890b4eb3e8",
+            "name": "Doporučit",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "31b95aba-4de0-43f5-91ec-ba69183b1ffe",
+              "name": "VK"
+            },
+            "destination": {
+              "id": "a52c61b5-9d13-4146-9dea-641ded47aff8",
+              "name": "Proděkan"
+            }
+          },
+          {
+            "id": "58542bd0-9693-465b-8092-364da49e97e7",
+            "name": "Vrátit",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "a52c61b5-9d13-4146-9dea-641ded47aff8",
+              "name": "Proděkan"
+            },
+            "destination": {
+              "id": "31b95aba-4de0-43f5-91ec-ba69183b1ffe",
+              "name": "VK"
+            }
+          },
+          {
+            "id": "9a76cc80-f0df-4875-849b-ef515808ee09",
+            "name": "Doporučit",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "a52c61b5-9d13-4146-9dea-641ded47aff8",
+              "name": "Proděkan"
+            },
+            "destination": {
+              "id": "c8f37369-2b30-4730-9ed5-e33b2cce51cb",
+              "name": "Děkan"
+            }
+          },
+          {
+            "id": "8dc5c8c6-e862-4738-8238-068cd1b7a9e3",
+            "name": "Vrátit",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "c8f37369-2b30-4730-9ed5-e33b2cce51cb",
+              "name": "Děkan"
+            },
+            "destination": {
+              "id": "a52c61b5-9d13-4146-9dea-641ded47aff8",
+              "name": "Proděkan"
+            }
+          },
+          {
+            "id": "0f09ee14-6e26-45f0-9f2b-770201a8dfc3",
+            "name": "Schválit",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "c8f37369-2b30-4730-9ed5-e33b2cce51cb",
+              "name": "Děkan"
+            },
+            "destination": {
+              "id": "607e4f0d-af42-422c-a4f0-09163242e89e",
+              "name": "Student"
+            }
+          },
+          {
+            "id": "db38ab50-4f69-44c5-bfec-8195ac7e7557",
+            "name": "Archivovat",
+            "lastchange": "2023-05-17 09:11:29.206184",
+            "source": {
+              "id": "607e4f0d-af42-422c-a4f0-09163242e89e",
+              "name": "Student"
+            },
+            "destination": {
+              "id": "7d701986-9bb1-435d-ac00-42679d31f496",
+              "name": "Archiv"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
