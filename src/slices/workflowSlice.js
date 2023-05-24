@@ -11,6 +11,7 @@ export const workflowSlice = createSlice ({
             state.push(action.payload)
             return state
         },
+        
     },
 })
 
