@@ -1,6 +1,5 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HonzaTable from './components/HonzaTable';
 import RayTable from './components/RayTable';
 
 
@@ -11,6 +10,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import reducer from './reducers/reducer';
 import TableContainer from './containers/container';
 
+import { PagesDisplayAll } from "./pages/PagesDisplayAll";
+
+import TableShowWorkflow from "./components/TableShowWorkflow";
+
+import { WorkflowPageQuery } from './queries/WorkflowPageQuerie';
+
 // gpt
 const store = configureStore({
   reducer: reducer,
@@ -20,13 +25,17 @@ const store = configureStore({
 
 
 function App() {
-  console.log("Hello");
+  console.log("App.js started");
   return(
-    <Provider store={store}>
-      <TableContainer />
-    </Provider>
+    <div className="App">
+      <h1>Workflow</h1>
+      {/* <TableShowWorkflow /> */}
+      <PagesDisplayAll />
+      {/* <RayTable /> */}
+      {/* <WorkflowPageQuery /> */}
+    </div>
   );
-  
+
 
   // return (
   //   <div className="App">

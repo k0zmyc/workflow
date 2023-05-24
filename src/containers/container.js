@@ -1,14 +1,17 @@
-import { connect } from 'react-redux';
-import { fetchData } from '../actions/actions';
-import TableComponent from '../components/TableComponent';
+// import { connect } from 'react-redux';
+// import { fetchData } from '../actions/actions';
+// import TableComponent from '../components/TableComponent';
 
-const mapStateToProps = (state) => ({
-  data: state.data,
-  error: state.error,
-});
+// console.log("container called");
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchData: () => dispatch(fetchData()),
-});
+// const mapStateToProps = (state) => ({
+//   data: state.data,
+//   error: state.error,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableComponent);
+// const mapDispatchToProps = (dispatch) => ({
+//   fetchData: () => dispatch(fetchData()),
+// });
+
+// //export default TableComponent
+// export default connect(mapStateToProps, mapDispatchToProps)(TableComponent);
