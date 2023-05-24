@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 function HonzaTable() {
-const tableData = useSelector((state) => state.states)
+const tableData = useSelector((state) => state.workflows.states)
 
   return (
       <div>
@@ -10,7 +10,6 @@ const tableData = useSelector((state) => state.states)
             <tr>
               <th>ID</th>
               <th>Name</th>
-              <th>Email</th>
             </tr>
           </thead>
           <tbody>
@@ -18,7 +17,6 @@ const tableData = useSelector((state) => state.states)
               <tr key={row.id}>
                 <td>{row.id}</td>
                 <td>{row.name}</td>
-                <td>{row.email}</td>
               </tr>
             ))}
           </tbody>

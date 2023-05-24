@@ -2,12 +2,12 @@
     "name": "another workflow",
     "states": [
         {
-            "_id": 0,
+            "id": 0,
             "name": "Student",
             "permisions": []
         },
         {
-            "_id": 1,
+            "id": 1,
             "name": "VK",
             "permisions": [
                 {"roletype": "VK", "level": 2}
@@ -15,7 +15,7 @@
         },
 
         {
-            "_id": 2,
+            "id": 2,
             "name": "Proděkan",
             "permisions": [
                 {"roletype": "PdS", "level": 2},
@@ -23,7 +23,7 @@
             ]
         },
         {
-            "_id": 3,
+            "id": 3,
             "name": "Děkan",
             "permisions": [
                 {"roletype": "Děkan", "level": 2},
@@ -32,14 +32,14 @@
             ]
         },
         {
-            "_id": 4,
+            "id": 4,
             "name": "Student",
             "permisions": [
                 {"roletype": "-1", "level": 2}
             ]
         },
         {
-            "_id": 5,
+            "id": 5,
             "name": "Archiv",
             "permisions": [
                 {"roletype": "VK", "level": 1},
