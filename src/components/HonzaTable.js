@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-
-import data from './mock_data.json';
+import { useSelector } from 'react-redux';
 
 function HonzaTable() {
-  const [tableData] = useState(data);
+const tableData = useSelector((state) => state.states)
 
   return (
       <div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import HonzaTable from './components/HonzaTable';
-import RayTable from './components/RayTable';
+import { TableVisibilityButton } from './components/tableVisibilityButton';
 
 function App() {
   return (
@@ -10,10 +9,7 @@ function App() {
         <h1>Workflow</h1>
       </header>
       <div className="container">
-        <h2>Honza Table</h2>
-        <HonzaTable />
-        <h2>Ray Table</h2>
-        <RayTable />
+        <TableVisibilityButton />
       </div>
     </div>
   );
