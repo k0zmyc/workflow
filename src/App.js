@@ -1,6 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { TableVisibilityButton } from './components/tableVisibilityButton';
+import { TableVisibilityButton2 } from './components/tableVisibilityButton2';
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       </header>
       <div className="container">
         <TableVisibilityButton />
+        <TableVisibilityButton2 />
       </div>
     </div>
   );
