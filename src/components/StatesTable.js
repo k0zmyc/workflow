@@ -19,9 +19,9 @@ export const StatesTableComponent = ({state, actions}) => {
                 </tr>
             </thead>
             <tbody>
-                {state?.memberships?.map(
+                {/* {state?.memberships?.map(
                     (m, index) => <StatesTableRow key={m.user.id} user={m.user} index={index + 1} actions={actions} gid={group.id}/>
-                )}
+                )} */}
             </tbody>
         </table>
     )

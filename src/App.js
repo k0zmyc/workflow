@@ -16,6 +16,8 @@ import TableShowWorkflow from "./components/TableShowWorkflow";
 
 import { WorkflowPageQuery } from './queries/WorkflowPageQuerie';
 
+import { TableVisibilityButton } from './components/tableVisibilityButton';
+
 // gpt
 const store = configureStore({
   reducer: reducer,
@@ -28,11 +30,18 @@ function App() {
   console.log("App.js started");
   return(
     <div className="App">
-      <h1>Workflow</h1>
+      {/* <h1>Workflow</h1> */}
       {/* <TableShowWorkflow /> */}
-      <PagesDisplayAll />
+      {/* <PagesDisplayAll /> */}
       {/* <RayTable /> */}
       {/* <WorkflowPageQuery /> */}
+
+      <header className="App-header">
+        <h1>Workflow</h1>
+      </header>
+      <div className="container">
+        <TableVisibilityButton />
+      </div>
     </div>
   );
 

@@ -13,11 +13,19 @@ class TableShowWorkflow extends Component {
       };
     }
 
-    
+
+    removeState() {
+      
+    }
+
+    addState() {
+      
+    }
   
     render() {
       return (
         <div>
+          <h2>Stavy</h2>
           <table className="table table-hover table-stripped">
             <thead>
               <tr>
@@ -34,11 +42,12 @@ class TableShowWorkflow extends Component {
                   <td>{state.name}</td> {/* Assuming 'state.name' is an object with an 'id' property */}
                   <td>{state.lastchange}</td>
                   <td>{state.nextTransitions.map((nextTransition) => <>{nextTransition.name} </>)}</td>
-                  <td><DeleteButton>Del</DeleteButton></td>
+                  <td><DeleteButton onClick= {() => this.removeState()}>Del</DeleteButton></td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <h2>Tranzice</h2>
           <table className="table table-hover table-stripped">
             <thead>
               <tr>
