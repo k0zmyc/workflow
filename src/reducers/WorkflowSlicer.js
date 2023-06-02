@@ -7,8 +7,8 @@ export const WorkflowSlicer = createSlice({
     reducers: {
         // A reducer that adds a new project to the projects state array
     loadData: (state, action) => {
-        const events = action.payload
-        state = [...state, ...events]
+        const workflows = action.payload
+        state = [...state, ...workflows]
         return state
        } , 
 

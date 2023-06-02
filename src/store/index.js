@@ -4,6 +4,6 @@ import WorkflowReducer from '../reducers/WorkflowSlicer';
 // Configures the Redux store with reducers
 export const Store = configureStore({
     reducer: {
-        events: WorkflowReducer,
+        workflows: WorkflowReducer,
     }
 })

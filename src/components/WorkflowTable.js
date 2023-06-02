@@ -4,7 +4,7 @@ import { useState } from 'react';
 // import { EventsTextBox } from '../comp/EventsTextbox';
 // import {  EventsUpdater } from '../actions/EventsMutationLoader';
 
-export const WorkflowTable = ({ dataa }) => {
+export const WorkflowTable = ({ data }) => {
     const [selectedGroupId, setSelectedGroupId] = useState(null);
   
     const handleGroupSelection = (groupId) => {
@@ -21,7 +21,7 @@ export const WorkflowTable = ({ dataa }) => {
       <div>
         <table className="table">
         <thead>
-          {dataa.map((data) => (
+          {data.states.map((data) => (
             <tr key={data.id}>
               <th scope="col">{data.id}</th>
               <th scope="col">{data.name}</th>
