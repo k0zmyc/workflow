@@ -2,32 +2,28 @@ import { WorkflowQuery } from '../queries/WorkflowQuery';
 import { loadData } from '../reducers/WorkflowSlicer';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { WorkflowTable } from '../components/WorkflowTable';
+import { WorkflowCard } from '../components/WorkflowCard';
 
 
 
 export const WorkflowLoader = () => {
   const dispatch = useDispatch();
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [dataa, setDates] = useState([]);
+  const [data, setWorkflowLoaderState] = useState([]);
 
   const fetchData = async () => {
     try {
       const response = await WorkflowQuery();
-      const data = await response.json();
-      if (dispatch(loadData(data.data.workflowPage))) {
-        console.log('Dispatch loadData works', data.data.workflowPage);
-        setDates(data.data.workflowPage); // Set the fetched dates to the state
+      const fetchedData = await response.json();
+      if (dispatch(loadData(fetchedData.data.workflowPage))) {
+        console.log('Dispatch loadData works', fetchedData.data.workflowPage);
+        setWorkflowLoaderState(fetchedData.data.workflowPage); // Set the fetched dates to the state
       }
       setIsDataLoaded(true);
     } catch (error) {
       console.error('Error fetching group names:', error);
     }
   };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
 
   return (
     <div>
@@ -39,7 +35,10 @@ export const WorkflowLoader = () => {
         {isDataLoaded ? 'Data Loaded' : 'Load Data'}
       </button>
 
-      {isDataLoaded && <WorkflowTable dataa={dataa} />}
+      {/* Mapping workflow array so they have a card each */}
+      {data.map((data) => (
+        isDataLoaded && <WorkflowCard key = {data.id} data={data} />
+      ))}
     </div>
   );
 }
