@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import statesReducer from "../features/statesSlice"
+import WorkflowReducer from '../reducers/WorkflowSlicer';
 
 // Configures the Redux store with reducers
-export const store = configureStore({
+export const Store = configureStore({
     reducer: {
-        projects: statesReducer,
+        events: WorkflowReducer,
     }
 })
