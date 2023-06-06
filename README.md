@@ -76,3 +76,53 @@ query {
 
 
 
+mutation {
+  workflowInsert(workflow:{
+    name: "name neco"
+    nameEn: "nameEN neco"
+    typeId: "typeId neco"
+    id: "id neco"
+  }){
+    id
+    msg
+    workflow{
+      id
+      lastchange
+      name
+      states{
+        id
+        ...
+      }
+      transitions{
+        id
+        ...
+      }
+    }
+  }
+}
+
+
+mutation {
+  workflowUpdate(workflow:{
+    name: "name neco"
+    nameEn: "nameEN neco"
+    typeId: "typeId neco"
+    id: "id neco"
+  }){
+    id
+    msg
+    workflow{
+      id
+      lastchange
+      name
+      states{
+        id
+        ...
+      }
+      transitions{
+        id
+        ...
+      }
+    }
+  }
+}

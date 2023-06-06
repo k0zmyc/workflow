@@ -1,13 +1,17 @@
-import React from 'react';
+import './App.css';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { MainPage } from './pages/MainPage';
+import { WorkflowPageProvider } from './pages/WorkflowPageProvider';
+import { AppProvider } from './pages/AppProvider';
 
 function App() {
-  console.log("App.js started");
   return (
     <div className="App">
-      <MainPage />
+      
+      <AppProvider>
+        <WorkflowPageProvider id="8299eeeb-99e7-4364-8cc2-88b83f900d32" />
+      </AppProvider>
     </div>
   );
 }
