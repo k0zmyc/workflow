@@ -8,6 +8,6 @@ export const WorkflowNameInput = ({workflow, actions}) => {
             .then(json=>console.log("WorkflowNameInput", json.data.workflowUpdate.msg))
     }
     return (
-        <TextInput id={workflow.id} value={workflow.name} placeholder={"název skupiny ********** zmenit v WorkflowNameInput ************"} onChange={onchange}/>
+        <TextInput id={workflow.id} value={workflow.name} placeholder={"workflow name"} onChange={onchange}/>
     )
 }

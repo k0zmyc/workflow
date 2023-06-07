@@ -13,8 +13,8 @@ export const bindWorkflowActions = (dispatch) => {
         onWorkflowUpdate: (g) => dispatch(WorkflowActions.workflow_update(g)),
         onWorkflowAdd: (g) => dispatch(WorkflowActions.workflow_add(g)),
     
-        onWorkflowMemberRemove: ({user, workflow}) => dispatch(WorkflowActions.workflow_memberRemove({user, workflow})),
-        onWorkflowMemberUpdate: (payload) => dispatch(WorkflowActions.workflow_memberUpdate(payload)),
+        onWorkflowStateRemove: ({state, workflow}) => dispatch(WorkflowActions.workflow_stateRemove({state, workflow})),
+        onWorkflowStateUpdate: (payload) => dispatch(WorkflowActions.workflow_stateUpdate(payload)),
     
         workflowFetch: (id) => dispatch(WorkflowFetch(id)),
        

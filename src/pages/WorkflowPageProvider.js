@@ -22,10 +22,12 @@ export const WorkflowPageProvider = ({id}) => {
 
     //console.log(group)
     console.log('prekresleni')
+    /*
     if (workflow?.states) {
         console.log(workflow.states)
     }
-    
+    */
+
     useEffect(
         () => {
             console.log('WorkflowPageProvider refetch ' + id)

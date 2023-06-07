@@ -42,11 +42,14 @@ export const WorkflowFetchHelper = (id, query, resultselector, dispatch, getStat
 export const WorkflowFetch = (id) => (dispatch, getState) => {
     const workflowSelector = (json) => json.data.workflowById
     const bodyfunc = async () => {
-        let workflowData = await WorkflowFetchHelper(id, WorkflowQuerySmall, workflowSelector, dispatch, getState)
+        // changed WorkflowQuerySmall to WorkflowQueryLarge
+        let workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
         
+        // dont know what this does
         if (workflowData.type !== "cd49e152-610c-11ed-9f29-001a7dda7110") {
             workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
         }
+        
         return workflowData
     }
     return bodyfunc()

@@ -10,13 +10,13 @@ import { CreateItem, DeleteItem, ReplaceItem, UpdateItem, SelectItem } from './K
 
 
 // more like WorkflowStateRemove & WorkflowTransitionRemove
-const WorkflowMemberRemove = (state, action) => {
-    console.log('volani stavove funkce, smazat uzivatele')
+const WorkflowStateRemove = (state, action) => {
+    //console.log('volani stavove funkce, smazat stav: ', action.payload)
     const w = action.payload.workflow
-    const u = action.payload.user
-    console.log(u)
-    const group = state[w.id]
-    group.memberships = group.memberships.filter(m => m.user.id !== u.id)
+    const s = action.payload.state
+    //console.log("s: ", s, "w: ", w)
+    const workflow = state[w.id]
+    workflow.states = workflow.states.filter(m => m.id !== s.id)
     return state
 }
 
@@ -28,11 +28,11 @@ const WorkflowMemberRemove = (state, action) => {
  */
 
 // more like WorkflowStateUpdate & WorkflowTransitionUpdate
-const WorkflowMemberUpdate = (state, action) => {
-    const g = action.payload.group
-    const u = action.payload.user
-    const group = state[g.id]
-    group.memberships = group.memberships.map(user => user.id === u.id ? {...user, ...u} : user)
+const WorkflowStateUpdate = (state, action) => {
+    const w = action.payload.workflow
+    const s = action.payload.state
+    const workflow = state[w.id]
+    workflow.states = workflow.states.map(state => state.id === s.id ? {...state, ...s} : state)
     return state
 }
 
@@ -51,8 +51,8 @@ export const WorkflowSlice = createSlice({
         workflow_update: UpdateItem,
         workflow_select: SelectItem,
 
-        workflow_memberRemove: WorkflowMemberRemove,
-        workflow_memberUpdate: WorkflowMemberUpdate
+        workflow_stateRemove: WorkflowStateRemove,
+        workflow_stateUpdate: WorkflowStateUpdate
     }
 })
 

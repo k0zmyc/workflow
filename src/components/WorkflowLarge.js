@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 
-//import { WorkflowMembersCard } from './WorkflowMembersCard';
+import { WorkflowStatesCard } from './WorkflowStatesCard';
 //import { GroupSubgroupsCard } from "./GroupSubgroupsCard";
 import { WorkflowNameInput } from "./WorkflowNameInput";
 
@@ -20,7 +20,7 @@ export const WorkflowLarge = ({workflow, actions}) => {
                 </Card.Title>
             </Card.Header>
             <Card.Body>
-                {/* <WorkflowMembersCard workflow={workflow} actions={actions} /> */}
+                <WorkflowStatesCard workflow={workflow} actions={actions} />
                 {/* <GroupSubgroupsCard workflow={workflow} actions={actions} /> */}
             </Card.Body>
             <Card.Body>
