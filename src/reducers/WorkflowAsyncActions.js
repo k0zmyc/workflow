@@ -49,7 +49,7 @@ export const WorkflowFetch = (id) => (dispatch, getState) => {
         if (workflowData.type !== "cd49e152-610c-11ed-9f29-001a7dda7110") {
             workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
         }
-        
+
         return workflowData
     }
     return bodyfunc()
@@ -79,28 +79,27 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
     const workflowMutationJSON = (workflow) => {
         return {
             query: 
-            `mutation ($id: ID!, $name: String!, $lastchange: DateTime!) {
-                workflowUpdate(workflow:{$id: ID!, $name: String!, $lastchange: DateTime!, $nameEn: String!, $typeId: ID!}){
-                    id
-                    msg
-                    workflow{
+                `mutation{
+                    workflowUpdate(workflow:{lastchange: "${workflow.lastchange}", id: "${workflow.id}", name: "${workflow.name}"}){
                         id
-                        lastchange
-                        name
-                        states{
+                        msg
+                        workflow{
                             id
-                            name
                             lastchange
-                        }
-                        transitions{
-                            id
                             name
-                            lastchange
+                            states{
+                                id
+                                name
+                                lastchange
+                            }
+                            transitions{
+                                id
+                                name
+                                lastchange
+                            }
                         }
                     }
-                }
-            }`,
-            variables: workflow
+                }`,
             }
         }
 
@@ -122,6 +121,7 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
         )
         .then(
             json => {
+                console.log(json.data)
                 const msg = json.data.workflowUpdate.msg
                 if (msg === "fail") {
                     console.log("Update selhalo")
@@ -132,5 +132,6 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
                 }
                 return json
             }
-        )   
+        ) 
+          
 }
