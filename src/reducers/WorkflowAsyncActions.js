@@ -87,16 +87,6 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
                             id
                             lastchange
                             name
-                            states{
-                                id
-                                name
-                                lastchange
-                            }
-                            transitions{
-                                id
-                                name
-                                lastchange
-                            }
                         }
                     }
                 }`,
@@ -135,3 +125,61 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
         ) 
           
 }
+
+
+
+export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getState) => {
+    console.log("WorkflowStateAsyncUpdate state: ", state)
+    const workflowStateMutationJSON = (state) => {
+        return {
+            query: 
+                `mutation{
+                    workflowStateUpdate(state:{lastchange: "${state.lastchange}", id: "${state.id}", name: "${state.name}"}){
+                        id
+                        msg
+                        state{
+                            id
+                            lastchange
+                            name
+                        }
+                    }
+                }`,
+            }
+        }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowStateMutationJSON(state))
+    }
+
+
+    return fetch('/api/gql', params)
+    //return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                console.log("WorkflowStateAsyncUpdate data: ", json.data)
+                const msg = json.data.workflowStateUpdate.msg
+                if (msg === "fail") {
+                    console.log("Update WorkflowStateAsyncUpdate selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const lastchange = json.data.workflowStateUpdate.state.lastchange
+                    
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_stateUpdate({workflow, state: {...state, lastchange: lastchange}}))
+                    
+                }
+                return json
+            }
+        ) 
+          
+}
+
