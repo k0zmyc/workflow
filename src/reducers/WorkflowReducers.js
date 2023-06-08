@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { CreateItem, DeleteItem, ReplaceItem, UpdateItem, SelectItem } from './KeyedReducers';
 
 /**
- * stavova funkce, ktera odebere uzivatele ze skupiny 
+ * stavova funkce, ktera odebere stav z workflow 
  * @param {*} state 
  * @param {*} action 
  * @returns 
@@ -21,7 +21,7 @@ const WorkflowStateRemove = (state, action) => {
 }
 
 /**
- * Stavova funkce, ktera provede update uzivatele ve skupine
+ * Stavova funkce, ktera provede update stavu v workflow
  * @param {*} state 
  * @param {*} action 
  * @returns 

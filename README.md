@@ -23,8 +23,19 @@
     	Zobrazení seznamu stavů, zobrazení následujících stavů k danému stavu.
     		 - zobrazuje vrchol a nasledovniky - komponenta - textova reprezentace subgrafu "kam se muzu posunout z vrcholu"
     		
-    	editace názvů stavů, Zobrazení (uživatele + skupina) pro stav, 
+
+
+      
+    	editace názvů stavů, 
     		- "Input box pro přejmenování stavu"
+          - uklada se do store - tlacitko save ulozi vse v karte
+            - implementace:
+              - mutation.workflowStateUpdate
+              - mutation.workflowTransitionUpdate
+
+      Zobrazení (uživatele + skupina) pro stav, 
+        - info button - zobrazi se popup s informacemi
+          - 
     	
     	editace (uživatel + skupina) pro daný stav,
     		- "stavovy automat"

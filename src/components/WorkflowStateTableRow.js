@@ -26,14 +26,18 @@ export const WorkflowStateTableRow = ({index, state, actions, wid}) => {
 
     //change state name callback
     const onChangeStateName = (value) => {
-        if (actions.WorkflowStateUpdate) {
+        if (actions.onWorkflowStateUpdate) {
+            console.log("onChangeName: ", state, value)
             const payload = {workflow: {id: wid}, state: {...state, name: value}}
             actions.onWorkflowStateUpdate(payload)
+
+            actions.workflowStateAsyncUpdate(payload)
+                .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
         }
     }
 
     /*
-    ********************** replace by change transitions, etc... **************
+    ********************** replace with change transitions, etc... **************
 
 
     const onChangeSurname = (value) => {
@@ -66,7 +70,7 @@ export const WorkflowStateTableRow = ({index, state, actions, wid}) => {
                 ))}
             </td>
             <td>
-                <DeleteButton onClick={onclick}><Trash />state</DeleteButton><br/>
+                <DeleteButton onClick={onclick}><Trash /> state</DeleteButton><br/>
                 {/* <WorkflowStateRemoveButton group={{id: gid}} user={name} actions={actions} /> */}
             </td>
             

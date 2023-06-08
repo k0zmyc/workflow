@@ -1,5 +1,5 @@
 import { WorkflowActions } from "./WorkflowReducers"
-import { WorkflowFetch, WorkflowAsyncUpdate } from "./WorkflowAsyncActions"
+import { WorkflowFetch, WorkflowAsyncUpdate, WorkflowStateAsyncUpdate } from "./WorkflowAsyncActions"
 
 
 /**
@@ -18,6 +18,7 @@ export const bindWorkflowActions = (dispatch) => {
     
         workflowFetch: (id) => dispatch(WorkflowFetch(id)),
        
-        workflowAsyncUpdate: (workflow) => dispatch(WorkflowAsyncUpdate(workflow))
+        workflowAsyncUpdate: (workflow) => dispatch(WorkflowAsyncUpdate(workflow)),
+        workflowStateAsyncUpdate: (workflow) => dispatch(WorkflowStateAsyncUpdate(workflow))
     }
 }

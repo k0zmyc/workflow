@@ -23,9 +23,9 @@ export const WorkflowLarge = ({workflow, actions}) => {
                 <WorkflowStatesCard workflow={workflow} actions={actions} />
                 {/* <GroupSubgroupsCard workflow={workflow} actions={actions} /> */}
             </Card.Body>
-            <Card.Body>
+            {/* <Card.Body>
                 {JSON.stringify(workflow)}
-            </Card.Body>
+            </Card.Body> */}
         </Card>
     )
 }
