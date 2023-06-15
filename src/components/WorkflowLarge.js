@@ -19,9 +19,11 @@ export const WorkflowLarge = ({workflow, actions}) => {
                     <WorkflowNameInput workflow={workflow} actions={actions} />
                 </Card.Title>
             </Card.Header>
+
             <Card.Body>
                 <WorkflowStatesCard workflow={workflow} actions={actions} />
             </Card.Body>
+            
             <Card.Body>
                 <WorkflowTransitionsCard workflow={workflow} actions={actions} />
             </Card.Body>

@@ -13,9 +13,9 @@ import { DeleteButton } from './DeleteButton';
 export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) => {
 
     //remove button action
-    const onclick = () => {
+    const onDeleteButtonClick = () => {
         const payload = {workflow: {id: wid}, transition: transition}
-        //console.log("State onclick: ")
+        console.log("State onclick: ", payload)
         //console.log(state.nextTransitions)
         
         // transition remove
@@ -24,19 +24,18 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
 
     //change state name callback
     const onChangeTransitionName = (value) => {
-        console.log("onChangeTransitionName")
-        /*
-        if (actions.onWorkflowStateUpdate) {
-            console.log("onChangeName: ", transition, value)
-            const payload = {workflow: {id: wid}, state: {...transition, name: value}}
+        //console.log("onChangeTransitionName: ", value)
+        if (actions.onWorkflowTransitionUpdate) {
+            const payload = {workflow: {id: wid}, transition: {...transition, name: value}}
+            //console.log("onChangeTransitionName: ", payload)
 
             //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
             //actions.onWorkflowStateUpdate(payload)
 
-            actions.workflowStateAsyncUpdate(payload)
-                .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
+            actions.workflowTransitionAsyncUpdate(payload)
+                .then(json=>console.log("WorkflowTransitionNameInput: ", json.data.workflowTransitionUpdate.msg))
         }
-        */
+        
     }
 
 
@@ -45,15 +44,25 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
             <td>{index}: </td>
             <td><TextInput placeholder={"transition name"} id={wid} value={transition.name} onChange={onChangeTransitionName}/></td>
             <td>
+                <div>
+                    {transition.source.name}
+                </div>
+
+                {/*                 
                 <TextInput 
                     key={transition.source.id} 
                     placeholder={"source name"} 
                     id={wid} 
                     value={transition.source.name} 
                     onChange={(value) => onChangeTransitionName(value, transition)}
-                />
+                /> */}
+
             </td>
             <td>
+                <div>
+                    {transition.destination.name}
+                </div>
+                {/*                 
                 <TextInput 
                     key={transition.destination.id} 
                     placeholder={"destination name"} 
@@ -61,9 +70,10 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
                     value={transition.destination.name} 
                     onChange={(value) => onChangeTransitionName(value, transition)}
                 />
+                 */}
             </td>
             <td>
-                <DeleteButton onClick={onclick}><Trash /></DeleteButton><br/>
+                <DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton><br/>
             </td>
         </tr>
     )

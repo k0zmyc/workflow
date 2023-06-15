@@ -189,13 +189,29 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
         return {
             query: 
                 `mutation{
-                    workflowTransitionUpdate(state:{lastchange: "${transition.lastchange}", id: "${transition.id}", name: "${transition.name}"}){
+                    workflowTransitionUpdate(state:{
+                        lastchange: "${transition.lastchange}", 
+                        id: "${transition.id}", 
+                        name: "${transition.name}"
+                        sourcestateId: "${transition.source.id}"
+                        destinationstateId: "${transition.destination.id}"
+                    }){
                         id
                         msg
                         transition{
                             id
                             lastchange
                             name
+                            source{
+                                id
+                                name
+                                lastchange
+                            }
+                            destination{
+                                id
+                                name
+                                lastchange
+                            }
                         }
                     }
                 }`,

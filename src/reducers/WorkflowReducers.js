@@ -39,11 +39,11 @@ const WorkflowStateUpdate = (state, action) => {
 const WorkflowTransitionUpdate = (state, action) => {
     console.log("WorkflowTransitionUpdate state, action", state, action)
 
-    // const w = action.payload.workflow
-    // const t = action.payload.transition
-    // const workflow = state[w.id]
-    // workflow.states = workflow.transitions.map(transition => transition.id === t.id ? {...transition, ...t} : transition)
-    // return state
+    const w = action.payload.workflow
+    const t = action.payload.transition
+    const workflow = state[w.id]
+    workflow.transitions = workflow.transitions.map(transition => transition.id === t.id ? {...transition, ...t} : transition)
+    return state
 }
 
 

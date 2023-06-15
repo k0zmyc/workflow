@@ -66,13 +66,20 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) =
             <td><TextInput placeholder={"name"} id={wid} value={state.name} onChange={onChangeStateName}/></td>
             <td>
                 {state.nextTransitions.map((transition) => (
+                    <div key={transition.id}>
+                        {transition.name}
+                    </div>
+                    
+                     
+                    /* 
                     <TextInput 
-                        key={transition.id} 
-                        placeholder={"transition"} 
-                        id={wid} 
-                        value={transition.name} 
-                        onChange={(value) => onChangeTransitionName(value, transition)}
+                    key={transition.id} 
+                    placeholder={"transition"} 
+                    id={wid} 
+                    value={transition.name} 
+                    onChange={(value) => onChangeTransitionName(value, transition)}
                     />
+                    */
                 ))}
             </td>
             <td>
