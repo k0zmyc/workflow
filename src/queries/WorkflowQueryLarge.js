@@ -14,6 +14,28 @@ export const WorkflowQueryLargeJSON = (id) => ({
                         id
                         name
                     }
+                    previousTransitions{
+                        id
+                        name
+                    }
+                    users{
+                        id
+                        lastchange
+                        user{
+                            id
+                            name
+                            surname
+                        }
+                    }
+                    roletypes{
+                        id
+                        lastchange
+                        roleType{
+                            id
+                            lastchange
+                            name
+                        }
+                    }
                 }
                 transitions{
                     id

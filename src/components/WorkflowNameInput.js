@@ -2,7 +2,7 @@ import { TextInput } from './TextInput';
 
 export const WorkflowNameInput = ({workflow, actions}) => {
     const onchange = (value) => {
-        console.log("changed", value)
+        //console.log("changed", value)
 
         actions.workflowAsyncUpdate({...workflow, name: value})
             .then(json=>console.log("WorkflowNameInput", json.data.workflowUpdate.msg))

@@ -52,7 +52,6 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
                     value={transition.source.name} 
                     onChange={(value) => onChangeTransitionName(value, transition)}
                 />
-                
             </td>
             <td>
                 <TextInput 
@@ -62,12 +61,10 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
                     value={transition.destination.name} 
                     onChange={(value) => onChangeTransitionName(value, transition)}
                 />
-                
             </td>
             <td>
                 <DeleteButton onClick={onclick}><Trash /></DeleteButton><br/>
             </td>
-            
         </tr>
     )
 }

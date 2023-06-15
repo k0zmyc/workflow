@@ -15,8 +15,10 @@ export const WorkflowPageProvider = ({id}) => {
 
     //vyber vsech skupin ze store
     const workflows = useSelector(state => state.workflows)
+
     //vyber idcka u skupiny, ktere bylo vybrano
     const selectedId = useSelector(state => state.workflows.selectedId)
+    
     //vyber skupiny ze store, ktera ma byt zobrazena
     const workflow = workflows[id] //|| {id: id}
 
@@ -31,7 +33,7 @@ export const WorkflowPageProvider = ({id}) => {
     useEffect(
         () => {
             console.log('WorkflowPageProvider refetch ' + id)
-            actions.workflowFetch(id)           
+            actions.workflowFetch(id)
         }, [id, selectedId]
     )
 
@@ -43,7 +45,7 @@ export const WorkflowPageProvider = ({id}) => {
     } else {
         //skupina ve store neni
         return (
-            <div>Loading... {id}, {workflow}</div>
+            <div>Loading... {id} {workflow}</div>
         )
     }
 }

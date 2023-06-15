@@ -15,6 +15,8 @@ export const bindWorkflowActions = (dispatch) => {
     
         onWorkflowStateRemove: ({state, workflow}) => dispatch(WorkflowActions.workflow_stateRemove({state, workflow})),
         onWorkflowStateUpdate: (payload) => dispatch(WorkflowActions.workflow_stateUpdate(payload)),
+        
+        onWorkflowTransitionUpdate: (payload) => dispatch(WorkflowActions.workflow_transitionUpdate(payload)),
     
         workflowFetch: (id) => dispatch(WorkflowFetch(id)),
        

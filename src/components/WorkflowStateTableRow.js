@@ -1,10 +1,9 @@
-import { Trash } from 'react-bootstrap-icons';
+import { Trash, Info } from 'react-bootstrap-icons';
 
 import { TextInput } from './TextInput';
 import { DeleteButton } from './DeleteButton';
+import { useState } from 'react';
 
-
-//import { WorkflowStateRemoveButton } from './WorkflowStateRemoveButton';
 
 /**
  * One member as a table row
@@ -12,16 +11,18 @@ import { DeleteButton } from './DeleteButton';
  * @returns 
  */
 
-export const WorkflowStateTableRow = ({index, state, actions, wid}) => {
-    //console.log("WorkflowStateTableRow log: ")
-    //console.log("index: ", index,"name: ", name, "nextTransitions: ", nextTransitions, "actions: ", actions, "gid: ", wid)
+export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) => {
 
-    //remove button action
-    const onclick = () => {
+    //delete button action
+    const onDeleteButtonClick = () => {
         const payload = {workflow: {id: wid}, state: state}
-        //console.log("State onclick: ")
-        //console.log(state.nextTransitions)
         actions.onWorkflowStateRemove(payload)
+    }
+
+    //info button action
+    const onInfoButtonClick = () => {
+        //console.log("onInfoButtonClick: ", state)
+        openModal(state)
     }
 
     //change state name callback
@@ -29,36 +30,35 @@ export const WorkflowStateTableRow = ({index, state, actions, wid}) => {
         if (actions.onWorkflowStateUpdate) {
             console.log("onChangeName: ", state, value)
             const payload = {workflow: {id: wid}, state: {...state, name: value}}
-            actions.onWorkflowStateUpdate(payload)
+
+            //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
+            //actions.onWorkflowStateUpdate(payload)
 
             actions.workflowStateAsyncUpdate(payload)
                 .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
         }
     }
 
-    /*
-    ********************** replace with change transitions, etc... **************
-
-
-    const onChangeSurname = (value) => {
-        //console.log("onChangeEmail")
-        //console.log(user, value)
-        if (actions.onGroupMemberUpdate) {
-            const payload = {group: {id: gid}, user: {...name, surname: value}}
-            actions.onGroupMemberUpdate(payload)
-        }
-    }
-
-    const onChangeName = (value) => {
-        //console.log("onChangeEmail")
+    //change transition name callback
+    const onChangeTransitionName = (value, transition) => {
         
-        if (actions.onGroupMemberUpdate) {
-            console.log(name, value)
-            const payload = {group: {id: gid}, user: {...name, name: value}}
-            actions.onGroupMemberUpdate(payload)
+        // paused for now - visualize transitions first
+        console.log("Transition changes are not implemented yet")
+        /*
+        if (actions.onWorkflowTransitionUpdate) {
+            
+            //console.log("onChangeName: ", state, value)
+            const payload = {workflow: {id: wid}, transition: {...transition, name: value}}
+            // actions.onWorkflowTransitionUpdate(payload)
+            console.log("onChangeTransitionName payload ", payload)
+
+            actions.onWorkflowTransitionUpdate(payload)
+
+            // actions.workflowStateAsyncUpdate(payload)
+            //     .then(json=>console.log("WorkflowTransitionNameInput: ", json.data.workflowTransitionUpdate.msg))
         }
+        */
     }
-    */
 
     return (
         <tr>
@@ -66,14 +66,19 @@ export const WorkflowStateTableRow = ({index, state, actions, wid}) => {
             <td><TextInput placeholder={"name"} id={wid} value={state.name} onChange={onChangeStateName}/></td>
             <td>
                 {state.nextTransitions.map((transition) => (
-                    <TextInput key={transition.id} placeholder={"transition"} id={wid} value={transition.name} onChange={onChangeStateName}/>
+                    <TextInput 
+                        key={transition.id} 
+                        placeholder={"transition"} 
+                        id={wid} 
+                        value={transition.name} 
+                        onChange={(value) => onChangeTransitionName(value, transition)}
+                    />
                 ))}
             </td>
             <td>
-                <DeleteButton onClick={onclick}><Trash /> state</DeleteButton><br/>
-                {/* <WorkflowStateRemoveButton group={{id: gid}} user={name} actions={actions} /> */}
+                <DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton>
+                <button className='btn btn-sm btn-info' onClick={onInfoButtonClick}><Info/></button>
             </td>
-            
         </tr>
     )
 }

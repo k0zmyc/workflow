@@ -36,6 +36,18 @@ const WorkflowStateUpdate = (state, action) => {
     return state
 }
 
+const WorkflowTransitionUpdate = (state, action) => {
+    console.log("WorkflowTransitionUpdate state, action", state, action)
+
+    // const w = action.payload.workflow
+    // const t = action.payload.transition
+    // const workflow = state[w.id]
+    // workflow.states = workflow.transitions.map(transition => transition.id === t.id ? {...transition, ...t} : transition)
+    // return state
+}
+
+
+
 
 /**
  * Kompletni rez budocim store.
@@ -52,7 +64,9 @@ export const WorkflowSlice = createSlice({
         workflow_select: SelectItem,
 
         workflow_stateRemove: WorkflowStateRemove,
-        workflow_stateUpdate: WorkflowStateUpdate
+        workflow_stateUpdate: WorkflowStateUpdate,
+
+        workflow_transitionUpdate: WorkflowTransitionUpdate
     }
 })
 

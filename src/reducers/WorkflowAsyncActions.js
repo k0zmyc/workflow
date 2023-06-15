@@ -20,7 +20,7 @@ export const WorkflowFetchHelper = (id, query, resultselector, dispatch, getStat
             error => error
         )
         .then(
-            j => log('incomming')(j)
+            //j => log('incomming')(j)
         )
         .then(
             json => log('converted')(resultselector(json)),
@@ -111,7 +111,7 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
         )
         .then(
             json => {
-                console.log(json.data)
+                //console.log(json.data)
                 const msg = json.data.workflowUpdate.msg
                 if (msg === "fail") {
                     console.log("Update selhalo")
@@ -129,7 +129,7 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
 
 
 export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getState) => {
-    console.log("WorkflowStateAsyncUpdate state: ", state)
+    //console.log("WorkflowStateAsyncUpdate state: ", state)
     const workflowStateMutationJSON = (state) => {
         return {
             query: 
@@ -165,7 +165,7 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
         )
         .then(
             json => {
-                console.log("WorkflowStateAsyncUpdate data: ", json.data)
+                //console.log("WorkflowStateAsyncUpdate data: ", json.data)
                 const msg = json.data.workflowStateUpdate.msg
                 if (msg === "fail") {
                     console.log("Update WorkflowStateAsyncUpdate selhalo")
@@ -180,6 +180,66 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
                 return json
             }
         ) 
-          
 }
+
+
+export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispatch, getState) => {
+    console.log("WorkflowStateAsyncUpdate transition, workflow: ", transition, workflow)
+    const workflowTransitionMutationJSON = (transition) => {
+        return {
+            query: 
+                `mutation{
+                    workflowTransitionUpdate(state:{lastchange: "${transition.lastchange}", id: "${transition.id}", name: "${transition.name}"}){
+                        id
+                        msg
+                        transition{
+                            id
+                            lastchange
+                            name
+                        }
+                    }
+                }`,
+            }
+        }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowTransitionMutationJSON(transition))
+    }
+
+
+    return fetch('/api/gql', params)
+    //return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                console.log("WorkflowTransitionAsyncUpdate data: ", json.data)
+                const msg = json.data.workflowTransitionUpdate.msg
+                if (msg === "fail") {
+                    console.log("Update WorkflowTransitionAsyncUpdate selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const lastchange = json.data.workflowTransitionUpdate.transition.lastchange
+                    
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_transitionUpdate({workflow, transition: {...transition, lastchange: lastchange}}))
+                    
+                }
+                return json
+            }
+        ) 
+}
+
+
+
+
+
+
 
