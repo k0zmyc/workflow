@@ -1,11 +1,12 @@
 import { WorkflowStateTableRow } from "./WorkflowStateTableRow.js"
-import { useState } from "react";
+import { useState, useCallback  } from "react";
 
 import ReactModal from 'react-modal';
 import { TextInput } from "./TextInput.js";
-import { AddButton } from "./AddButton.js";
+import { AddStateButton } from "./AddStateButton.js";
 import { WorkflowStateTablePopupUserRow } from "./WorkflowStateTablePopupUserRow.js";
 import { WorkflowStateTablePopupRoletypeRow } from "./WorkflowStateTablePopupRoletypeRow.js";
+
 
 const rootElement = document.getElementById('root');
 ReactModal.setAppElement(rootElement);
@@ -24,6 +25,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
     
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalStateData, setModalStateData] = useState(null);
+    const [addStateName, setAddStateName] = useState(null)
 
     const openModal = (data) => {
         setModalStateData(data)
@@ -34,6 +36,23 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
         setModalStateData(null)
         setModalIsOpen(false);
     };
+
+    const onChangeAddState = (value) => {
+        setAddStateName(value)
+    } 
+
+    const addState = () => {
+        if (actions.onWorkflowStateUpdate && addStateName !== "") {
+            const wid = workflow.id
+            const payload = {workflow: {id: wid}, state: {name: addStateName}}
+            console.log("onChangeAddState: ", payload)
+
+            actions.workflowStateAsyncInsert(payload)
+                .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateInsert.msg))
+                .then(setAddStateName(""))
+                .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
+        }
+    }
 
     return (
         <div>
@@ -60,7 +79,8 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                     ))}
                 </tbody>
             </table>
-            <AddButton />
+            <TextInput placeholder={"Add state"} value="" onChange={onChangeAddState}/>
+            <AddStateButton onClick={addState}/>
             
             <ReactModal isOpen={modalIsOpen}>
                 <h2>State info: {modalStateData?.name}</h2>
@@ -86,7 +106,6 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                         ))}
                     </tbody>
                 </table>
-                <AddButton />
 
                 <h4>Role types</h4>
                 <table className="table table-hover table-stripped">
@@ -109,7 +128,6 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                         ))}
                     </tbody>
                 </table>
-                <p><AddButton /></p>
                 <button onClick={closeModal} className='btn btn-sm btn-danger'>Close</button>
             </ReactModal>
         </div>

@@ -34,6 +34,7 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
 
             actions.workflowTransitionAsyncUpdate(payload)
                 .then(json=>console.log("WorkflowTransitionNameInput: ", json.data.workflowTransitionUpdate.msg))
+                .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
         }
         
     }

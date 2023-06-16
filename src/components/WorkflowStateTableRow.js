@@ -36,6 +36,7 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) =
 
             actions.workflowStateAsyncUpdate(payload)
                 .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
+                .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
         }
     }
 

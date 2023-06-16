@@ -10,8 +10,8 @@ import { WorkflowQueryLarge } from "../queries/WorkflowQueryLarge"
  */
 export const WorkflowFetchHelper = (id, query, resultselector, dispatch, getState) => {
     const log = (text) => (p) => {
-        console.log(text)
-        console.log(JSON.stringify(p))
+        //console.log(text)
+        //console.log(JSON.stringify(p))
         return p
     }
     const p = query(id)
@@ -45,10 +45,11 @@ export const WorkflowFetch = (id) => (dispatch, getState) => {
         // changed WorkflowQuerySmall to WorkflowQueryLarge
         let workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
         
-        // dont know what this does
-        if (workflowData.type !== "cd49e152-610c-11ed-9f29-001a7dda7110") {
-            workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
-        }
+    
+        // dont know what this does - ID from DEMO
+        // if (workflowData.type !== "cd49e152-610c-11ed-9f29-001a7dda7110") {
+        //     workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
+        // }
 
         return workflowData
     }
@@ -256,6 +257,60 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
 
 
 
+// not final yet
+export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getState) => {
+    //console.log("WorkflowStateAsyncUpdate state: ", state)
+    const workflowStateMutationJSON = (state) => {
+        return {
+            query: 
+                `mutation{
+                    workflowStateInsert(state:{workflowId: "${workflow.id}", name: "${state.name}"}){
+                        id
+                        msg
+                        state{
+                            id
+                            lastchange
+                            name
+                        }
+                    }
+                }`,
+            }
+        }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowStateMutationJSON(state))
+    }
+
+
+    return fetch('/api/gql', params)
+    //return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                //console.log("WorkflowStateAsyncUpdate data: ", json.data)
+                const msg = json.data.workflowStateInsert.msg
+                if (msg === "fail") {
+                    console.log("Update WorkflowStateAsyncInsert selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const state = json.data.workflowStateInsert.state
+                    
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_stateUpdate({workflow, state: {...state}}))
+                    
+                }
+                return json
+            }
+        ) 
+}
 
 
 

@@ -6,8 +6,8 @@ import { useState, useCallback } from 'react';
  * @param {() => void} onClick
  * @returns 
  */
-export const AddButton = ({children, onClick}) => {
+export const AddStateButton = ({children, onClick}) => {
     return(
-        <button className='btn btn-sm btn-success'>Add</button>
+        <button className='btn btn-sm btn-success' onClick={onClick}>Add state</button>
     )
 }
