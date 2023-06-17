@@ -3,9 +3,12 @@ import { useState, useCallback  } from "react";
 
 import ReactModal from 'react-modal';
 import { TextInput } from "./TextInput.js";
-import { AddStateButton } from "./AddStateButton.js";
 import { WorkflowStateTablePopupUserRow } from "./WorkflowStateTablePopupUserRow.js";
 import { WorkflowStateTablePopupRoletypeRow } from "./WorkflowStateTablePopupRoletypeRow.js";
+import { WorkflowStateTablePopupTransitionRow } from "./WorkflowStateTablePopupTransitionRow.js";
+import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupAddTransition.js";
+import { AddStateRow } from "./AddStateRow.js";
+import { DropDown } from "./DropDown.js";
 
 
 const rootElement = document.getElementById('root');
@@ -25,7 +28,8 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
     
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalStateData, setModalStateData] = useState(null);
-    const [addStateName, setAddStateName] = useState(null)
+    const [addStateName, setAddStateName] = useState("")
+    const [addStateTransition, setAddStateTransition] = useState(undefined)
 
     const openModal = (data) => {
         setModalStateData(data)
@@ -37,22 +41,38 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
         setModalIsOpen(false);
     };
 
-    const onChangeAddState = (value) => {
+    const onChangeAddStateName = (value) => {
         setAddStateName(value)
-    } 
+    }
+
+    const onChangeAddStateTransition = (value) => {
+        console.log("onChangeAddStateTransition: ", value)
+        setAddStateTransition(value)
+    }
 
     const addState = () => {
-        if (actions.onWorkflowStateUpdate && addStateName !== "") {
+        if (actions.onWorkflowStateUpdate && addStateName) {
             const wid = workflow.id
             const payload = {workflow: {id: wid}, state: {name: addStateName}}
-            console.log("onChangeAddState: ", payload)
+            
 
             actions.workflowStateAsyncInsert(payload)
-                .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateInsert.msg))
-                .then(setAddStateName(""))
+                .then(json => console.log("WorkflowStateNameInput: ", json.data.workflowStateInsert.msg))
+                .then(() => setAddStateName(""))
+                .then(() => {
+                    console.log("onChangeAddState: ", payload, addStateTransition)
+                    //actions.workflowStateAsyncInsert(payload)
+                })
                 .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
         }
     }
+
+    const addTransition = (value) => {
+        console.log("addTransition: ", value)
+    }
+
+
+
 
     return (
         <div>
@@ -60,6 +80,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                 <thead>
                     <tr>
                         <th>#</th>
+                        <th>ID</th>
                         <th>State name</th>
                         <th>State transitions</th>
                         <th>Options</th>
@@ -79,11 +100,42 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                     ))}
                 </tbody>
             </table>
-            <TextInput placeholder={"Add state"} value="" onChange={onChangeAddState}/>
-            <AddStateButton onClick={addState}/>
+
+            <TextInput placeholder={"Add state name"} value={addStateName} onChange={onChangeAddStateName}/>
+            <button className='btn btn-sm btn-success' onClick={addState}>Add state</button>
             
+            
+
             <ReactModal isOpen={modalIsOpen}>
-                <h2>State info: {modalStateData?.name}</h2>
+                
+                <h2>State data: {modalStateData?.name}</h2>
+                <h4>Transitions</h4>
+                <table className="table table-hover table-stripped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Destination</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {modalStateData?.nextTransitions?.map((transition, index) => (
+                            <WorkflowStateTablePopupTransitionRow 
+                                key={transition.id}
+                                transition={transition}
+                                index={index + 1}
+                                actions={actions}
+                                wid={workflow.id}
+                            />
+                        ))}
+                    </tbody>
+                </table>
+
+                <WorkflowStateTablePopupAddTransition state={modalStateData} actions={actions} wid={workflow.id}/>
+
+
+                
                 <h4>Users</h4>
                 <table className="table table-hover table-stripped">
                     <thead>

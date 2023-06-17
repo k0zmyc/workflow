@@ -255,9 +255,6 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
 }
 
 
-
-
-// not final yet
 export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getState) => {
     //console.log("WorkflowStateAsyncUpdate state: ", state)
     const workflowStateMutationJSON = (state) => {
@@ -312,5 +309,70 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
         ) 
 }
 
+// not final yet
+export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispatch, getState) => {
+    console.log("WorkflowStateAsyncInsert transition, workflow: ", transition, workflow)
+    const workflowTransitionMutationJSON = ({transition, workflow}) => {
+        return {
+            query: 
+                `mutation{
+                    workflowTransitionInsert(state:{
+                        workflowId: "${workflow.id}"
+                        sourcestateId: "${transition.source.id}"
+                        destinationstateId: "${transition.destination.id}"
+                        name: "${transition.name}"
+                    }){
+                        id
+                        msg
+                        transition{
+                          id
+                          lastchange
+                          name
+                          source{
+                            id
+                            name
+                          }
+                          destination{
+                            id
+                            name
+                          }
+                        }
+                    }
+                }`,
+            }
+        }
+
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowTransitionMutationJSON({transition, workflow}))
+    }
 
 
+    return fetch('/api/gql', params)
+    //return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                console.log("WorkflowTransitionAsyncInsert data: ", json.data)
+                const msg = json.data.workflowTransitionInsert.msg
+                if (msg === "fail") {
+                    console.log("Update WorkflowTransitionAsyncInsert selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const transition = json.data.workflowTransitionInsert.transition
+                    
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_transitionUpdate({workflow, transition: {...transition}}))
+                    
+                }
+                return json
+            }
+        ) 
+}

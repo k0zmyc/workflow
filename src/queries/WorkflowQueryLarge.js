@@ -13,6 +13,16 @@ export const WorkflowQueryLargeJSON = (id) => ({
                     nextTransitions{
                         id
                         name
+                        source{
+                            id
+                            name
+                            lastchange
+                        }
+                        destination{
+                            id
+                            name
+                            lastchange
+                        }
                     }
                     previousTransitions{
                         id
