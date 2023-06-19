@@ -35,10 +35,6 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
         }
     }
 
-
-
-
-
     return(
         <table className="table table-hover table-stripped">
             <tbody>
@@ -49,10 +45,5 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
                 </tr> 
             </tbody>
         </table>
-        
     )
 }
-
-
-{/* <th><TextInput placeholder={"Add state name"} value={addStateName} onChange={onChangeAddStateName}/></th>
-<th><button className='btn btn-sm btn-success' onClick={addState}>Add state</button></th> */}

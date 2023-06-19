@@ -22,7 +22,8 @@ export const WorkflowStateTablePopupTransitionRow = ({index, transition, actions
         <tr>
             <th>{index}</th>
             <th>{transition.id}</th>
-            <th><TextInput placeholder={"name"} value={transition.name} onChange={onChangeTranstitionName}/></th>
+            <th>{transition.name}</th>
+            {/* <th><TextInput placeholder={"name"} value={transition.name} onChange={onChangeTranstitionName}/></th> */}
             <th>{transition.destination.name}</th>
         </tr> 
     )

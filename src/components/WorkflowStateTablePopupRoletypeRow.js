@@ -22,7 +22,8 @@ export const WorkflowStateTablePopupRoletypeRow = ({index, roleType, actions, wi
         <tr>
             <th>{index}</th>
             <th>{roleType.id}</th>
-            <th><TextInput placeholder={"name"} value={roleType.roleType.name} onChange={onChangeRoleTypeName}/></th>
+            <th>{roleType.roleType.name}</th>
+            {/* <th><TextInput placeholder={"name"} value={roleType.roleType.name} onChange={onChangeRoleTypeName}/></th> */}
         </tr> 
     )
 }

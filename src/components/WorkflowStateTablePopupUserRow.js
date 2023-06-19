@@ -37,8 +37,10 @@ export const WorkflowStateTablePopupUserRow = ({index, user, actions, wid}) => {
         <tr>
             <th>{index}:</th>
             <th>{user.user.id}</th>
-            <th><TextInput placeholder={"name"} value={user.user.name} onChange={onChangeUserName}/></th>
-            <th><TextInput placeholder={"surname"} value={user.user.surname} onChange={onChangeUserSurname}/></th>
+            <th>{user.user.name}</th>
+            <th>{user.user.surname}</th>
+            {/* <th><TextInput placeholder={"name"} value={user.user.name} onChange={onChangeUserName}/></th>
+            <th><TextInput placeholder={"surname"} value={user.user.surname} onChange={onChangeUserSurname}/></th> */}
         </tr>
     )
 }

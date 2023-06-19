@@ -7,7 +7,6 @@ import { WorkflowStateTablePopupUserRow } from "./WorkflowStateTablePopupUserRow
 import { WorkflowStateTablePopupRoletypeRow } from "./WorkflowStateTablePopupRoletypeRow.js";
 import { WorkflowStateTablePopupTransitionRow } from "./WorkflowStateTablePopupTransitionRow.js";
 import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupAddTransition.js";
-import { AddStateRow } from "./AddStateRow.js";
 import { DropDown } from "./DropDown.js";
 
 
@@ -24,8 +23,6 @@ ReactModal.setAppElement(rootElement);
  * @returns 
  */
 export const WorkflowStatesTable = ({workflow, actions}) => {
-    //console.log("workflol states in workflowStatesTable: ", workflow)
-    
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalStateData, setModalStateData] = useState(null);
     const [addStateName, setAddStateName] = useState("")
@@ -71,9 +68,6 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
         console.log("addTransition: ", value)
     }
 
-
-
-
     return (
         <div>
             <table className="table table-hover table-stripped">
@@ -105,7 +99,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
             <button className='btn btn-sm btn-success' onClick={addState}>Add state</button>
             
             
-
+            {/*separate component*/}
             <ReactModal isOpen={modalIsOpen}>
                 
                 <h2>State data: {modalStateData?.name}</h2>

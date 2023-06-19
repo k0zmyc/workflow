@@ -20,7 +20,13 @@ export const WorkflowTransitionsTable = ({workflow, actions}) => {
             <tbody>
                 {workflow?.transitions?.map(
                     (transition, index) => 
-                        <WorkflowTransitionTableRow key={transition.id} transition={transition} index={index + 1} actions={actions} wid={workflow.id}/>
+                        <WorkflowTransitionTableRow 
+                            key={transition.id} 
+                            transition={transition} 
+                            index={index + 1} 
+                            actions={actions} 
+                            wid={workflow.id}
+                        />
                 )}
             </tbody>
         </table>

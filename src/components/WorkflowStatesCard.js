@@ -4,7 +4,7 @@ import { WorkflowStatesTable } from './WorkflowStatesTable';
 import { WorkflowTransitionsTable } from './WorkflowTransitionsTable';
 
 /**
- * Renders a card containing a list of group members.
+ * Renders a card containing a list of workflow members.
  */
 export const WorkflowStatesCard = ({workflow, actions}) => {
     return (

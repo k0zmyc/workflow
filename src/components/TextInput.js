@@ -1,7 +1,5 @@
 import { useState, useMemo, useCallback } from 'react'
-
 import { CreateDelayer } from '../utils/CreateDelayer'
-
 
 /**
  * Editable Text (input type="text")

@@ -21,7 +21,6 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) =
 
     //info button action
     const onInfoButtonClick = () => {
-        //console.log("onInfoButtonClick: ", state)
         openModal(state)
     }
 
@@ -32,8 +31,8 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) =
             const payload = {workflow: {id: wid}, state: {...state, name: value}}
 
             actions.workflowStateAsyncUpdate(payload)
-                .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
-                .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
+                .then(json => console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
+                .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
         }
     }
 
