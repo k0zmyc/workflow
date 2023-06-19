@@ -80,8 +80,8 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
     const workflowMutationJSON = (workflow) => {
         return {
             query: 
-                `mutation{
-                    workflowUpdate(workflow:{lastchange: "${workflow.lastchange}", id: "${workflow.id}", name: "${workflow.name}"}){
+                `mutation ($id: ID!, $lastchange: DateTime!, $name: String!){
+                    workflowUpdate(workflow:{id: $id, lastchange: $lastchange, name: $name}){
                         id
                         msg
                         workflow{
@@ -91,6 +91,11 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
                         }
                     }
                 }`,
+                "variables": {
+                    "id": workflow.id,
+                    "lastchange": workflow.lastchange,
+                    "name": workflow.name
+                }
             }
         }
 
@@ -134,8 +139,8 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
     const workflowStateMutationJSON = (state) => {
         return {
             query: 
-                `mutation{
-                    workflowStateUpdate(state:{lastchange: "${state.lastchange}", id: "${state.id}", name: "${state.name}"}){
+                `mutation($id: ID!, $lastchange: DateTime!, $name: String!) {
+                    workflowStateUpdate(state:{id: $id, lastchange: $lastchange, name: $name}){
                         id
                         msg
                         state{
@@ -145,6 +150,11 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
                         }
                     }
                 }`,
+                "variables": {
+                    "id": state.id,
+                    "lastchange": state.lastchange,
+                    "name": state.name
+                }
             }
         }
 
@@ -189,13 +199,13 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
     const workflowTransitionMutationJSON = (transition) => {
         return {
             query: 
-                `mutation{
+                `mutation($id: ID!, $lastchange: DateTime!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!){
                     workflowTransitionUpdate(state:{
-                        lastchange: "${transition.lastchange}", 
-                        id: "${transition.id}", 
-                        name: "${transition.name}"
-                        sourcestateId: "${transition.source.id}"
-                        destinationstateId: "${transition.destination.id}"
+                        lastchange: $lastchange
+                        id: $id
+                        name: $name
+                        sourcestateId: $sourcestateId
+                        destinationstateId: $destinationstateId
                     }){
                         id
                         msg
@@ -216,6 +226,13 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
                         }
                     }
                 }`,
+                "variables": {
+                    "lastchange": transition.lastchange, 
+                    "id": transition.id, 
+                    "name": transition.name,
+                    "sourcestateId": transition.source.id,
+                    "destinationstateId": transition.destination.id
+                }
             }
         }
 
@@ -260,8 +277,8 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
     const workflowStateMutationJSON = (state) => {
         return {
             query: 
-                `mutation{
-                    workflowStateInsert(state:{workflowId: "${workflow.id}", name: "${state.name}"}){
+                `mutation($workflowId: ID!, $name: String!){
+                    workflowStateInsert(state:{workflowId: $workflowId, name: $name}){
                         id
                         msg
                         state{
@@ -271,6 +288,10 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
                         }
                     }
                 }`,
+                "variables": {
+                    "workflowId": workflow.id, 
+                    "name": state.name
+                }
             }
         }
 
@@ -309,18 +330,17 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
         ) 
 }
 
-// not final yet
 export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispatch, getState) => {
     console.log("WorkflowStateAsyncInsert transition, workflow: ", transition, workflow)
     const workflowTransitionMutationJSON = ({transition, workflow}) => {
         return {
             query: 
-                `mutation{
+                `mutation($workflowid: ID!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!) {
                     workflowTransitionInsert(state:{
-                        workflowId: "${workflow.id}"
-                        sourcestateId: "${transition.source.id}"
-                        destinationstateId: "${transition.destination.id}"
-                        name: "${transition.name}"
+                        workflowId: $workflowId
+                        name: $name
+                        sourcestateId: $sourcestateId
+                        destinationstateId: $destinationstateId
                     }){
                         id
                         msg
@@ -339,6 +359,12 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispat
                         }
                     }
                 }`,
+                "variables": {
+                    "workflowId": workflow.id, 
+                    "name": transition.name,
+                    "sourcestateId": transition.source.id,
+                    "destinationstateId": transition.destination.id
+                }
             }
         }
 
