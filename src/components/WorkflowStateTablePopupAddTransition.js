@@ -41,7 +41,7 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
                 <tr>
                     <th><TextInput placeholder={"Add transition name"} value={transition.name} onChange={addTransitionName} /></th>
                     <th><TextInput placeholder={"Add destination state ID"} value={transition.destinationId} onChange={addTransitionDestinationId} /></th>
-                    <th><button className='btn btn-sm btn-success' onClick={addTransition} >Add state</button></th>
+                    <th><button className='btn btn-sm btn-success' onClick={addTransition} >Add transition</button></th>
                 </tr> 
             </tbody>
         </table>
