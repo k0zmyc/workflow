@@ -76,29 +76,31 @@ export const WorkflowFakeFetch = (id) => (dispatch, getState) => {
 }
 */
 
-export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
-    const workflowMutationJSON = (workflow) => {
-        return {
-            query: 
-                `mutation ($id: ID!, $lastchange: DateTime!, $name: String!){
-                    workflowUpdate(workflow:{id: $id, lastchange: $lastchange, name: $name}){
-                        id
-                        msg
-                        workflow{
-                            id
-                            lastchange
-                            name
-                        }
-                    }
-                }`,
-                "variables": {
-                    "id": workflow.id,
-                    "lastchange": workflow.lastchange,
-                    "name": workflow.name
-                }
-            }
-        }
 
+const workflowAsyncUpdateMutationJSON = ({workflow}) => {
+    return {
+        query: 
+            `mutation ($id: ID!, $lastchange: DateTime!, $name: String!){
+                workflowUpdate(workflow:{id: $id, lastchange: $lastchange, name: $name}){
+                    id
+                    msg
+                    workflow{
+                        id
+                        lastchange
+                        name
+                    }
+                }
+            }`,
+            "variables": {
+                "id": workflow.id,
+                "lastchange": workflow.lastchange,
+                "name": workflow.name
+            }
+            
+    }
+}
+
+export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
     const params = {
         method: 'POST',
         headers: {
@@ -106,7 +108,7 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(workflowMutationJSON(workflow))
+        body: JSON.stringify(workflowAsyncUpdateMutationJSON({workflow}))
     }
 
 
@@ -133,31 +135,31 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
 }
 
 
+const workflowStateAsyncUpdateMutationJSON = ({state}) => {
+    return {
+        query: 
+            `mutation($id: ID!, $lastchange: DateTime!, $name: String!) {
+                workflowStateUpdate(state:{id: $id, lastchange: $lastchange, name: $name}){
+                    id
+                    msg
+                    state{
+                        id
+                        lastchange
+                        name
+                    }
+                }
+            }`,
+            "variables": {
+                "id": state.id,
+                "lastchange": state.lastchange,
+                "name": state.name
+            }
+    
+    }
+}
 
 export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getState) => {
     //console.log("WorkflowStateAsyncUpdate state: ", state)
-    const workflowStateMutationJSON = (state) => {
-        return {
-            query: 
-                `mutation($id: ID!, $lastchange: DateTime!, $name: String!) {
-                    workflowStateUpdate(state:{id: $id, lastchange: $lastchange, name: $name}){
-                        id
-                        msg
-                        state{
-                            id
-                            lastchange
-                            name
-                        }
-                    }
-                }`,
-                "variables": {
-                    "id": state.id,
-                    "lastchange": state.lastchange,
-                    "name": state.name
-                }
-            }
-        }
-
     const params = {
         method: 'POST',
         headers: {
@@ -165,9 +167,8 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(workflowStateMutationJSON(state))
+        body: JSON.stringify(workflowStateAsyncUpdateMutationJSON({state}))
     }
-
 
     return fetch('/api/gql', params)
     //return authorizedFetch('/api/gql', params)
@@ -193,49 +194,48 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
         ) 
 }
 
-
-export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispatch, getState) => {
-    console.log("WorkflowStateAsyncUpdate transition, workflow: ", transition, workflow)
-    const workflowTransitionMutationJSON = (transition) => {
-        return {
-            query: 
-                `mutation($id: ID!, $lastchange: DateTime!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!){
-                    workflowTransitionUpdate(state:{
-                        lastchange: $lastchange
-                        id: $id
-                        name: $name
-                        sourcestateId: $sourcestateId
-                        destinationstateId: $destinationstateId
-                    }){
+const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
+    return {
+        query: 
+            `mutation($id: ID!, $lastchange: DateTime!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!){
+                workflowTransitionUpdate(state:{
+                    lastchange: $lastchange
+                    id: $id
+                    name: $name
+                    sourcestateId: $sourcestateId
+                    destinationstateId: $destinationstateId
+                }){
+                    id
+                    msg
+                    transition{
                         id
-                        msg
-                        transition{
+                        lastchange
+                        name
+                        source{
                             id
-                            lastchange
                             name
-                            source{
-                                id
-                                name
-                                lastchange
-                            }
-                            destination{
-                                id
-                                name
-                                lastchange
-                            }
+                            lastchange
+                        }
+                        destination{
+                            id
+                            name
+                            lastchange
                         }
                     }
-                }`,
-                "variables": {
-                    "lastchange": transition.lastchange, 
-                    "id": transition.id, 
-                    "name": transition.name,
-                    "sourcestateId": transition.source.id,
-                    "destinationstateId": transition.destination.id
                 }
+            }`,
+            "variables": {
+                "lastchange": transition.lastchange, 
+                "id": transition.id, 
+                "name": transition.name,
+                "sourcestateId": transition.source.id,
+                "destinationstateId": transition.destination.id
             }
-        }
+            
+    }
+}
 
+export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispatch, getState) => {
     const params = {
         method: 'POST',
         headers: {
@@ -243,7 +243,7 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(workflowTransitionMutationJSON(transition))
+        body: JSON.stringify(workflowTransitionAsyncUpdateMutationJSON({transition}))
     }
 
 
@@ -268,33 +268,47 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
                 }
                 return json
             }
-        ) 
+        )
+
 }
 
-
-export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getState) => {
-    //console.log("WorkflowStateAsyncUpdate state: ", state)
-    const workflowStateMutationJSON = (state) => {
-        return {
-            query: 
-                `mutation($workflowId: ID!, $name: String!){
-                    workflowStateInsert(state:{workflowId: $workflowId, name: $name}){
-                        id
-                        msg
-                        state{
-                            id
-                            lastchange
-                            name
-                        }
-                    }
-                }`,
-                "variables": {
-                    "workflowId": workflow.id, 
-                    "name": state.name
-                }
+/*
+    state{
+        workflow{
+            states{
+                id
+                lastchange
+                name
             }
         }
+    }
+    pomoci update_item to updatovat
+*/
 
+
+const workflowStateAsyncInsertMutationJSON = ({state, workflow}) => {
+    return {
+        query: 
+            `mutation($workflowId: ID!, $name: String!){
+                workflowStateInsert(state:{workflowId: $workflowId, name: $name}){
+                    id
+                    msg
+                    state{
+                        id
+                        lastchange
+                        name
+                    }
+                }
+            }`,
+            "variables": {
+                "workflowId": workflow.id, 
+                "name": state.name
+            }
+
+    }
+}
+
+export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getState) => {
     const params = {
         method: 'POST',
         headers: {
@@ -302,7 +316,7 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(workflowStateMutationJSON(state))
+        body: JSON.stringify(workflowStateAsyncInsertMutationJSON({state, workflow}))
     }
 
 
@@ -323,51 +337,51 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
                     
                     // update lastchange pro budouci upravy
                     dispatch(WorkflowActions.workflow_stateUpdate({workflow, state: {...state}}))
-                    
                 }
                 return json
             }
-        ) 
+        )
+    
+}
+
+const workflowTransitionAsyncInsertMutationJSON = ({transition, workflow}) => {
+    return {
+        query: 
+            `mutation($workflowId: ID!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!) {
+                workflowTransitionInsert(state:{
+                    workflowId: $workflowId
+                    name: $name
+                    sourcestateId: $sourcestateId
+                    destinationstateId: $destinationstateId
+                }){
+                    id
+                    msg
+                    transition{
+                      id
+                      lastchange
+                      name
+                      source{
+                        id
+                        name
+                      }
+                      destination{
+                        id
+                        name
+                      }
+                    }
+                }
+            }`,
+            "variables": {
+                "workflowId": workflow.id, 
+                "name": transition.name,
+                "sourcestateId": transition.source.id,
+                "destinationstateId": transition.destination.id
+            }
+        
+    }
 }
 
 export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispatch, getState) => {
-    console.log("WorkflowStateAsyncInsert transition, workflow: ", transition, workflow)
-    const workflowTransitionMutationJSON = ({transition, workflow}) => {
-        return {
-            query: 
-                `mutation($workflowid: ID!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!) {
-                    workflowTransitionInsert(state:{
-                        workflowId: $workflowId
-                        name: $name
-                        sourcestateId: $sourcestateId
-                        destinationstateId: $destinationstateId
-                    }){
-                        id
-                        msg
-                        transition{
-                          id
-                          lastchange
-                          name
-                          source{
-                            id
-                            name
-                          }
-                          destination{
-                            id
-                            name
-                          }
-                        }
-                    }
-                }`,
-                "variables": {
-                    "workflowId": workflow.id, 
-                    "name": transition.name,
-                    "sourcestateId": transition.source.id,
-                    "destinationstateId": transition.destination.id
-                }
-            }
-        }
-
     const params = {
         method: 'POST',
         headers: {
@@ -375,9 +389,8 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispat
         },
         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
         redirect: 'follow', // manual, *follow, error
-        body: JSON.stringify(workflowTransitionMutationJSON({transition, workflow}))
+        body: JSON.stringify(workflowTransitionAsyncInsertMutationJSON({transition, workflow}))
     }
-
 
     return fetch('/api/gql', params)
     //return authorizedFetch('/api/gql', params)
@@ -400,5 +413,6 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispat
                 }
                 return json
             }
-        ) 
+        )
+    
 }
