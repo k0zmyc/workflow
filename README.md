@@ -23,9 +23,13 @@
     	Zobrazení seznamu stavů, zobrazení následujících stavů k danému stavu.
     		 - zobrazuje vrchol a nasledovniky - komponenta - textova reprezentace subgrafu "kam se muzu posunout z vrcholu"
     		
-    	editace názvů stavů, Zobrazení (uživatele + skupina) pro stav, 
+    	editace názvů stavů, 
     		- "Input box pro přejmenování stavu"
+
+      Zobrazení (uživatele + skupina) pro stav, 
+        - info button - zobrazi se popup s informacemi
     	
+      
     	editace (uživatel + skupina) pro daný stav,
     		- "stavovy automat"
     		- umozni priradit prava k dokumentu v zavislosti na tom v jakem stavu se dokument nachazi
@@ -39,4 +43,3 @@
         Button pro vložení nového přechodu
         Button (+select) pro vložení nové role ke stavu
         Button (+user+group) pro připojení ke stavu
-
