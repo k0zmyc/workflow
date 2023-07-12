@@ -2,6 +2,7 @@ import { WorkflowActions } from "./WorkflowReducers"
 
 import { WorkflowQuerySmall } from "../queries/WorkflowQuerySmall"
 import { WorkflowQueryLarge } from "../queries/WorkflowQueryLarge"
+import { authorizedFetch } from "../queries/authorizedFetch"
 
 /**
  * Ask for the item on server and adds it or update it in the store to the heap
@@ -100,7 +101,7 @@ const workflowAsyncUpdateMutationJSON = ({workflow}) => {
     }
 }
 
-export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
+export const WorkflowAsyncUpdate = (workflow) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
         headers: {
@@ -112,8 +113,8 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
     }
 
 
-    return fetch('/api/gql', params)
-    //return authorizedFetch('/api/gql', params)
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )
@@ -138,27 +139,34 @@ export const WorkflowAsyncUpdate = (workflow) => (dispatch, getState) => {
 const workflowStateAsyncUpdateMutationJSON = ({state}) => {
     return {
         query: 
-            `mutation($id: ID!, $lastchange: DateTime!, $name: String!) {
-                workflowStateUpdate(state:{id: $id, lastchange: $lastchange, name: $name}){
+            `mutation($id: ID!, $lastchange: DateTime!, $name: String!, $valid: Boolean!) {
+                workflowStateUpdate(state:{
+                    id: $id, 
+                    lastchange: $lastchange, 
+                    name: $name
+                    valid: $valid
+                }){
                     id
                     msg
                     state{
                         id
                         lastchange
                         name
+                        valid
                     }
                 }
             }`,
             "variables": {
                 "id": state.id,
                 "lastchange": state.lastchange,
-                "name": state.name
+                "name": state.name,
+                "valid": state.valid
             }
     
     }
 }
 
-export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getState) => {
+export const WorkflowStateAsyncUpdate = ({state, workflow}) => async (dispatch, getState) => {
     //console.log("WorkflowStateAsyncUpdate state: ", state)
     const params = {
         method: 'POST',
@@ -170,8 +178,8 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
         body: JSON.stringify(workflowStateAsyncUpdateMutationJSON({state}))
     }
 
-    return fetch('/api/gql', params)
-    //return authorizedFetch('/api/gql', params)
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )
@@ -179,6 +187,7 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
             json => {
                 //console.log("WorkflowStateAsyncUpdate data: ", json.data)
                 const msg = json.data.workflowStateUpdate.msg
+                console.log("WorkflowStateAsyncUpdate: ", msg)
                 if (msg === "fail") {
                     console.log("Update WorkflowStateAsyncUpdate selhalo")
                 } else {
@@ -187,6 +196,7 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => (dispatch, getSta
                     
                     // update lastchange pro budouci upravy
                     dispatch(WorkflowActions.workflow_stateUpdate({workflow, state: {...state, lastchange: lastchange}}))
+                    //dispatch(WorkflowActions.workflow_update({...workflow}))  // did not update the page
                     
                 }
                 return json
@@ -247,8 +257,8 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
     }
 
 
-    return fetch('/api/gql', params)
-    //return authorizedFetch('/api/gql', params)
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )
@@ -320,8 +330,8 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
     }
 
 
-    return fetch('/api/gql', params)
-    //return authorizedFetch('/api/gql', params)
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )
@@ -392,8 +402,8 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispat
         body: JSON.stringify(workflowTransitionAsyncInsertMutationJSON({transition, workflow}))
     }
 
-    return fetch('/api/gql', params)
-    //return authorizedFetch('/api/gql', params)
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
         .then(
             resp => resp.json()
         )

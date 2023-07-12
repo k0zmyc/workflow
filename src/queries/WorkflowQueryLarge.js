@@ -5,11 +5,14 @@ export const WorkflowQueryLargeJSON = (id) => ({
     "query":
         `query ($id: ID!) {
             workflowById(id: $id) {
-                id, name, lastchange
+                id
+                name 
+                lastchange
                 states{
                     id
                     name
                     lastchange
+                    valid
                     nextTransitions{
                         id
                         name

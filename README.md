@@ -25,11 +25,11 @@
     		
     	editace názvů stavů, 
     		- "Input box pro přejmenování stavu"
-
-      Zobrazení (uživatele + skupina) pro stav, 
-        - info button - zobrazi se popup s informacemi
+		
+		Zobrazení (uživatele + skupina) pro stav, 
+        	- info button - zobrazi se popup s informacemi
     	
-      
+		
     	editace (uživatel + skupina) pro daný stav,
     		- "stavovy automat"
     		- umozni priradit prava k dokumentu v zavislosti na tom v jakem stavu se dokument nachazi
@@ -41,5 +41,6 @@
         Input box pro přejmenování přechodu
         Button pro vložení nového stavu
         Button pro vložení nového přechodu
+
         Button (+select) pro vložení nové role ke stavu
         Button (+user+group) pro připojení ke stavu

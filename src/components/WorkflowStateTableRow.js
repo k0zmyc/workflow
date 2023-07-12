@@ -11,17 +11,26 @@ import { useState } from 'react';
  * @returns 
  */
 
-export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) => {
+export const WorkflowStateTableRow = ({index, state, actions, wid, openModal: onOpenModal}) => {
 
     //delete button action
-    const onDeleteButtonClick = () => {
+    const onDeleteButtOnClick = () => {
         const payload = {workflow: {id: wid}, state: state}
-        actions.onWorkflowStateRemove(payload)
+        //actions.onWorkflowStateRemove(payload)
+
+        if (actions.onWorkflowStateUpdate) {
+            console.log("onDeleteButtonOnClick: ", state)
+            const payload = {workflow: {id: wid}, state: {...state, valid: false}}
+
+            actions.workflowStateAsyncUpdate(payload)
+                .then(json => console.log("WorkflowStateAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowStateUpdate.msg))
+                .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
+        }
     }
 
     //info button action
     const onInfoButtonClick = () => {
-        openModal(state)
+        onOpenModal(state) // rename to on....
     }
 
     //change state name callback
@@ -36,6 +45,9 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) =
         }
     }
 
+    if(!state.valid){
+        return
+    }
     return (
         <tr>
             <td>{index}: </td>
@@ -49,7 +61,7 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, openModal}) =
                 ))}
             </td>
             <td>
-                <DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton>
+                <DeleteButton onClick={onDeleteButtOnClick}><Trash /></DeleteButton>
                 <button className='btn btn-sm btn-info' onClick={onInfoButtonClick}><Info /></button>
             </td>
         </tr>
