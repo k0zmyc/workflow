@@ -54,6 +54,7 @@ export const WorkflowQueryLargeJSON = (id) => ({
                     id
                     name
                     lastchange
+                    valid
                     source{
                         id
                         name

@@ -12,12 +12,17 @@ import { DeleteButton } from './DeleteButton';
 export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) => {
 
     //remove button action
-    const onDeleteButtonClick = () => {
+    const onDeleteButtOnClick = () => {
         const payload = {workflow: {id: wid}, transition: transition}
-        console.log("State onclick: ", payload)
-        
-        // transition remove
-        //actions.onWorkflowStateRemove(payload)
+
+        if (actions.onWorkflowTransitionUpdate) {
+            console.log("onDeleteButtonOnClick WorkflowTransitionTableRow: ", transition)
+            const payload = {workflow: {id: wid}, transition: {...transition, valid: false}}
+
+            actions.workflowTransitionAsyncUpdate(payload)
+                .then(json => console.log("WorkflowTransitionAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowTransitionUpdate.msg))
+                .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
+        }
     }
 
     //change state name callback
@@ -35,6 +40,12 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
     }
 
 
+    // when should I not include a state in the table
+    if(transition.valid == false){
+        console.log("Transition.valid: ", transition.valid)
+        return 
+    }
+
     return (
         <tr>
             <td>{index}: </td>
@@ -50,7 +61,7 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
                 </div>
             </td>
             <td>
-                <DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton><br/>
+                <DeleteButton onClick={onDeleteButtOnClick}><Trash /></DeleteButton><br/>
             </td>
         </tr>
     )

@@ -207,13 +207,14 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => async (dispatch, 
 const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
     return {
         query: 
-            `mutation($id: ID!, $lastchange: DateTime!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!){
+            `mutation($id: ID!, $lastchange: DateTime!, $name: String!, $sourcestateId: ID!, $destinationstateId: ID!, $valid: Boolean!){
                 workflowTransitionUpdate(state:{
                     lastchange: $lastchange
                     id: $id
                     name: $name
                     sourcestateId: $sourcestateId
                     destinationstateId: $destinationstateId
+                    valid: $valid
                 }){
                     id
                     msg
@@ -221,6 +222,7 @@ const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
                         id
                         lastchange
                         name
+                        valid
                         source{
                             id
                             name
@@ -239,7 +241,8 @@ const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
                 "id": transition.id, 
                 "name": transition.name,
                 "sourcestateId": transition.source.id,
-                "destinationstateId": transition.destination.id
+                "destinationstateId": transition.destination.id,
+                "valid": transition.valid
             }
             
     }
