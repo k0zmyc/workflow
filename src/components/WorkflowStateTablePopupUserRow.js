@@ -1,46 +1,32 @@
-import { TextInput } from "./TextInput.js";
+import { DeleteButton } from "./DeleteButton.js";
+import { Trash } from 'react-bootstrap-icons';
 
-export const WorkflowStateTablePopupUserRow = ({index, user, actions, wid}) => {
+export const WorkflowStateTablePopupUserRow = ({index, user, actions, wid, stateId}) => {
     
-    //change state name callback
-    const onChangeUserName = (value) => {
-        console.log("onChangeUserName: ", value)
+    //delete button action
+    const onDeleteButtonClick = () => {
+        //console.log("User ID: ", user.user.id)
+        const payload = {workflow: {id: wid}, workflowstateId: stateId, userId: user.user.id, }
+        // //actions.onWorkflowStateRemove(payload)
+
         if (actions.onWorkflowStateUpdate) {
-        //     console.log("onChangeName: ", state, value)
-        //     const payload = {workflow: {id: wid}, state: {...state, name: value}}
+            console.log("onDeleteButtonsClick: ", payload)
 
-        //     //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
-        //     //actions.onWorkflowStateUpdate(payload)
-
-        //     actions.workflowStateAsyncUpdate(payload)
-        //         .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
+            actions.workflowStateAsyncRemoveUser(payload)
+                //.then(json => console.log("WorkflowStateAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowStateRemoveUser.msg))
+                .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
         }
     }
 
-    //change state name callback
-    const onChangeUserSurname = (value) => {
-        console.log("onChangeUserSurname: ", value)
-        if (actions.onWorkflowStateUpdate) {
-        //     console.log("onChangeName: ", state, value)
-        //     const payload = {workflow: {id: wid}, state: {...state, name: value}}
-
-        //     //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
-        //     //actions.onWorkflowStateUpdate(payload)
-
-        //     actions.workflowStateAsyncUpdate(payload)
-        //         .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
-        }
-    }
-
-
+    //console.log("WorkflowStateTablePopupUserRow: ", user)
+    if(user == null) return
     return(
         <tr>
             <th>{index}:</th>
             <th>{user.user.id}</th>
             <th>{user.user.name}</th>
             <th>{user.user.surname}</th>
-            {/* <th><TextInput placeholder={"name"} value={user.user.name} onChange={onChangeUserName}/></th>
-            <th><TextInput placeholder={"surname"} value={user.user.surname} onChange={onChangeUserSurname}/></th> */}
+            <th><DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton></th>
         </tr>
     )
 }

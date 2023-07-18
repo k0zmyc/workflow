@@ -4,6 +4,7 @@ import { WorkflowQuerySmall } from "../queries/WorkflowQuerySmall"
 import { WorkflowQueryLarge } from "../queries/WorkflowQueryLarge"
 import { authorizedFetch } from "../queries/authorizedFetch"
 
+
 /**
  * Ask for the item on server and adds it or update it in the store to the heap
  * @param {*} id 
@@ -394,7 +395,7 @@ const workflowTransitionAsyncInsertMutationJSON = ({transition, workflow}) => {
     }
 }
 
-export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispatch, getState) => {
+export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
         headers: {
@@ -419,9 +420,387 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => (dispat
                 } else {
                     //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
                     const transition = json.data.workflowTransitionInsert.transition
+
+                    console.log("WorkflowTransitionAsyncInsert transition: ", transition)
                     
                     // update lastchange pro budouci upravy
                     dispatch(WorkflowActions.workflow_transitionUpdate({workflow, transition: {...transition}}))
+                    
+                }
+                return json
+            }
+        )
+    
+}
+
+const userAsyncQueryJSON = () => {
+    return {
+        query: 
+            `query {
+                userPage {
+                    id
+                    name
+                    surname
+                }
+            }`,
+    }
+}
+
+export const UserAsyncQuery = () => async (dispatch, getState) => {
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(userAsyncQueryJSON())
+    }
+
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                //console.log("UserAsyncQuery data: ", json.data)
+                return json
+            }
+        )
+    
+}
+
+
+const workflowStateAsyncAddUserMutationJSON = ({state, user}) => {
+    return {
+        query: 
+            `mutation($workflowstateId: ID!, $userId: ID!, $groupId: ID!, $accesslevel: Int!) {
+                workflowStateAddUser(payload: {
+                    workflowstateId: $workflowstateId
+                    userId: $userId
+                    groupId: $groupId
+                    accesslevel: $accesslevel
+                }){
+                    id
+                    msg
+                    state {
+                        id
+                        lastchange
+                        name
+                        users {
+                            user {
+                                name
+                                surname
+                                id
+                            }
+                        }
+                    }
+                }
+            }`,
+            "variables": {
+                "workflowstateId": state.id, 
+                "userId": user.id,
+                "groupId": "",
+                "accesslevel": 10
+            }
+        
+    }
+}
+
+export const WorkflowStateAsyncAddUser = ({state, user, workflow}) => async (dispatch, getState) => {
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowStateAsyncAddUserMutationJSON({state: state, user: user}))
+    }
+
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                console.log("workflowStateAsyncAddUser data: ", json.data)
+                const msg = json.data.workflowStateAddUser.msg
+                if (msg === "fail") {
+                    console.log("Update workflowStateAsyncAddUser selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const state = json.data.workflowStateAddUser.state
+                    const lastchange = json.data.workflowStateAddUser.lastchange
+                    const payload = {workflow, state: {...state, lastchange: lastchange, users: state.users}}
+
+                    //console.log("WorkflowStateAsyncAddUser payload: ", payload)
+
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_stateUpdate(payload))
+                    
+                }
+                return json
+            }
+        )
+    
+}
+
+
+const workflowStateAsyncRemoveUserMutationJSON = ({userId, workflowstateId}) => {
+    return {
+        query: 
+            `mutation($workflowstateId: ID!, $userId: ID!, $groupId: ID!) {
+                workflowStateRemoveUser(payload: {
+                    workflowstateId: $workflowstateId
+                    userId: $userId
+                    groupId: $groupId
+                }){
+                    id
+                    msg
+                    state {
+                        id
+                        lastchange
+                        name
+                        users {
+                            user {
+                                id
+                                name
+                                surname
+                            }
+                        }
+                    }
+                }
+            }`,
+            "variables": {
+                "workflowstateId": workflowstateId, 
+                "userId": userId,
+                "groupId": "",
+            }
+        
+    }
+}
+
+export const WorkflowStateAsyncRemoveUser = ({workflowstateId, userId, workflow}) => async (dispatch, getState) => {
+    console.log("WorkflowStateAsyncRemoveUser payload: ", {workflowstateId, userId, workflow})
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowStateAsyncRemoveUserMutationJSON({userId, workflowstateId}))
+    }
+
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                console.log("WorkflowStateAsyncRemoveUser data: ", json.data)
+                const msg = json.data.workflowStateRemoveUser.msg
+                if (msg === "fail") {
+                    console.log("Remove WorkflowStateAsyncRemoveUser selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const state = json.data.workflowStateRemoveUser.state
+                    const lastchange = json.data.workflowStateRemoveUser.lastchange
+                    const payload = {workflow, state: {...state, lastchange: lastchange, users: [state.users[0]]}}
+
+                    //console.log("WorkflowStateAsyncAddUser payload: ", payload)
+
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_stateUpdate(payload))
+                    
+                }
+                return json
+            }
+        )
+    
+}
+
+
+const roleTypeAsyncQueryJSON = () => {
+    return {
+        query: 
+            `query {
+                roleTypePage {
+                    id
+                    name
+                }
+            }`,
+    }
+}
+
+export const RoleTypeAsyncQuery = () => async (dispatch, getState) => {
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(roleTypeAsyncQueryJSON())
+    }
+
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                //console.log("RoleTypeAsyncQuery data: ", json.data)
+                return json
+            }
+        )
+    
+}
+
+
+const workflowStateAsyncAddRoleTypeMutationJSON = ({workflowstateId, roletypeId}) => {
+    return {
+        query: 
+            `mutation($workflowstateId: ID!, $roletypeId: ID!, $accesslevel: Int!) {
+                workflowStateAddRole(payload: {
+                    workflowstateId: $workflowstateId
+                    roletypeId: $roletypeId
+                    accesslevel: $accesslevel
+                }){
+                    id
+                    msg
+                    state {
+                        id
+                        lastchange
+                        name
+                        roletypes {
+                            roleType {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
+            }`,
+            "variables": {
+                "workflowstateId": workflowstateId, 
+                "roletypeId": roletypeId,
+                "accesslevel": 10
+            }
+        
+    }
+}
+
+export const WorkflowStateAsyncAddRoleType = ({state, roleType, workflow}) => async (dispatch, getState) => {
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowStateAsyncAddRoleTypeMutationJSON({workflowstateId: state.id, roletypeId: roleType.id}))
+    }
+
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                //console.log("workflowStateAsyncAddRoleType data: ", json.data)
+                const msg = json.data.workflowStateAddRole.msg
+                if (msg === "fail") {
+                    console.log("Update WorkflowStateAsyncAddRoleType selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const state = json.data.workflowStateAddRole.state
+                    const lastchange = json.data.workflowStateAddRole.lastchange
+                    const payload = {workflow, state: {...state, lastchange: lastchange, users: [...state.roletypes]}}
+
+                    //console.log("WorkflowStateAsyncAddUser payload: ", payload)
+
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_stateUpdate(payload))
+                    
+                }
+                return json
+            }
+        )
+    
+}
+
+
+const workflowStateAsyncRemoveRoleTypeMutationJSON = ({roletypeId, workflowstateId}) => {
+    return {
+        query: 
+            `mutation($workflowstateId: ID!, $roletypeId: ID!) {
+                workflowStateRemoveRole(payload: {
+                    workflowstateId: $workflowstateId
+                    roletypeId: $roletypeId
+                }){
+                    id
+                    msg
+                    state {
+                        id
+                        lastchange
+                        name
+                        roletypes {
+                            roleType {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
+            }`,
+            "variables": {
+                "workflowstateId": workflowstateId, 
+                "roletypeId": roletypeId,
+            }
+        
+    }
+}
+
+export const WorkflowStateAsyncRemoveRoleType = ({workflowstateId, roletypeId, workflow}) => async (dispatch, getState) => {
+    console.log("WorkflowStateAsyncRemoveUser payload: ", {workflowstateId, roletypeId, workflow})
+    const params = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        redirect: 'follow', // manual, *follow, error
+        body: JSON.stringify(workflowStateAsyncRemoveRoleTypeMutationJSON({roletypeId, workflowstateId}))
+    }
+
+    //return fetch('/api/gql', params)
+    return authorizedFetch('/api/gql', params)
+        .then(
+            resp => resp.json()
+        )
+        .then(
+            json => {
+                console.log("WorkflowStateAsyncRemoveRoleTypeId data: ", json.data)
+                const msg = json.data.workflowStateRemoveRole.msg
+                if (msg === "fail") {
+                    console.log("Remove WorkflowStateAsyncRemoveUser selhalo")
+                } else {
+                    //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
+                    const state = json.data.workflowStateRemoveRole.state
+                    const lastchange = json.data.workflowStateRemoveRole.lastchange
+                    const payload = {workflow, state: {...state, lastchange: lastchange, users: [state.roletypes[0]]}}
+
+                    //console.log("WorkflowStateAsyncAddUser payload: ", payload)
+
+                    // update lastchange pro budouci upravy
+                    dispatch(WorkflowActions.workflow_stateUpdate(payload))
                     
                 }
                 return json

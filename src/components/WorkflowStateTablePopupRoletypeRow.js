@@ -1,19 +1,19 @@
-import { TextInput } from "./TextInput.js";
+import { DeleteButton } from "./DeleteButton.js";
+import { Trash } from 'react-bootstrap-icons';
 
-export const WorkflowStateTablePopupRoletypeRow = ({index, roleType, actions, wid}) => {
+
+export const WorkflowStateTablePopupRoleTypeRow = ({index, roleType, actions, wid, stateId}) => {
     
-    //change state name callback
-    const onChangeRoleTypeName = (value) => {
-        console.log("onChangeRoleTypeName: ", value)
+    //delete button action
+    const onDeleteButtonClick = () => {
+        const payload = {workflow: {id: wid}, workflowstateId: stateId, roletypeId: roleType.roleType.id, }
+
         if (actions.onWorkflowStateUpdate) {
-        //     console.log("onChangeName: ", state, value)
-        //     const payload = {workflow: {id: wid}, state: {...state, name: value}}
+            console.log("onDeleteButtonsClick: ", payload)
 
-        //     //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
-        //     //actions.onWorkflowStateUpdate(payload)
-
-        //     actions.workflowStateAsyncUpdate(payload)
-        //         .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
+            actions.workflowStateAsyncRemoveRoleType(payload)
+                .then(json => console.log("workflowStateAsyncRemoveRoleType onDeleteButtonOnClick: ", json.data.workflowStateRemoveRole.msg))
+                .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
         }
     }
 
@@ -21,9 +21,9 @@ export const WorkflowStateTablePopupRoletypeRow = ({index, roleType, actions, wi
     return(
         <tr>
             <th>{index}</th>
-            <th>{roleType.id}</th>
+            <th>{roleType.roleType.id}</th>
             <th>{roleType.roleType.name}</th>
-            {/* <th><TextInput placeholder={"name"} value={roleType.roleType.name} onChange={onChangeRoleTypeName}/></th> */}
+            <th><DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton></th>
         </tr> 
     )
 }

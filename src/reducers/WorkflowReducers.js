@@ -53,6 +53,7 @@ const WorkflowTransitionUpdate = (state, action) => {
 
 
 
+
 /**
  * Kompletni rez budocim store.
  * Obsluhuje skupiny

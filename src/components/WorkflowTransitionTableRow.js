@@ -13,7 +13,7 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
 
     //remove button action
     const onDeleteButtOnClick = () => {
-        const payload = {workflow: {id: wid}, transition: transition}
+        //const payload = {workflow: {id: wid}, transition: transition}
 
         if (actions.onWorkflowTransitionUpdate) {
             console.log("onDeleteButtonOnClick WorkflowTransitionTableRow: ", transition)
@@ -28,7 +28,9 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
     //change state name callback
     const onChangeTransitionName = (value) => {
         if (actions.onWorkflowTransitionUpdate) {
-            const payload = {workflow: {id: wid}, transition: {...transition, name: value}}
+            const payload = {workflow: {id: wid}, transition: {...transition, name: value, valid: true}}
+
+            console.log("onChangeTransitionName payload: ", payload)
 
             //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
             //actions.onWorkflowStateUpdate(payload)
@@ -40,9 +42,9 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
     }
 
 
-    // when should I not include a state in the table
-    if(transition.valid == false){
-        console.log("Transition.valid: ", transition.valid)
+    // when should I not include a transition in the table
+    if(transition.valid === false){
+        //console.log("Transition.valid: ", transition.valid)
         return 
     }
 

@@ -17,7 +17,7 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
     }
 
     const addTransition = () => {
-        if (actions.onWorkflowStateUpdate) {
+        if (actions.onWorkflowStateUpdate && transition.name != "" && transition.destinationId != "") {
             console.log("addTransition: ", transition)
             const payload = {
                 workflow: {id: wid}, 

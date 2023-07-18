@@ -36,7 +36,7 @@ export const WorkflowPageProvider = ({id}) => {
         }, [id, selectedId]
     )
 
-    console.log("Worklow: ", workflow)
+    //console.log("Worklow: ", workflow)
 
     if (workflow) {
         //skupina je ve store

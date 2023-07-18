@@ -4,10 +4,11 @@ import { useState, useCallback  } from "react";
 import ReactModal from 'react-modal';
 import { TextInput } from "./TextInput.js";
 import { WorkflowStateTablePopupUserRow } from "./WorkflowStateTablePopupUserRow.js";
-import { WorkflowStateTablePopupRoletypeRow } from "./WorkflowStateTablePopupRoletypeRow.js";
+import { WorkflowStateTablePopupRoleTypeRow } from "./WorkflowStateTablePopupRoletypeRow.js";
 import { WorkflowStateTablePopupTransitionRow } from "./WorkflowStateTablePopupTransitionRow.js";
 import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupAddTransition.js";
-import { DropDown } from "./DropDown.js";
+import { WorkflowStateTablePopupAddUser } from "./WorkflowStateTablePopupAddUser.js";
+import { WorkflowStateTablePopupAddRoleType } from "./WorkflowStateTablePopupAddRoleType.js";
 
 
 const rootElement = document.getElementById('root');
@@ -29,6 +30,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
     const [addStateTransition, setAddStateTransition] = useState(undefined)
 
     const openModal = (data) => {
+        //console.log("WorkflowStatesTable openModal data: ", data)
         setModalStateData(data)
         setModalIsOpen(true);
     };
@@ -88,7 +90,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                             index={index + 1} 
                             actions={actions} 
                             wid={workflow.id}
-                            openModal={openModal}
+                            onOpenModal={openModal}
                             setModalRowData={setModalStateData}
                         />
                     ))}
@@ -128,8 +130,6 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
 
                 <WorkflowStateTablePopupAddTransition state={modalStateData} actions={actions} wid={workflow.id}/>
 
-
-                
                 <h4>Users</h4>
                 <table className="table table-hover table-stripped">
                     <thead>
@@ -138,6 +138,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                             <th>ID</th>
                             <th>Name</th>
                             <th>Surname</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -148,10 +149,13 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                                 index={index + 1}
                                 actions={actions}
                                 wid={workflow.id}
+                                stateId={modalStateData.id}
                             />
                         ))}
                     </tbody>
                 </table>
+
+                <WorkflowStateTablePopupAddUser state={modalStateData} actions={actions} wid={workflow.id}/>
 
                 <h4>Role types</h4>
                 <table className="table table-hover table-stripped">
@@ -159,21 +163,26 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                         <tr>
                             <th>#</th>
                             <th>ID</th>
-                            <th>name</th>
+                            <th>Name</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
                         {modalStateData?.roletypes?.map((roleType, index) => (
-                            <WorkflowStateTablePopupRoletypeRow
+                            <WorkflowStateTablePopupRoleTypeRow
                                 key={roleType.id}
                                 roleType={roleType}
                                 index={index + 1}
                                 actions={actions}
                                 wid={workflow.id}
+                                stateId={modalStateData.id}
                             />
                         ))}
                     </tbody>
                 </table>
+
+                <WorkflowStateTablePopupAddRoleType state={modalStateData} actions={actions} wid={workflow.id}/>
+
                 <button onClick={closeModal} className='btn btn-sm btn-danger'>Close</button>
             </ReactModal>
         </div>
