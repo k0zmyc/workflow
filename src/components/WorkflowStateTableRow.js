@@ -19,27 +19,30 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, onOpenModal})
             console.log("onDeleteButtonOnClick: ", state)
             const payload = {workflow: {id: wid}, state: {...state, valid: false}}
 
-            actions.workflowStateAsyncUpdate(payload)
-                .then(json => console.log("WorkflowStateAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowStateUpdate.msg))
-                //.then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
-            
+
+            // Create an array of promises for all updates to rerender all at the end
+            const updatePromises = [
+                actions.workflowStateAsyncUpdate(payload)
+                    .then((json) => console.log("WorkflowStateAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowStateUpdate.msg)),
+            ];
 
             // disvalidating all transitions to and from this state
             state.nextTransitions?.map((nextTransition) => {
                 console.log("Disvalidating transition: ", nextTransition)
                 const payload = {workflow: {id: wid}, transition: {...nextTransition, valid: false}}
-                actions.workflowTransitionAsyncUpdate(payload)
-                    //.then(json => console.log("WorkflowTransitionAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowTransitionUpdate.msg))
+                updatePromises.push(actions.workflowTransitionAsyncUpdate(payload))
             })
 
             state.previousTransitions?.map((previousTransition) => {
                 console.log("Disvalidating transition: ", previousTransition)
                 const payload = {workflow: {id: wid}, transition: {...previousTransition, valid: false}}
-                actions.workflowTransitionAsyncUpdate(payload)
-                    //.then(json => console.log("WorkflowTransitionAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowTransitionUpdate.msg))
+                updatePromises.push(actions.workflowTransitionAsyncUpdate(payload))
             })
 
-            actions.workflowFetch(wid)
+            // wait for all promises to resolve and then rerender
+            Promise.all(updatePromises)
+                .then(() => actions.workflowFetch(wid))
+                .catch((error) => console.error("Error updating state and transitions:", error));
         }
     }
 

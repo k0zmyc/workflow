@@ -1,8 +1,7 @@
 import { WorkflowStateTableRow } from "./WorkflowStateTableRow.js"
-import { useState, useCallback  } from "react";
+import { useState } from "react";
 
 import ReactModal from 'react-modal';
-import { TextInput } from "./TextInput.js";
 import { WorkflowStateTablePopup } from "./WorkflowStateTablePopup.js";
 
 
@@ -22,7 +21,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [modalStateData, setModalStateData] = useState(null);
     const [addStateName, setAddStateName] = useState("")
-    const [addStateTransition, setAddStateTransition] = useState(undefined)
+    //const [addStateTransition, setAddStateTransition] = useState(undefined)
 
     const openModal = (data) => {
         //console.log("WorkflowStatesTable openModal data: ", data)
@@ -35,27 +34,26 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
         setModalIsOpen(false);
     };
 
-    const onChangeAddStateName = (value) => {
-        setAddStateName(value)
-    }
+    // const onChangeAddStateName = (value) => {
+    //     setAddStateName(value)
+    // }
 
-    const onChangeAddStateTransition = (value) => {
-        console.log("onChangeAddStateTransition: ", value)
-        setAddStateTransition(value)
-    }
+    // const onChangeAddStateTransition = (value) => {
+    //     console.log("onChangeAddStateTransition: ", value)
+    //     setAddStateTransition(value)
+    // }
 
     const addState = () => {
         if (actions.onWorkflowStateUpdate && addStateName) {
             const wid = workflow.id
-            const payload = {workflow: {id: wid}, state: {name: addStateName}}
+            const payload = {workflow: {id: wid}, state: {name: addStateName, valid: true}}
             
 
             actions.workflowStateAsyncInsert(payload)
                 .then(json => console.log("WorkflowStateNameInput: ", json.data.workflowStateInsert.msg))
                 .then(() => setAddStateName(""))
                 .then(() => {
-                    console.log("onChangeAddState: ", payload, addStateTransition)
-                    //actions.workflowStateAsyncInsert(payload)
+                    console.log("onChangeAddState: ", payload)
                 })
                 .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
         }
@@ -89,7 +87,13 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                 </tbody>
             </table>
 
-            <TextInput placeholder={"Add state name"} value={addStateName} onChange={onChangeAddStateName}/>
+            <input
+                className="form-control"
+                placeholder={"Add state name"}
+                value={addStateName}
+                onChange={(e) => setAddStateName(e.target.value)}
+            />
+
             <button className='btn btn-sm btn-success' onClick={addState}>Add state</button>
             
             
