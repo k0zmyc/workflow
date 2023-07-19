@@ -6,12 +6,12 @@ import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupA
 import { WorkflowStateTablePopupAddUser } from "./WorkflowStateTablePopupAddUser.js";
 import { WorkflowStateTablePopupAddRoleType } from "./WorkflowStateTablePopupAddRoleType.js";
 
-export const WorkflowStateTablePopup = ({workflow, actions, modalStateData, modalIsOpen, closeModal}) => {
+export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState}) => {
 
     return(
         <ReactModal isOpen={modalIsOpen}>
                 
-                <h2>State data: {modalStateData?.name}</h2>
+                <h2>State data: {modalState?.name}</h2>
                 <h4>Transitions</h4>
                 <table className="table table-hover table-stripped">
                     <thead>
@@ -23,7 +23,7 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalStateData, moda
                         </tr>
                     </thead>
                     <tbody>
-                        {modalStateData?.nextTransitions?.map((transition, index) => (
+                        {modalState?.nextTransitions?.map((transition, index) => (
                             <WorkflowStateTablePopupTransitionRow 
                                 key={transition.id}
                                 transition={transition}
@@ -35,7 +35,7 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalStateData, moda
                     </tbody>
                 </table>
 
-                <WorkflowStateTablePopupAddTransition state={modalStateData} actions={actions} wid={workflow.id}/>
+                <WorkflowStateTablePopupAddTransition state={modalState} actions={actions} wid={workflow.id} addTransitionToState={addTransitionToState} />
 
                 <h4>Users</h4>
                 <table className="table table-hover table-stripped">
@@ -49,20 +49,20 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalStateData, moda
                         </tr>
                     </thead>
                     <tbody>
-                        {modalStateData?.users?.map((user, index) => (
+                        {modalState?.users?.map((user, index) => (
                             <WorkflowStateTablePopupUserRow 
                                 key={user.id}
                                 user={user}
                                 index={index + 1}
                                 actions={actions}
                                 wid={workflow.id}
-                                stateId={modalStateData.id}
+                                stateId={modalState.id}
                             />
                         ))}
                     </tbody>
                 </table>
 
-                <WorkflowStateTablePopupAddUser state={modalStateData} actions={actions} wid={workflow.id}/>
+                <WorkflowStateTablePopupAddUser state={modalState} actions={actions} wid={workflow.id}/>
 
                 <h4>Role types</h4>
                 <table className="table table-hover table-stripped">
@@ -75,20 +75,20 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalStateData, moda
                         </tr>
                     </thead>
                     <tbody>
-                        {modalStateData?.roletypes?.map((roleType, index) => (
+                        {modalState?.roletypes?.map((roleType, index) => (
                             <WorkflowStateTablePopupRoleTypeRow
                                 key={roleType.id}
                                 roleType={roleType}
                                 index={index + 1}
                                 actions={actions}
                                 wid={workflow.id}
-                                stateId={modalStateData.id}
+                                stateId={modalState.id}
                             />
                         ))}
                     </tbody>
                 </table>
 
-                <WorkflowStateTablePopupAddRoleType state={modalStateData} actions={actions} wid={workflow.id}/>
+                <WorkflowStateTablePopupAddRoleType state={modalState} actions={actions} wid={workflow.id}/>
 
                 <button onClick={closeModal} className='btn btn-sm btn-danger'>Close</button>
             </ReactModal>

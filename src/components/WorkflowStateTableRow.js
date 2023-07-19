@@ -70,7 +70,7 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, onOpenModal})
 
 
     // when should I not include a state in the table
-    if(state.valid == false){
+    if(state.valid === false){
         return
     }
     return (

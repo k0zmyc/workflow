@@ -19,20 +19,25 @@ ReactModal.setAppElement(rootElement);
  */
 export const WorkflowStatesTable = ({workflow, actions}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [modalStateData, setModalStateData] = useState(null);
+    const [modalState, setModalState] = useState(null);
     const [addStateName, setAddStateName] = useState("")
-    //const [addStateTransition, setAddStateTransition] = useState(undefined)
 
-    const openModal = (data) => {
+    const openModal = (state) => {
         //console.log("WorkflowStatesTable openModal data: ", data)
-        setModalStateData(data)
+        setModalState(state)
         setModalIsOpen(true);
     };
 
     const closeModal = () => {
-        setModalStateData(null)
+        setModalState(null)
         setModalIsOpen(false);
     };
+
+    const addTransitionToState = (transition) => {
+        console.log("addTransitionToState: ", [modalState.nextTransitions, transition])
+        setModalState({...modalState, nextTransitions: [...modalState.nextTransitions, transition]})
+    }
+
 
     const addState = () => {
         if (actions.onWorkflowStateUpdate && addStateName) {
@@ -72,7 +77,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                             actions={actions} 
                             wid={workflow.id}
                             onOpenModal={openModal}
-                            setModalRowData={setModalStateData}
+                            setModalRowData={setModalState}
                         />
                     ))}
                 </tbody>
@@ -91,9 +96,10 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
             <WorkflowStateTablePopup 
                 workflow={workflow}
                 actions={actions}
-                modalStateData={modalStateData}
+                modalState={modalState}
                 modalIsOpen={modalIsOpen}
                 closeModal={closeModal}
+                addTransitionToState={addTransitionToState}
             />
         </div>
     )
