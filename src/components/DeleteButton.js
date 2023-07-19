@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
 
 /**
- * This is Delete Button with confirmation (two state button).
- * @param {*} children
- * @param {() => void} onClick
- * @returns 
+ * Button component for deleting an item.
+ * @param {Object} props - The props object.
+ * @param {Function} props.onClick - The callback function for the button click event.
+ * @returns {JSX.Element} - A JSX element representing the DeleteButton component.
  */
 export const DeleteButton = ({children, onClick}) => {
 

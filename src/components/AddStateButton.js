@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
 
 /**
- * This is Add Button.
- * @param {*} children
- * @param {() => void} onClick
- * @returns 
+ * Button component for adding state.
+ * @param {Object} props - The props object.
+ * @param {Function} props.onClick - The callback function for the button click event.
+ * @returns {JSX.Element} - A JSX element representing the AddStateButton component.
  */
 export const AddStateButton = ({children, onClick}) => {
     return(

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/WorkflowTransitionsTable.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/WorkflowTransitionsTable.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { WorkflowTransitionTableRow } from "./WorkflowTransitionTableRow.js"
+
+/**
+ * Renders a table of transitions in the workflow.
+ *
+ * @param {Object} param0 - Props for the WorkflowTransitionsTable component.
+ * @param {Object} param0.workflow - The workflow object containing information about the workflow.
+ * @param {Object} param0.actions - The actions object providing functions to interact with the workflow.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowTransitionsTable component.
+ */
+export const WorkflowTransitionsTable = ({workflow, actions}) => {
+    return (
+        &lt;table className="table table-hover table-stripped">
+            &lt;thead>
+                &lt;tr>
+                    &lt;th>#&lt;/th>
+                    &lt;th>Transition name&lt;/th>
+                    &lt;th>Source&lt;/th>
+                    &lt;th>Destination&lt;/th>
+                    &lt;th>Options&lt;/th>
+                &lt;/tr>
+            &lt;/thead>
+            &lt;tbody>
+                {workflow?.transitions?.map(
+                    (transition, index) => 
+                        &lt;WorkflowTransitionTableRow 
+                            key={transition.id} 
+                            transition={transition} 
+                            index={index + 1} 
+                            actions={actions} 
+                            wid={workflow.id}
+                        />
+                )}
+            &lt;/tbody>
+        &lt;/table>
+    )
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddStateButton">AddStateButton</a></li><li><a href="global.html#AppProvider">AppProvider</a></li><li><a href="global.html#CreateDelayer">CreateDelayer</a></li><li><a href="global.html#CreateItem">CreateItem</a></li><li><a href="global.html#DeleteButton">DeleteButton</a></li><li><a href="global.html#DeleteItem">DeleteItem</a></li><li><a href="global.html#ReplaceItem">ReplaceItem</a></li><li><a href="global.html#RoleTypeAsyncQuery">RoleTypeAsyncQuery</a></li><li><a href="global.html#SelectItem">SelectItem</a></li><li><a href="global.html#TextInput">TextInput</a></li><li><a href="global.html#UpdateItem">UpdateItem</a></li><li><a href="global.html#UserAsyncQuery">UserAsyncQuery</a></li><li><a href="global.html#WorkflowAsyncUpdate">WorkflowAsyncUpdate</a></li><li><a href="global.html#WorkflowFetch">WorkflowFetch</a></li><li><a href="global.html#WorkflowFetchHelper">WorkflowFetchHelper</a></li><li><a href="global.html#WorkflowLarge">WorkflowLarge</a></li><li><a href="global.html#WorkflowNameInput">WorkflowNameInput</a></li><li><a href="global.html#WorkflowPageProvider">WorkflowPageProvider</a></li><li><a href="global.html#WorkflowQueryLargeJSON">WorkflowQueryLargeJSON</a></li><li><a href="global.html#WorkflowSlice">WorkflowSlice</a></li><li><a href="global.html#WorkflowStateAsyncAddRoleType">WorkflowStateAsyncAddRoleType</a></li><li><a href="global.html#WorkflowStateAsyncAddUser">WorkflowStateAsyncAddUser</a></li><li><a href="global.html#WorkflowStateAsyncInsert">WorkflowStateAsyncInsert</a></li><li><a href="global.html#WorkflowStateAsyncRemoveRoleType">WorkflowStateAsyncRemoveRoleType</a></li><li><a href="global.html#WorkflowStateAsyncRemoveUser">WorkflowStateAsyncRemoveUser</a></li><li><a href="global.html#WorkflowStateAsyncUpdate">WorkflowStateAsyncUpdate</a></li><li><a href="global.html#WorkflowStateRemove">WorkflowStateRemove</a></li><li><a href="global.html#WorkflowStateTablePopup">WorkflowStateTablePopup</a></li><li><a href="global.html#WorkflowStateTablePopupAddRoleType">WorkflowStateTablePopupAddRoleType</a></li><li><a href="global.html#WorkflowStateTablePopupAddRoleTypeModalTable">WorkflowStateTablePopupAddRoleTypeModalTable</a></li><li><a href="global.html#WorkflowStateTablePopupAddRoleTypeModalTableRow">WorkflowStateTablePopupAddRoleTypeModalTableRow</a></li><li><a href="global.html#WorkflowStateTablePopupAddTransition">WorkflowStateTablePopupAddTransition</a></li><li><a href="global.html#WorkflowStateTablePopupAddUser">WorkflowStateTablePopupAddUser</a></li><li><a href="global.html#WorkflowStateTablePopupAddUserModalTable">WorkflowStateTablePopupAddUserModalTable</a></li><li><a href="global.html#WorkflowStateTablePopupAddUserModalTableRow">WorkflowStateTablePopupAddUserModalTableRow</a></li><li><a href="global.html#WorkflowStateTablePopupRoleType">WorkflowStateTablePopupRoleType</a></li><li><a href="global.html#WorkflowStateTablePopupRoleTypeRow">WorkflowStateTablePopupRoleTypeRow</a></li><li><a href="global.html#WorkflowStateTablePopupTransition">WorkflowStateTablePopupTransition</a></li><li><a href="global.html#WorkflowStateTablePopupTransitionRow">WorkflowStateTablePopupTransitionRow</a></li><li><a href="global.html#WorkflowStateTablePopupUser">WorkflowStateTablePopupUser</a></li><li><a href="global.html#WorkflowStateTablePopupUserRow">WorkflowStateTablePopupUserRow</a></li><li><a href="global.html#WorkflowStateTableRow">WorkflowStateTableRow</a></li><li><a href="global.html#WorkflowStateUpdate">WorkflowStateUpdate</a></li><li><a href="global.html#WorkflowStatesCard">WorkflowStatesCard</a></li><li><a href="global.html#WorkflowStatesTable">WorkflowStatesTable</a></li><li><a href="global.html#WorkflowTransitionAsyncInsert">WorkflowTransitionAsyncInsert</a></li><li><a href="global.html#WorkflowTransitionAsyncUpdate">WorkflowTransitionAsyncUpdate</a></li><li><a href="global.html#WorkflowTransitionTableRow">WorkflowTransitionTableRow</a></li><li><a href="global.html#WorkflowTransitionUpdate">WorkflowTransitionUpdate</a></li><li><a href="global.html#WorkflowTransitionsCard">WorkflowTransitionsCard</a></li><li><a href="global.html#WorkflowTransitionsTable">WorkflowTransitionsTable</a></li><li><a href="global.html#actions">actions</a></li><li><a href="global.html#authorizedFetch">authorizedFetch</a></li><li><a href="global.html#bindWorkflowActions">bindWorkflowActions</a></li><li><a href="global.html#roleTypeAsyncQueryJSON">roleTypeAsyncQueryJSON</a></li><li><a href="global.html#store">store</a></li><li><a href="global.html#userAsyncQueryJSON">userAsyncQueryJSON</a></li><li><a href="global.html#workflowAsyncUpdateMutationJSON">workflowAsyncUpdateMutationJSON</a></li><li><a href="global.html#workflowStateAsyncAddRoleTypeMutationJSON">workflowStateAsyncAddRoleTypeMutationJSON</a></li><li><a href="global.html#workflowStateAsyncAddUserMutationJSON">workflowStateAsyncAddUserMutationJSON</a></li><li><a href="global.html#workflowStateAsyncInsertMutationJSON">workflowStateAsyncInsertMutationJSON</a></li><li><a href="global.html#workflowStateAsyncRemoveRoleTypeMutationJSON">workflowStateAsyncRemoveRoleTypeMutationJSON</a></li><li><a href="global.html#workflowStateAsyncRemoveUserMutationJSON">workflowStateAsyncRemoveUserMutationJSON</a></li><li><a href="global.html#workflowStateAsyncUpdateMutationJSON">workflowStateAsyncUpdateMutationJSON</a></li><li><a href="global.html#workflowTransitionAsyncInsertMutationJSON">workflowTransitionAsyncInsertMutationJSON</a></li><li><a href="global.html#workflowTransitionAsyncUpdateMutationJSON">workflowTransitionAsyncUpdateMutationJSON</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Jul 20 2023 01:30:22 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

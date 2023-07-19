@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit'
 import { CreateItem, DeleteItem, ReplaceItem, UpdateItem, SelectItem } from './KeyedReducers';
 
 /**
- * stavova funkce, ktera odebere stav z workflow 
- * @param {*} state 
- * @param {*} action 
- * @returns 
+ * Removes a state from the workflow.
+ * @param {Object} state - The current state of the workflows.
+ * @param {Object} action - The Redux action object containing the payload.
+ * @returns {Object} - The updated state after removing the specified state from the workflow.
  */
 const WorkflowStateRemove = (state, action) => {
     //console.log('volani stavove funkce, smazat stav: ', action.payload)
@@ -18,10 +18,10 @@ const WorkflowStateRemove = (state, action) => {
 }
 
 /**
- * Stavova funkce, ktera provede update stavu v workflow
- * @param {*} state 
- * @param {*} action 
- * @returns 
+ * Updates a state within the workflow.
+ * @param {Object} state - The current state of the workflows.
+ * @param {Object} action - The Redux action object containing the payload.
+ * @returns {Object} - The updated state after updating the specified state in the workflow.
  */
 const WorkflowStateUpdate = (state, action) => {
     const oldWorkflow = action.payload.workflow

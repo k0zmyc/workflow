@@ -3,11 +3,12 @@ import { CreateDelayer } from '../utils/CreateDelayer'
 
 /**
  * Editable Text (input type="text")
- * @param {*} id mandatory identification, often related to id of entity 
- * @param {str} value value of input
- * @param {str} placeholder value of help if the text is not displayed
- * @param {(value) => void} onChange delayed callback notifying about the change
- * @returns 
+ * @param {Object} props - The props object.
+ * @param {string} props.id - Mandatory identification, often related to the id of the entity.
+ * @param {string} props.value - The value of the input.
+ * @param {string} props.placeholder - The value to display as help if the text is not displayed.
+ * @param {Function} props.onChange - Delayed callback notifying about the change.
+ * @returns {JSX.Element} - A JSX element representing the TextInput component.
  */
 export const TextInput = ({id, value, onChange, placeholder}) => {
     const [localValue, setLocalValue] = useState(value)
