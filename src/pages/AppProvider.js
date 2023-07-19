@@ -1,6 +1,5 @@
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-
 import { bindWorkflowActions } from '../reducers/_main';
 import { WorkflowReducer } from '../reducers/WorkflowReducers'; 
 

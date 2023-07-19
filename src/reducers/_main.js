@@ -14,7 +14,6 @@ import {
     RoleTypeAsyncQuery
 } from "./WorkflowAsyncActions"
 
-
 /**
  * vytvori actions, ktere pri volani uz vse radne provedou
  * jsou zahrnuty i "asynchronni" akce
@@ -46,8 +45,6 @@ export const bindWorkflowActions = (dispatch) => {
 
         workflowStateAsyncAddRoleType: (payload) => dispatch(WorkflowStateAsyncAddRoleType(payload)),
         workflowStateAsyncRemoveRoleType: (payload) => dispatch(WorkflowStateAsyncRemoveRoleType(payload)),
-
-        
 
         workflowTransitionAsyncUpdate: (workflow) => dispatch(WorkflowTransitionAsyncUpdate(workflow)),
         workflowTransitionAsyncInsert: (workflow) => dispatch(WorkflowTransitionAsyncInsert(workflow))

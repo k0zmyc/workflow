@@ -48,7 +48,7 @@ export const WorkflowFetch = (id) => (dispatch, getState) => {
         let workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
         
     
-        // dont know what this does - ID from DEMO
+        // dont know what this does - ID from DEMO - dont think I need this
         // if (workflowData.type !== "cd49e152-610c-11ed-9f29-001a7dda7110") {
         //     workflowData = await WorkflowFetchHelper(id, WorkflowQueryLarge, workflowSelector, dispatch, getState)
         // }
@@ -77,7 +77,6 @@ export const WorkflowFakeFetch = (id) => (dispatch, getState) => {
     return bodyfunc()
 }
 */
-
 
 const workflowAsyncUpdateMutationJSON = ({workflow}) => {
     return {
@@ -133,7 +132,7 @@ export const WorkflowAsyncUpdate = (workflow) => async (dispatch, getState) => {
                 return json
             }
         ) 
-          
+    
 }
 
 
@@ -202,7 +201,8 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => async (dispatch, 
                 }
                 return json
             }
-        ) 
+        )
+    
 }
 
 const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
@@ -249,7 +249,7 @@ const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
     }
 }
 
-export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispatch, getState) => {
+export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
         headers: {
@@ -259,7 +259,6 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
         redirect: 'follow', // manual, *follow, error
         body: JSON.stringify(workflowTransitionAsyncUpdateMutationJSON({transition}))
     }
-
 
     //return fetch('/api/gql', params)
     return authorizedFetch('/api/gql', params)
@@ -286,19 +285,6 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
 
 }
 
-/*
-    state{
-        workflow{
-            states{
-                id
-                lastchange
-                name
-            }
-        }
-    }
-    pomoci update_item to updatovat
-*/
-
 
 const workflowStateAsyncInsertMutationJSON = ({state, workflow}) => {
     return {
@@ -322,7 +308,7 @@ const workflowStateAsyncInsertMutationJSON = ({state, workflow}) => {
     }
 }
 
-export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getState) => {
+export const WorkflowStateAsyncInsert = ({state, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
         headers: {
@@ -357,6 +343,7 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => (dispatch, getSta
         )
     
 }
+
 
 const workflowTransitionAsyncInsertMutationJSON = ({transition, workflow}) => {
     return {
@@ -413,7 +400,7 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => async (
         )
         .then(
             json => {
-                console.log("WorkflowTransitionAsyncInsert data: ", json.data)
+                //console.log("WorkflowTransitionAsyncInsert data: ", json.data)
                 const msg = json.data.workflowTransitionInsert.msg
                 if (msg === "fail") {
                     console.log("Update WorkflowTransitionAsyncInsert selhalo")
@@ -421,7 +408,7 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => async (
                     //mame hlasku, ze ok, musime si prebrat token (lastchange) a pouzit jej pro priste
                     const transition = json.data.workflowTransitionInsert.transition
 
-                    console.log("WorkflowTransitionAsyncInsert transition: ", transition)
+                    //console.log("WorkflowTransitionAsyncInsert transition: ", transition)
                     
                     // update lastchange pro budouci upravy
                     dispatch(WorkflowActions.workflow_transitionUpdate({workflow, transition: {...transition}}))
@@ -432,6 +419,7 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => async (
         )
     
 }
+
 
 const userAsyncQueryJSON = () => {
     return {
@@ -528,7 +516,7 @@ export const WorkflowStateAsyncAddUser = ({state, user, workflow}) => async (dis
         )
         .then(
             json => {
-                console.log("workflowStateAsyncAddUser data: ", json.data)
+                //console.log("workflowStateAsyncAddUser data: ", json.data)
                 const msg = json.data.workflowStateAddUser.msg
                 if (msg === "fail") {
                     console.log("Update workflowStateAsyncAddUser selhalo")
@@ -588,7 +576,6 @@ const workflowStateAsyncRemoveUserMutationJSON = ({userId, workflowstateId}) => 
 }
 
 export const WorkflowStateAsyncRemoveUser = ({workflowstateId, userId, workflow}) => async (dispatch, getState) => {
-    console.log("WorkflowStateAsyncRemoveUser payload: ", {workflowstateId, userId, workflow})
     const params = {
         method: 'POST',
         headers: {
@@ -606,7 +593,7 @@ export const WorkflowStateAsyncRemoveUser = ({workflowstateId, userId, workflow}
         )
         .then(
             json => {
-                console.log("WorkflowStateAsyncRemoveUser data: ", json.data)
+                //console.log("WorkflowStateAsyncRemoveUser data: ", json.data)
                 const msg = json.data.workflowStateRemoveUser.msg
                 if (msg === "fail") {
                     console.log("Remove WorkflowStateAsyncRemoveUser selhalo")
@@ -777,7 +764,6 @@ const workflowStateAsyncRemoveRoleTypeMutationJSON = ({roletypeId, workflowstate
 }
 
 export const WorkflowStateAsyncRemoveRoleType = ({workflowstateId, roletypeId, workflow}) => async (dispatch, getState) => {
-    console.log("WorkflowStateAsyncRemoveUser payload: ", {workflowstateId, roletypeId, workflow})
     const params = {
         method: 'POST',
         headers: {
@@ -795,7 +781,7 @@ export const WorkflowStateAsyncRemoveRoleType = ({workflowstateId, roletypeId, w
         )
         .then(
             json => {
-                console.log("WorkflowStateAsyncRemoveRoleTypeId data: ", json.data)
+                //console.log("WorkflowStateAsyncRemoveRoleTypeId data: ", json.data)
                 const msg = json.data.workflowStateRemoveRole.msg
                 if (msg === "fail") {
                     console.log("Remove WorkflowStateAsyncRemoveUser selhalo")
