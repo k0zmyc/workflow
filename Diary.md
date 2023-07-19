@@ -54,4 +54,4 @@
 
 **19. 7. 2023**
 - poslední úpravy/opravy
-- uhlazování kódy
+- uhlazování kódu
