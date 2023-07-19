@@ -19,7 +19,7 @@ export const WorkflowStateTablePopupRoleTypeRow = ({index, roleType, actions, wi
 
 
     return(
-        <tr>
+        <tr key={roleType.roleType.id}>
             <th>{index}</th>
             <th>{roleType.roleType.id}</th>
             <th>{roleType.roleType.name}</th>

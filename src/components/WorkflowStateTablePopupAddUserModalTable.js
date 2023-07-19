@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ReactModal from 'react-modal';
 import { WorkflowStateTablePopupAddUserModalTableRow } from './WorkflowStateTablePopupAddUserModalTableRow';
 
-export const WorkflowStateTablePopupAddUserModalTable = ({state, actions, wid, isOpen, closeModal }) => {
+export const WorkflowStateTablePopupAddUserModalTable = ({state, actions, wid, isOpen, closeModal, addUsersToState }) => {
 
     const [users, setUsers] = useState(null);
 
@@ -10,10 +10,6 @@ export const WorkflowStateTablePopupAddUserModalTable = ({state, actions, wid, i
         actions.userAsyncQuery()
             .then(json => setUsers(json.data.userPage));
     }, [actions]);
-
-    
-    //console.log("Users: ", users)
-
 
 
     return (
@@ -32,20 +28,20 @@ export const WorkflowStateTablePopupAddUserModalTable = ({state, actions, wid, i
                 </thead>
                 <tbody>
                     {users?.map((user, index) => (
-                        <WorkflowStateTablePopupAddUserModalTableRow 
-                            key={user.id} 
-                            user={user} 
+                        <WorkflowStateTablePopupAddUserModalTableRow
+                            key={user.id}
+                            user={user}
                             state={state}
-                            index={index + 1} 
-                            actions={actions} 
+                            index={index + 1}
+                            actions={actions}
                             wid={wid}
                             closeModal={closeModal}
+                            addUsersToState={addUsersToState}
                         />
                     ))}
                 </tbody>
             </table>
 
-            {/* <button className="btn btn-primary" onClick={closeModal}>Save</button> */}
             <button className="btn btn-secondary" onClick={closeModal}>Cancel</button>
         </ReactModal>
     );

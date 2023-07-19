@@ -6,8 +6,10 @@ import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupA
 import { WorkflowStateTablePopupAddUser } from "./WorkflowStateTablePopupAddUser.js";
 import { WorkflowStateTablePopupAddRoleType } from "./WorkflowStateTablePopupAddRoleType.js";
 
-export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState}) => {
+export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState, addUsersToState}) => {
 
+
+    //console.log("WorkflowStateTablePopup users: ", modalState?.users)
     return(
         <ReactModal isOpen={modalIsOpen}>
                 
@@ -35,7 +37,14 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsO
                     </tbody>
                 </table>
 
-                <WorkflowStateTablePopupAddTransition state={modalState} actions={actions} wid={workflow.id} addTransitionToState={addTransitionToState} />
+                <WorkflowStateTablePopupAddTransition 
+                    state={modalState} 
+                    actions={actions} 
+                    wid={workflow.id} 
+                    addTransitionToState={addTransitionToState} 
+                />
+
+
 
                 <h4>Users</h4>
                 <table className="table table-hover table-stripped">
@@ -62,7 +71,14 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsO
                     </tbody>
                 </table>
 
-                <WorkflowStateTablePopupAddUser state={modalState} actions={actions} wid={workflow.id}/>
+                <WorkflowStateTablePopupAddUser 
+                    state={modalState} 
+                    actions={actions} 
+                    wid={workflow.id} 
+                    addUsersToState={addUsersToState} 
+                />
+
+
 
                 <h4>Role types</h4>
                 <table className="table table-hover table-stripped">

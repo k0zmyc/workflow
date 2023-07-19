@@ -13,7 +13,7 @@ export const WorkflowStateTablePopupTransitionRow = ({index, transition, actions
     console.log("WorkflowStateTablePopupTransitionRow: ", transition)
 
     return(
-        <tr>
+        <tr key={transition.id}>
             <th>{index}</th>
             <th>{transition.id}</th>
             <th>{transition.name}</th>

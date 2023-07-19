@@ -17,12 +17,12 @@ export const WorkflowStateTablePopupAddRoleType = ({state, actions, wid}) => {
     };
 
 
-    const [modalData, setModalData] = useState({});
+    //const [modalData, setModalData] = useState({});
 
     // Function to handle updating the modal data
-    const updateModalData = (data) => {
-        setModalData(data);
-    };
+    // const updateModalData = (data) => {
+    //     setModalData(data);
+    // };
 
 
     return(

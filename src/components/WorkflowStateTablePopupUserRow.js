@@ -20,8 +20,9 @@ export const WorkflowStateTablePopupUserRow = ({index, user, actions, wid, state
 
     //console.log("WorkflowStateTablePopupUserRow: ", user)
     if(user == null) return
+    console.log("WorkflowStateTablePopupUserRow: ", user)
     return(
-        <tr>
+        <tr key={user.user.id}>
             <th>{index}:</th>
             <th>{user.user.id}</th>
             <th>{user.user.name}</th>

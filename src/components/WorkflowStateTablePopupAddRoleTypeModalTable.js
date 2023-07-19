@@ -40,7 +40,6 @@ export const WorkflowStateTablePopupAddRoleTypeModalTable = ({state, actions, wi
                 </tbody>
             </table>
 
-            {/* <button className="btn btn-primary" onClick={closeModal}>Save</button> */}
             <button className="btn btn-secondary" onClick={closeModal}>Cancel</button>
         </ReactModal>
     );

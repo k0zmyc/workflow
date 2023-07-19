@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { WorkflowStateTablePopupAddUserModalTable } from "./WorkflowStateTablePopupAddUserModalTable.js";
 
-export const WorkflowStateTablePopupAddUser = ({state, actions, wid}) => {
+export const WorkflowStateTablePopupAddUser = ({state, actions, wid, addUsersToState}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -12,18 +12,8 @@ export const WorkflowStateTablePopupAddUser = ({state, actions, wid}) => {
 
     // Function to handle closing the modal
     const closeModal = () => {
-        //actions.workflowFetch(wid)  // update page after change - not ideal but better than nothing
         setIsModalOpen(false);
     };
-
-
-    const [modalData, setModalData] = useState({});
-
-    // Function to handle updating the modal data
-    const updateModalData = (data) => {
-        setModalData(data);
-    };
-
 
     return(
         <div>
@@ -41,8 +31,8 @@ export const WorkflowStateTablePopupAddUser = ({state, actions, wid}) => {
                 state={state} 
                 actions={actions} 
                 wid={wid}
+                addUsersToState={addUsersToState}
             />
-
         </div>
         
     )

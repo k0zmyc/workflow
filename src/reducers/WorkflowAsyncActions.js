@@ -489,6 +489,8 @@ const workflowStateAsyncAddUserMutationJSON = ({state, user}) => {
                         lastchange
                         name
                         users {
+                            id
+                            lastchange
                             user {
                                 name
                                 surname
