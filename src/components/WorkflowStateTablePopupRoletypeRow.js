@@ -1,6 +1,18 @@
 import { DeleteButton } from "./DeleteButton.js";
 import { Trash } from 'react-bootstrap-icons';
 
+/**
+ * Renders a table row for a single role type in the popup modal.
+ *
+ * @param {Object} param0 - Props for the WorkflowStateTablePopupRoleTypeRow component.
+ * @param {number} param0.index - The index of the role type row.
+ * @param {Object} param0.roleType - The role type object containing information about the role type.
+ * @param {Object} param0.actions - The actions object providing functions to interact with the state.
+ * @param {string} param0.wid - The ID of the workflow.
+ * @param {string} param0.stateId - The ID of the workflow state.
+ * @param {Function} param0.setRoleTypesInState - Callback function to set role types in the state.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowStateTablePopupRoleTypeRow component.
+ */
 export const WorkflowStateTablePopupRoleTypeRow = ({index, roleType, actions, wid, stateId, setRoleTypesInState}) => {
     
     //delete button action

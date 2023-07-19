@@ -1,15 +1,16 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import { WorkflowLarge } from '../components/WorkflowLarge';
 import { actions } from './AppProvider';
 
 /**
- * Komponenta, ktera je zaclenena ve strukture s Providerem, tedy se store, importuje si akce a poskytuje je podrizenym komponentam
- * @param {*} param0 
- * @returns 
+ * A component that is integrated into the structure with a Provider, thus having access to the store.
+ * It imports actions and provides them to its child components.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.id - The ID of the workflow page to display.
+ * @returns {JSX.Element} - JSX element representing the WorkflowPageProvider component.
  */
-
 export const WorkflowPageProvider = ({id}) => {
 
     //vyber vsech skupin ze store

@@ -1,9 +1,12 @@
 import { WorkflowTransitionTableRow } from "./WorkflowTransitionTableRow.js"
 
 /**
- * List of members as a table
- * @param {*} param0 
- * @returns 
+ * Renders a table of transitions in the workflow.
+ *
+ * @param {Object} param0 - Props for the WorkflowTransitionsTable component.
+ * @param {Object} param0.workflow - The workflow object containing information about the workflow.
+ * @param {Object} param0.actions - The actions object providing functions to interact with the workflow.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowTransitionsTable component.
  */
 export const WorkflowTransitionsTable = ({workflow, actions}) => {
     return (

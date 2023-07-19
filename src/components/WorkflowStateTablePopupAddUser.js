@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { WorkflowStateTablePopupAddUserModalTable } from "./WorkflowStateTablePopupAddUserModalTable.js";
 
+/**
+ * Renders a table row for adding a user in the popup modal.
+ *
+ * @param {Object} param0 - Props for the WorkflowStateTablePopupAddUser component.
+ * @param {Object} param0.state - The state object containing information about the workflow state.
+ * @param {Object} param0.actions - The actions object providing functions to interact with the state.
+ * @param {string} param0.wid - The ID of the workflow.
+ * @param {Function} param0.setUsersInState - Callback function to set users in the state.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowStateTablePopupAddUser component.
+ */
 export const WorkflowStateTablePopupAddUser = ({state, actions, wid, setUsersInState}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);

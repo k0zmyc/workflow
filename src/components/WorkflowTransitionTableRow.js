@@ -3,11 +3,15 @@ import { TextInput } from './TextInput';
 import { DeleteButton } from './DeleteButton';
 
 /**
- * One member as a table row
- * @param {*} param0 
- * @returns 
+ * Renders a table row for a single transition in the workflow.
+ *
+ * @param {Object} param0 - Props for the WorkflowTransitionTableRow component.
+ * @param {number} param0.index - The index of the transition row.
+ * @param {Object} param0.transition - The transition object containing information about the transition.
+ * @param {Object} param0.actions - The actions object providing functions to interact with the transition.
+ * @param {string} param0.wid - The ID of the workflow.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowTransitionTableRow component.
  */
-
 export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) => {
 
     //remove button action

@@ -29,7 +29,9 @@ export const actions = {
 }
 
 /**
- * Zapouzdruje vnorene komponenty a umoznuje jim vyuzivat store - centralni data
+ * Encapsulates nested components and allows them to use the store - central data.
+ * @param {Object} props - The properties passed to the component.
+ * @returns {JSX.Element} - JSX element encapsulating the nested components.
  */
 export const AppProvider = (props) => {
     return (

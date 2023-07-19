@@ -1,8 +1,10 @@
 /**
- * @function
- * @param {int} index
- * @param {int} transition
- * @returns 
+ * Renders a table row for a transition in the popup modal.
+ *
+ * @param {Object} param0 - Props for the WorkflowStateTablePopupTransitionRow component.
+ * @param {int} param0.index - The index of the transition row.
+ * @param {Object} param0.transition - The transition object containing information about the transition.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowStateTablePopupTransitionRow component.
  */
 export const WorkflowStateTablePopupTransitionRow = ({index, transition}) => {
 

@@ -13,9 +13,12 @@ ReactModal.setAppElement(rootElement);
 // screen readers from seeing the main content when the modal is opened.
 
 /**
- * List of members as a table
- * @param {*} param0 
- * @returns 
+ * Renders a table of states in the workflow with options to add new states and view details in a popup modal.
+ *
+ * @param {Object} param0 - Props for the WorkflowStatesTable component.
+ * @param {Object} param0.workflow - The workflow object containing information about the workflow.
+ * @param {Object} param0.actions - The actions object providing functions to interact with the workflow.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowStatesTable component.
  */
 export const WorkflowStatesTable = ({workflow, actions}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);

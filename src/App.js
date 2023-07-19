@@ -1,10 +1,19 @@
+/**
+ * Main App component
+ * @module App
+ */
+
 import './App.css';
-
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import { WorkflowPageProvider } from './pages/WorkflowPageProvider';
 import { AppProvider } from './pages/AppProvider';
 
+
+/**
+ * The root component of the application.
+ * @function App
+ * @returns {JSX.Element} JSX element representing the main App component.
+ */
 function App() {
   return (
     <div className="App">

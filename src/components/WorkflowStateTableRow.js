@@ -3,11 +3,16 @@ import { TextInput } from './TextInput';
 import { DeleteButton } from './DeleteButton';
 
 /**
- * One member as a table row
- * @param {*} param0 
- * @returns 
+ * Renders a table row for a single state in the workflow with options to edit and delete the state.
+ *
+ * @param {Object} param0 - Props for the WorkflowStateTableRow component.
+ * @param {number} param0.index - The index of the state row.
+ * @param {Object} param0.state - The state object containing information about the state.
+ * @param {Object} param0.actions - The actions object providing functions to interact with the state.
+ * @param {string} param0.wid - The ID of the workflow.
+ * @param {Function} param0.onOpenModal - Callback function to open the popup modal.
+ * @returns {JSX.Element} - The JSX element representing the WorkflowStateTableRow component.
  */
-
 export const WorkflowStateTableRow = ({index, state, actions, wid, onOpenModal}) => {
 
     //delete button action - disvalidate state

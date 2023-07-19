@@ -1,14 +1,17 @@
 import { WorkflowActions } from "./WorkflowReducers" 
-
 import { WorkflowQuerySmall } from "../queries/WorkflowQuerySmall"
 import { WorkflowQueryLarge } from "../queries/WorkflowQueryLarge"
 import { authorizedFetch } from "../queries/authorizedFetch"
 
 
 /**
- * Ask for the item on server and adds it or update it in the store to the heap
- * @param {*} id 
- * @returns promise
+ * Helper function to fetch workflow data from the server and update it in the store.
+ * @param {string} id - The ID of the item to fetch from the server.
+ * @param {Function} query - The function to fetch the item from the server.
+ * @param {Function} resultselector - The function to process the fetched JSON data.
+ * @param {Function} dispatch - The Redux dispatch function to update the store.
+ * @param {Function} getState - The Redux getState function to get the current store state.
+ * @returns {Promise} - A promise that resolves when the workflow data is fetched and updated.
  */
 export const WorkflowFetchHelper = (id, query, resultselector, dispatch, getState) => {
     const log = (text) => (p) => {
@@ -37,9 +40,9 @@ export const WorkflowFetchHelper = (id, query, resultselector, dispatch, getStat
 }
 
 /**
- * Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
- * @param {*} id 
- * @returns 
+ * Fetches the workflow data from the server, checks its type, and fetches detailed data if necessary. Then, it puts the result in the store.
+ * @param {string} id - The ID of the workflow to fetch from the server.
+ * @returns {Function} - A Redux thunk function that handles the workflow fetch.
  */
 export const WorkflowFetch = (id) => (dispatch, getState) => {
     const workflowSelector = (json) => json.data.workflowById
@@ -58,26 +61,12 @@ export const WorkflowFetch = (id) => (dispatch, getState) => {
     return bodyfunc()
 }
 
+
 /**
- * Fetch the group from server checks its type and asks once more for detailed data. Finally puts the result in the store.
- * @param {*} id 
- * @returns 
+ * Creates a JSON object for updating the workflow data on the server.
+ * @param {Object} workflow - The workflow data to update on the server.
+ * @returns {Object} - A JSON object representing the update mutation.
  */
-
-// dont think I need this for workflow
-/*
-export const WorkflowFakeFetch = (id) => (dispatch, getState) => {
-    //console.log('GroupFakeFetch')
-    const groupSelector = (json) => json.groupById
-    const bodyfunc = async () => {
-        let groupData = await WorkflowFetchHelper(id, fakeQueryGroup, groupSelector, dispatch, getState)
-        dispatch(WorkflowActions.group_select(groupData))
-        return groupData
-    }
-    return bodyfunc()
-}
-*/
-
 const workflowAsyncUpdateMutationJSON = ({workflow}) => {
     return {
         query: 
@@ -101,6 +90,12 @@ const workflowAsyncUpdateMutationJSON = ({workflow}) => {
     }
 }
 
+
+/**
+ * Asynchronously updates the workflow data on the server.
+ * @param {Object} workflow - The workflow data to update on the server.
+ * @returns {Promise} - A promise that resolves when the update is complete.
+ */
 export const WorkflowAsyncUpdate = (workflow) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -136,6 +131,11 @@ export const WorkflowAsyncUpdate = (workflow) => async (dispatch, getState) => {
 }
 
 
+/**
+ * Creates a JSON object for updating the workflow state on the server.
+ * @param {Object} state - The workflow state data to update on the server.
+ * @returns {Object} - A JSON object representing the state update mutation.
+ */
 const workflowStateAsyncUpdateMutationJSON = ({state}) => {
     return {
         query: 
@@ -166,6 +166,13 @@ const workflowStateAsyncUpdateMutationJSON = ({state}) => {
     }
 }
 
+
+/**
+ * Asynchronously updates the workflow state on the server.
+ * @param {Object} state - The workflow state data to update on the server.
+ * @param {Object} workflow - The workflow containing the state to update.
+ * @returns {Promise} - A promise that resolves when the state update is complete.
+ */
 export const WorkflowStateAsyncUpdate = ({state, workflow}) => async (dispatch, getState) => {
     //console.log("WorkflowStateAsyncUpdate state: ", state)
     const params = {
@@ -205,6 +212,13 @@ export const WorkflowStateAsyncUpdate = ({state, workflow}) => async (dispatch, 
     
 }
 
+/**
+ * Generates a GraphQL mutation JSON object for updating a workflow transition.
+ *
+ * @param {object} params - The parameters for the mutation.
+ * @param {object} params.transition - The transition object to be updated.
+ * @returns {object} The GraphQL mutation JSON object.
+ */
 const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
     return {
         query: 
@@ -249,6 +263,14 @@ const workflowTransitionAsyncUpdateMutationJSON = ({transition}) => {
     }
 }
 
+/**
+ * Updates a workflow transition asynchronously.
+ *
+ * @param {object} params - The parameters for the update function.
+ * @param {object} params.transition - The transition object to be updated.
+ * @param {object} params.workflow - The workflow object to which the transition belongs.
+ * @returns {Promise} A Promise that resolves to the JSON response of the update operation.
+ */
 export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -285,7 +307,14 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => async (
 
 }
 
-
+/**
+ * Generates a GraphQL mutation JSON object for inserting a new workflow state.
+ *
+ * @param {object} params - The parameters for the mutation.
+ * @param {object} params.state - The state object to be inserted.
+ * @param {object} params.workflow - The workflow object to which the state belongs.
+ * @returns {object} The GraphQL mutation JSON object.
+ */
 const workflowStateAsyncInsertMutationJSON = ({state, workflow}) => {
     return {
         query: 
@@ -308,6 +337,14 @@ const workflowStateAsyncInsertMutationJSON = ({state, workflow}) => {
     }
 }
 
+/**
+ * Inserts a new workflow state asynchronously.
+ *
+ * @param {object} params - The parameters for the insert function.
+ * @param {object} params.state - The state object to be inserted.
+ * @param {object} params.workflow - The workflow object to which the state belongs.
+ * @returns {Promise} A Promise that resolves to the JSON response of the insert operation.
+ */
 export const WorkflowStateAsyncInsert = ({state, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -344,7 +381,14 @@ export const WorkflowStateAsyncInsert = ({state, workflow}) => async (dispatch, 
     
 }
 
-
+/**
+ * Generates a GraphQL mutation JSON object for inserting a new workflow transition.
+ *
+ * @param {object} params - The parameters for the mutation.
+ * @param {object} params.transition - The transition object to be inserted.
+ * @param {object} params.workflow - The workflow object to which the transition belongs.
+ * @returns {object} The GraphQL mutation JSON object.
+ */
 const workflowTransitionAsyncInsertMutationJSON = ({transition, workflow}) => {
     return {
         query: 
@@ -382,6 +426,14 @@ const workflowTransitionAsyncInsertMutationJSON = ({transition, workflow}) => {
     }
 }
 
+/**
+ * Inserts a new workflow transition asynchronously.
+ *
+ * @param {object} params - The parameters for the insert function.
+ * @param {object} params.transition - The transition object to be inserted.
+ * @param {object} params.workflow - The workflow object to which the transition belongs.
+ * @returns {Promise} A Promise that resolves to the JSON response of the insert operation.
+ */
 export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -420,7 +472,11 @@ export const WorkflowTransitionAsyncInsert = ({transition, workflow}) => async (
     
 }
 
-
+/**
+ * Generates a GraphQL query JSON object to fetch user data.
+ *
+ * @returns {object} The GraphQL query JSON object.
+ */
 const userAsyncQueryJSON = () => {
     return {
         query: 
@@ -434,6 +490,11 @@ const userAsyncQueryJSON = () => {
     }
 }
 
+/**
+ * Fetches user data asynchronously.
+ *
+ * @returns {Promise} A Promise that resolves to the JSON response containing user data.
+ */
 export const UserAsyncQuery = () => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -460,6 +521,14 @@ export const UserAsyncQuery = () => async (dispatch, getState) => {
 }
 
 
+/**
+ * Generates a GraphQL mutation JSON object for adding a user to a workflow state.
+ *
+ * @param {object} params - The parameters for the mutation.
+ * @param {object} params.state - The state object to which the user will be added.
+ * @param {object} params.user - The user object to be added.
+ * @returns {object} The GraphQL mutation JSON object.
+ */
 const workflowStateAsyncAddUserMutationJSON = ({state, user}) => {
     return {
         query: 
@@ -498,6 +567,15 @@ const workflowStateAsyncAddUserMutationJSON = ({state, user}) => {
     }
 }
 
+/**
+ * Adds a user to a workflow state asynchronously.
+ *
+ * @param {object} params - The parameters for the add user function.
+ * @param {object} params.state - The state object to which the user will be added.
+ * @param {object} params.user - The user object to be added.
+ * @param {object} params.workflow - The workflow object to which the state belongs.
+ * @returns {Promise} A Promise that resolves to the JSON response of the add user operation.
+ */
 export const WorkflowStateAsyncAddUser = ({state, user, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -539,6 +617,14 @@ export const WorkflowStateAsyncAddUser = ({state, user, workflow}) => async (dis
 }
 
 
+/**
+ * Generates a GraphQL mutation JSON object for removing a user from a workflow state.
+ *
+ * @param {object} params - The parameters for the mutation.
+ * @param {string} params.userId - The ID of the user to be removed.
+ * @param {string} params.workflowstateId - The ID of the state from which the user will be removed.
+ * @returns {object} The GraphQL mutation JSON object.
+ */
 const workflowStateAsyncRemoveUserMutationJSON = ({userId, workflowstateId}) => {
     return {
         query: 
@@ -575,6 +661,15 @@ const workflowStateAsyncRemoveUserMutationJSON = ({userId, workflowstateId}) => 
     }
 }
 
+/**
+ * Removes a user from a workflow state asynchronously.
+ *
+ * @param {object} params - The parameters for the remove user function.
+ * @param {string} params.workflowstateId - The ID of the state from which the user will be removed.
+ * @param {string} params.userId - The ID of the user to be removed.
+ * @param {object} params.workflow - The workflow object to which the state belongs.
+ * @returns {Promise} A Promise that resolves to the JSON response of the remove user operation.
+ */
 export const WorkflowStateAsyncRemoveUser = ({workflowstateId, userId, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -593,7 +688,7 @@ export const WorkflowStateAsyncRemoveUser = ({workflowstateId, userId, workflow}
         )
         .then(
             json => {
-                //console.log("WorkflowStateAsyncRemoveUser data: ", json.data)
+                console.log("WorkflowStateAsyncRemoveUser data: ", json.data)
                 const msg = json.data.workflowStateRemoveUser.msg
                 if (msg === "fail") {
                     console.log("Remove WorkflowStateAsyncRemoveUser selhalo")
@@ -616,6 +711,11 @@ export const WorkflowStateAsyncRemoveUser = ({workflowstateId, userId, workflow}
 }
 
 
+/**
+ * Generates a GraphQL query JSON object for fetching role types.
+ *
+ * @returns {object} The GraphQL query JSON object.
+ */
 const roleTypeAsyncQueryJSON = () => {
     return {
         query: 
@@ -628,6 +728,11 @@ const roleTypeAsyncQueryJSON = () => {
     }
 }
 
+/**
+ * Fetches role types asynchronously.
+ *
+ * @returns {Promise} A Promise that resolves to the JSON response of the role types query.
+ */
 export const RoleTypeAsyncQuery = () => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -654,6 +759,14 @@ export const RoleTypeAsyncQuery = () => async (dispatch, getState) => {
 }
 
 
+/**
+ * Generates a GraphQL mutation JSON object for adding a role type to a workflow state.
+ *
+ * @param {object} params - The parameters for the mutation.
+ * @param {string} params.workflowstateId - The ID of the state to which the role type will be added.
+ * @param {string} params.roletypeId - The ID of the role type to be added.
+ * @returns {object} The GraphQL mutation JSON object.
+ */
 const workflowStateAsyncAddRoleTypeMutationJSON = ({workflowstateId, roletypeId}) => {
     return {
         query: 
@@ -689,6 +802,15 @@ const workflowStateAsyncAddRoleTypeMutationJSON = ({workflowstateId, roletypeId}
     }
 }
 
+/**
+ * Adds a role type to a workflow state asynchronously.
+ *
+ * @param {object} params - The parameters for the add role type function.
+ * @param {string} params.workflowstateId - The ID of the state to which the role type will be added.
+ * @param {object} params.roleType - The role type object to be added.
+ * @param {object} params.workflow - The workflow object to which the state belongs.
+ * @returns {Promise} A Promise that resolves to the JSON response of the add role type operation.
+ */
 export const WorkflowStateAsyncAddRoleType = ({state, roleType, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
@@ -730,6 +852,14 @@ export const WorkflowStateAsyncAddRoleType = ({state, roleType, workflow}) => as
 }
 
 
+/**
+ * Generates a GraphQL mutation JSON object for removing a role type from a workflow state.
+ *
+ * @param {object} params - The parameters for the mutation.
+ * @param {string} params.roletypeId - The ID of the role type to be removed.
+ * @param {string} params.workflowstateId - The ID of the state from which the role type will be removed.
+ * @returns {object} The GraphQL mutation JSON object.
+ */
 const workflowStateAsyncRemoveRoleTypeMutationJSON = ({roletypeId, workflowstateId}) => {
     return {
         query: 
@@ -763,6 +893,15 @@ const workflowStateAsyncRemoveRoleTypeMutationJSON = ({roletypeId, workflowstate
     }
 }
 
+/**
+ * Removes a role type from a workflow state asynchronously.
+ *
+ * @param {object} params - The parameters for the remove role type function.
+ * @param {string} params.workflowstateId - The ID of the state from which the role type will be removed.
+ * @param {string} params.roletypeId - The ID of the role type to be removed.
+ * @param {object} params.workflow - The workflow object to which the state belongs.
+ * @returns {Promise} A Promise that resolves to the JSON response of the remove role type operation.
+ */
 export const WorkflowStateAsyncRemoveRoleType = ({workflowstateId, roletypeId, workflow}) => async (dispatch, getState) => {
     const params = {
         method: 'POST',
