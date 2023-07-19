@@ -36,12 +36,12 @@ const WorkflowStateUpdate = (state, action) => {
     // state[newWorkflow.id] = {...newWorkflow, states: newWorkflow.states}
     WorkflowActions.workflow_update(newWorkflow)
 
-    console.log("WorkflowStateUpdate: ", state[newWorkflow.id].states)
+    //console.log("WorkflowStateUpdate: ", state[newWorkflow.id].states)
     return state
 }
 
 const WorkflowTransitionUpdate = (state, action) => {
-    console.log("WorkflowTransitionUpdate state, action", state, action)
+    //console.log("WorkflowTransitionUpdate state, action", state, action)
 
     const w = action.payload.workflow
     const t = action.payload.transition

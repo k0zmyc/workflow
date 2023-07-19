@@ -6,8 +6,6 @@ import { WorkflowStateTablePopupRoleType } from './WorkflowStateTablePopupRoleTy
 export const WorkflowStateTablePopup = ({
     workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState, setUsersInState, setRoleTypesInState}) => {
 
-
-    //console.log("WorkflowStateTablePopup users: ", modalState?.users)
     return(
         <ReactModal isOpen={modalIsOpen}>
                 

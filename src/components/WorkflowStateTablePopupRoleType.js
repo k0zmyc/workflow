@@ -2,7 +2,6 @@ import { WorkflowStateTablePopupRoleTypeRow } from "./WorkflowStateTablePopupRol
 import { WorkflowStateTablePopupAddRoleType } from "./WorkflowStateTablePopupAddRoleType.js";
 
 export const WorkflowStateTablePopupRoleType = ({workflow, actions, modalState, setRoleTypesInState}) => {
-
     return(
         <div>
             <h4>Role types</h4>

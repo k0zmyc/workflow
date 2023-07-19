@@ -2,7 +2,6 @@ import { WorkflowStateTablePopupTransitionRow } from "./WorkflowStateTablePopupT
 import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupAddTransition.js";
 
 export const WorkflowStateTablePopupTransition = ({workflow, actions, modalState, addTransitionToState}) => {
-
     return(
         <div>
             <h2>State data: {modalState?.name}</h2>

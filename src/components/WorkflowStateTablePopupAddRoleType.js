@@ -12,7 +12,6 @@ export const WorkflowStateTablePopupAddRoleType = ({state, actions, wid, setRole
 
     // Function to handle closing the modal
     const closeModal = () => {
-        //actions.workflowFetch(wid)  // update page after change - not ideal but better than nothing
         setIsModalOpen(false);
     };
 
@@ -34,8 +33,6 @@ export const WorkflowStateTablePopupAddRoleType = ({state, actions, wid, setRole
                 wid={wid}
                 setRoleTypesInState={setRoleTypesInState}
             />
-
-        </div>
-        
+        </div>   
     )
 }

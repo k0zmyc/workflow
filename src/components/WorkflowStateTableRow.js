@@ -1,9 +1,6 @@
-import { Trash, Info, PencilFill } from 'react-bootstrap-icons';
-
+import { Trash, Info} from 'react-bootstrap-icons';
 import { TextInput } from './TextInput';
 import { DeleteButton } from './DeleteButton';
-import { useState } from 'react';
-
 
 /**
  * One member as a table row
@@ -19,7 +16,6 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, onOpenModal})
             console.log("onDeleteButtonOnClick: ", state)
             const payload = {workflow: {id: wid}, state: {...state, valid: false}}
 
-
             // Create an array of promises for all updates to rerender all at the end
             const updatePromises = [
                 actions.workflowStateAsyncUpdate(payload)
@@ -28,13 +24,13 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, onOpenModal})
 
             // disvalidating all transitions to and from this state
             state.nextTransitions?.map((nextTransition) => {
-                console.log("Disvalidating transition: ", nextTransition)
+                //console.log("Disvalidating transition: ", nextTransition)
                 const payload = {workflow: {id: wid}, transition: {...nextTransition, valid: false}}
                 updatePromises.push(actions.workflowTransitionAsyncUpdate(payload))
             })
 
             state.previousTransitions?.map((previousTransition) => {
-                console.log("Disvalidating transition: ", previousTransition)
+                //console.log("Disvalidating transition: ", previousTransition)
                 const payload = {workflow: {id: wid}, transition: {...previousTransition, valid: false}}
                 updatePromises.push(actions.workflowTransitionAsyncUpdate(payload))
             })
@@ -54,7 +50,7 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, onOpenModal})
     //change state name callback
     const onChangeStateName = (value) => {
         if (actions.onWorkflowStateUpdate) {
-            console.log("onChangeName: ", state, value)
+            //console.log("onChangeName state value: ", state, value)
             const payload = {workflow: {id: wid}, state: {...state, name: value, valid: true}}
 
             actions.workflowStateAsyncUpdate(payload)
@@ -69,19 +65,19 @@ export const WorkflowStateTableRow = ({index, state, actions, wid, onOpenModal})
     );
 
 
-    // when should I not include a state in the table
+    // when should I not include a state in the table?
     if(state.valid === false){
         return
     }
     return (
         <tr>
             <td>{index}: </td>
-            <td>{state.id}</td>
+            <td>{state?.id}</td>
             <td><TextInput placeholder={"name"} id={wid} value={state.name} onChange={onChangeStateName}/></td>
             <td>
                 {validTransitions?.map((transition) => (
                     <div key={transition.id}>
-                        {transition.name}
+                        {transition?.name}
                     </div>
                 ))}
             </td>

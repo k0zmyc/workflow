@@ -268,7 +268,7 @@ export const WorkflowTransitionAsyncUpdate = ({transition, workflow}) => (dispat
         )
         .then(
             json => {
-                console.log("WorkflowTransitionAsyncUpdate data: ", json.data)
+                //console.log("WorkflowTransitionAsyncUpdate data: ", json.data)
                 const msg = json.data.workflowTransitionUpdate.msg
                 if (msg === "fail") {
                     console.log("Update WorkflowTransitionAsyncUpdate selhalo")

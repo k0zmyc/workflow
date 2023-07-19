@@ -1,8 +1,7 @@
 import { WorkflowStateTablePopupUserRow } from "./WorkflowStateTablePopupUserRow.js";
 import { WorkflowStateTablePopupAddUser } from "./WorkflowStateTablePopupAddUser.js";
 
-export const WorkflowStateTablePopupUser = ({workflow, actions, modalState, setUsersInState}) =>{
-
+export const WorkflowStateTablePopupUser = ({workflow, actions, modalState, setUsersInState}) => {
     return(
         <div>
             <h4>Users</h4>

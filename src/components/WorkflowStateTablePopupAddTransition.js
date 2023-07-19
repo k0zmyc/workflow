@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { TextInput } from "./TextInput.js";
 
 export const WorkflowStateTablePopupAddTransition = ({state, actions, wid, addTransitionToState}) => {
-
-    // logs everytime I change transition name - does the component refresh? don't understand...
-    //console.log("WorkflowStateTablePopupAddTransition: ", state)
 
     const [transition, setTransition] = useState({name: "", sourceId: state?.id, destinationId: ""})
 
@@ -18,7 +14,7 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid, addTr
 
     const addTransition = () => {
         if (actions.onWorkflowStateUpdate && transition.name != "" && transition.destinationId != "") {
-            console.log("addTransition: ", transition)
+            //console.log("addTransition transition: ", transition)
             const payload = {
                 workflow: {id: wid}, 
                 transition: {
@@ -26,8 +22,6 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid, addTr
                     source: {id: transition.sourceId}, 
                     destination: {id: transition.destinationId
             }}}
-
-            console.log("addTransition: ", payload)
 
             actions.workflowTransitionAsyncInsert(payload)
                 .then((json) => {
@@ -39,6 +33,7 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid, addTr
                     actions.workflowFetch(wid)  // not ideal but better than nothing
                     setTransition({name: "", sourceId: state?.id, destinationId: ""})
                 })   
+        
         }
     }
 
