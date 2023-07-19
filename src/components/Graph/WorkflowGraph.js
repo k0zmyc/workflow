@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-function Workflow({ workflowPage }) {
+export const Workflow = ({ workflow }) => {
   const d3Container = useRef(null);
-  const { states, transitions } = workflowPage;
+  const { states, transitions } = workflow;
 
   useEffect(() => {
     if (states && transitions && d3Container.current) {
@@ -33,7 +33,8 @@ function Workflow({ workflowPage }) {
         .attr("fill", "none")
         .attr("stroke-width", 1);
 
-      const circles = svg.selectAll(".state")
+      svg.selectAll(".state")
+
         .data(states)
         .enter()
         .append("circle")
@@ -56,7 +57,7 @@ function Workflow({ workflowPage }) {
         .attr("fill", "black")
         .attr("text-anchor", "middle");
 
-      const paths = svg.selectAll(".transition")
+      svg.selectAll(".paths")
         .data(transitions)
         .enter()
         .append("path")

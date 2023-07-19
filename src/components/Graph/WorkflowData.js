@@ -12,9 +12,7 @@ function App() {
 
   return (
     <div>
-      {/* ... states and transitions list code ... */}
-
-      <h1>Workflow Graph</h1>
+        <h1>Workflow Graph</h1>
       <Workflow workflowPage={workflowPage} />
     </div>
   );

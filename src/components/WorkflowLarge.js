@@ -3,6 +3,7 @@ import Card from "react-bootstrap/Card";
 import { WorkflowStatesCard } from './WorkflowStatesCard';
 import { WorkflowTransitionsCard } from "./WorkflowTransitionsCard";
 import { WorkflowNameInput } from "./WorkflowNameInput";
+import { Workflow } from "./Graph/WorkflowGraph";
 
 /**
  * Renders a card describing a group im detailed form.
@@ -26,6 +27,9 @@ export const WorkflowLarge = ({workflow, actions}) => {
             
             <Card.Body>
                 <WorkflowTransitionsCard workflow={workflow} actions={actions} />
+            </Card.Body>
+            <Card.Body>
+                <Workflow workflow={workflow} actions={actions} />
             </Card.Body>
         </Card>
     )
