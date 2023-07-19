@@ -31,7 +31,10 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
 
             actions.workflowTransitionAsyncInsert(payload)
                 .then(json=>console.log("workflowStateAsyncInsert: ", json.data.workflowTransitionInsert.msg))
-                .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
+                .then(() => {
+                    actions.workflowFetch(wid)  // not ideal but better than nothing
+                    setTransition({name: "", sourceId: state?.id, destinationId: ""})
+                })   
         }
     }
 
@@ -39,8 +42,22 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
         <table className="table table-hover table-stripped">
             <tbody>
                 <tr>
-                    <th><TextInput placeholder={"Add transition name"} value={transition.name} onChange={addTransitionName} /></th>
-                    <th><TextInput placeholder={"Add destination state ID"} value={transition.destinationId} onChange={addTransitionDestinationId} /></th>
+                    <th>
+                        <input
+                            className="form-control"
+                            placeholder={"Add transition name"}
+                            value={transition.name}
+                            onChange={(e) => addTransitionName(e.target.value)}
+                        />
+                    </th>
+                    <th>
+                        <input
+                            className="form-control"
+                            placeholder={"Add destination ID"}
+                            value={transition.destinationId}
+                            onChange={(e) => addTransitionDestinationId(e.target.value)}
+                        />
+                    </th>
                     <th><button className='btn btn-sm btn-success' onClick={addTransition} >Add transition</button></th>
                 </tr> 
             </tbody>

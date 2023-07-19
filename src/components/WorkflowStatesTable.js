@@ -34,15 +34,6 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
         setModalIsOpen(false);
     };
 
-    // const onChangeAddStateName = (value) => {
-    //     setAddStateName(value)
-    // }
-
-    // const onChangeAddStateTransition = (value) => {
-    //     console.log("onChangeAddStateTransition: ", value)
-    //     setAddStateTransition(value)
-    // }
-
     const addState = () => {
         if (actions.onWorkflowStateUpdate && addStateName) {
             const wid = workflow.id
