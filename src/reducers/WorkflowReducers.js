@@ -7,9 +7,6 @@ import { CreateItem, DeleteItem, ReplaceItem, UpdateItem, SelectItem } from './K
  * @param {*} action 
  * @returns 
  */
-
-
-// more like WorkflowStateRemove & WorkflowTransitionRemove
 const WorkflowStateRemove = (state, action) => {
     //console.log('volani stavove funkce, smazat stav: ', action.payload)
     const w = action.payload.workflow
@@ -26,7 +23,6 @@ const WorkflowStateRemove = (state, action) => {
  * @param {*} action 
  * @returns 
  */
-
 const WorkflowStateUpdate = (state, action) => {
     const oldWorkflow = action.payload.workflow
     const newState = action.payload.state
@@ -40,6 +36,12 @@ const WorkflowStateUpdate = (state, action) => {
     return state
 }
 
+/**
+ * Updates a transition within the workflow.
+ * @param {Object} state - The current state of the workflows.
+ * @param {Object} action - The Redux action object containing the payload.
+ * @returns {Object} - The updated state after updating the specified transition in the workflow.
+ */
 const WorkflowTransitionUpdate = (state, action) => {
     //console.log("WorkflowTransitionUpdate state, action", state, action)
 

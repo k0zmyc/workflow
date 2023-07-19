@@ -1,5 +1,12 @@
 import { authorizedFetch } from './authorizedFetch'
 
+/**
+ * Generates a GraphQL query in JSON format to fetch data for a specific workflow by its ID.
+ *
+ * @function
+ * @param {string} id - The ID of the workflow to fetch.
+ * @returns {Object} - The GraphQL query object in JSON format.
+ */
 export const WorkflowQueryLargeJSON = (id) => ({
     "query":
         `query ($id: ID!) {

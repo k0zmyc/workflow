@@ -15,10 +15,12 @@ import {
 } from "./WorkflowAsyncActions"
 
 /**
- * vytvori actions, ktere pri volani uz vse radne provedou
- * jsou zahrnuty i "asynchronni" akce
- * @param {*} dispatch 
- * @returns 
+ * Creates actions that will be automatically dispatched when called. 
+ * Includes both synchronous and asynchronous actions.
+ *
+ * @function
+ * @param {Function} dispatch - The Redux store's `dispatch` function.
+ * @returns {Object} - An object containing action functions.
  */
 export const bindWorkflowActions = (dispatch) => {
     return {
