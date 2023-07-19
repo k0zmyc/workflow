@@ -44,8 +44,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
     }
 
     const setRoleTypesInState = (roleTypes) => {
-        console.log("setUsersInState roleTypes: ", roleTypes)
-        console.log("setUsersInState modalState: ", modalState)
+        //console.log("setUsersInState roleTypes: ", roleTypes)
         setModalState({...modalState, roletypes: roleTypes})
     }
 
@@ -63,7 +62,6 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                 .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
         }
     }
-
 
     return (
         <div>
