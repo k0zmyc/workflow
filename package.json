@@ -1,7 +1,12 @@
 {
   "name": "workflow",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "babel": { 
+    "presets": [
+      "@babel/preset-react"
+    ]
+  },
   "homepage": "/ui",
   "proxy": "http://localhost:31180/",
   "dependencies": {
@@ -26,8 +31,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "publish:npm": "rimraf dist && shx mkdir -p dist && npx babel ./src/components -d dist --copy-files"
   },
+   
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -45,5 +52,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+    "devDependencies": {
+      "@babel/cli": "^7.5.5",
+      "@babel/preset-react": "^7.0.0"
+     }
 }
