@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const WorkflowStateTablePopupAddUserModalTableRow = ({user, state, actions, wid, index, closeModal, addUsersToState }) => {
+export const WorkflowStateTablePopupAddUserModalTableRow = ({user, state, actions, wid, index, closeModal, setUsersInState }) => {
     const onAddUser = () => {
         console.log(user)
         if (actions.onWorkflowStateUpdate) {
@@ -11,7 +11,7 @@ export const WorkflowStateTablePopupAddUserModalTableRow = ({user, state, action
                 .then(json => {
                     console.log("workflowStateAsyncAddUser: ", json.data.workflowStateAddUser)
                     const users = json.data.workflowStateAddUser.state.users
-                    addUsersToState(users)
+                    setUsersInState(users)
                 })
                 //.then(json => console.log("workflowStateAsyncAddUser: ", json.data.workflowStateAddUser))
                 .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing

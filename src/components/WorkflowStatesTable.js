@@ -38,23 +38,10 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
         setModalState({...modalState, nextTransitions: [...modalState.nextTransitions, transition]})
     }
 
-    const addUsersToState = (users) => {
-
-        console.log("addUsersToState user: ", users)
-        console.log("addUsersToState modalState.users: ", modalState.users)
-
+    const setUsersInState = (users) => {
+        console.log("setUsersInState users: ", users)
         setModalState({...modalState, users: users})
-
-        // Create a new Set combining the existing users and the new user array
-        //const combinedUsersSet = new Set([...modalState.users, user]);
-
-        // Convert the Set back to an array
-        //const combinedUsersArray = Array.from(combinedUsersSet);
-
-        //console.log("newUsersToState: ", [...combinedUsersArray])
-        //setModalState({...modalState, users: [...combinedUsersArray]})
     }
-
 
     const addState = () => {
         if (actions.onWorkflowStateUpdate && addStateName) {
@@ -94,6 +81,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                             wid={workflow.id}
                             onOpenModal={openModal}
                             setModalRowData={setModalState}
+                            setUsersInState={setUsersInState}
                         />
                     ))}
                 </tbody>
@@ -116,7 +104,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                 modalIsOpen={modalIsOpen}
                 closeModal={closeModal}
                 addTransitionToState={addTransitionToState}
-                addUsersToState={addUsersToState}
+                setUsersInState={setUsersInState}
             />
         </div>
     )

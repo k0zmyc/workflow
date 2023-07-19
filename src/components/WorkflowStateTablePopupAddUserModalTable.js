@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ReactModal from 'react-modal';
 import { WorkflowStateTablePopupAddUserModalTableRow } from './WorkflowStateTablePopupAddUserModalTableRow';
 
-export const WorkflowStateTablePopupAddUserModalTable = ({state, actions, wid, isOpen, closeModal, addUsersToState }) => {
+export const WorkflowStateTablePopupAddUserModalTable = ({state, actions, wid, isOpen, closeModal, setUsersInState }) => {
 
     const [users, setUsers] = useState(null);
 
@@ -36,7 +36,7 @@ export const WorkflowStateTablePopupAddUserModalTable = ({state, actions, wid, i
                             actions={actions}
                             wid={wid}
                             closeModal={closeModal}
-                            addUsersToState={addUsersToState}
+                            setUsersInState={setUsersInState}
                         />
                     ))}
                 </tbody>

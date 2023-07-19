@@ -6,7 +6,8 @@ import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupA
 import { WorkflowStateTablePopupAddUser } from "./WorkflowStateTablePopupAddUser.js";
 import { WorkflowStateTablePopupAddRoleType } from "./WorkflowStateTablePopupAddRoleType.js";
 
-export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState, addUsersToState}) => {
+export const WorkflowStateTablePopup = ({
+    workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState, setUsersInState}) => {
 
 
     //console.log("WorkflowStateTablePopup users: ", modalState?.users)
@@ -66,6 +67,7 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsO
                                 actions={actions}
                                 wid={workflow.id}
                                 stateId={modalState.id}
+                                setUsersInState={setUsersInState}
                             />
                         ))}
                     </tbody>
@@ -75,7 +77,7 @@ export const WorkflowStateTablePopup = ({workflow, actions, modalState, modalIsO
                     state={modalState} 
                     actions={actions} 
                     wid={workflow.id} 
-                    addUsersToState={addUsersToState} 
+                    setUsersInState={setUsersInState} 
                 />
 
 

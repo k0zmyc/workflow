@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { WorkflowStateTablePopupAddUserModalTable } from "./WorkflowStateTablePopupAddUserModalTable.js";
 
-export const WorkflowStateTablePopupAddUser = ({state, actions, wid, addUsersToState}) => {
+export const WorkflowStateTablePopupAddUser = ({state, actions, wid, setUsersInState}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -31,7 +31,7 @@ export const WorkflowStateTablePopupAddUser = ({state, actions, wid, addUsersToS
                 state={state} 
                 actions={actions} 
                 wid={wid}
-                addUsersToState={addUsersToState}
+                setUsersInState={setUsersInState}
             />
         </div>
         

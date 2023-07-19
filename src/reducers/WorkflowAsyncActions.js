@@ -567,6 +567,8 @@ const workflowStateAsyncRemoveUserMutationJSON = ({userId, workflowstateId}) => 
                         lastchange
                         name
                         users {
+                            id
+                            lastchange
                             user {
                                 id
                                 name
