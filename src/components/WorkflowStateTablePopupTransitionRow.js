@@ -1,30 +1,21 @@
-import { TextInput } from "./TextInput.js";
+/**
+ * @function
+ * @param {int} index
+ * @param {int} transition
+ * @returns 
+ */
+export const WorkflowStateTablePopupTransitionRow = ({index, transition}) => {
 
-export const WorkflowStateTablePopupTransitionRow = ({index, transition, actions, wid}) => {
-    
-    //change state name callback
-    const onChangeTranstitionName = (value) => {
-        console.log("onChangeTransitionName: ", value)
-        if (actions.onWorkflowStateUpdate) {
-        //     console.log("onChangeName: ", state, value)
-        //     const payload = {workflow: {id: wid}, state: {...state, name: value}}
-
-        //     //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
-        //     //actions.onWorkflowStateUpdate(payload)
-
-        //     actions.workflowStateAsyncUpdate(payload)
-        //         .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
-        }
-    }
-
+    // filter out transition that are not valid
+    if(transition.valid === false) return
+    if(!transition) return
 
     return(
-        <tr>
+        <tr key={transition?.id}>
             <th>{index}</th>
-            <th>{transition.id}</th>
-            <th>{transition.name}</th>
-            {/* <th><TextInput placeholder={"name"} value={transition.name} onChange={onChangeTranstitionName}/></th> */}
-            <th>{transition.destination.name}</th>
+            <th>{transition?.id}</th>
+            <th>{transition?.name}</th>
+            <th>{transition?.destination.name}</th>
         </tr> 
     )
 }

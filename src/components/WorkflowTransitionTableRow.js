@@ -2,7 +2,6 @@ import { Trash } from 'react-bootstrap-icons';
 import { TextInput } from './TextInput';
 import { DeleteButton } from './DeleteButton';
 
-
 /**
  * One member as a table row
  * @param {*} param0 
@@ -12,21 +11,21 @@ import { DeleteButton } from './DeleteButton';
 export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) => {
 
     //remove button action
-    const onDeleteButtonClick = () => {
-        const payload = {workflow: {id: wid}, transition: transition}
-        console.log("State onclick: ", payload)
-        
-        // transition remove
-        //actions.onWorkflowStateRemove(payload)
+    const onDeleteButtOnClick = () => {
+        if (actions.onWorkflowTransitionUpdate) {
+            //console.log("onDeleteButtonOnClick WorkflowTransitionTableRow transition: ", transition)
+            const payload = {workflow: {id: wid}, transition: {...transition, valid: false}}
+
+            actions.workflowTransitionAsyncUpdate(payload)
+                .then(json => console.log("WorkflowTransitionAsyncUpdate onDeleteButtonOnClick: ", json.data.workflowTransitionUpdate.msg))
+                .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
+        }
     }
 
     //change state name callback
     const onChangeTransitionName = (value) => {
         if (actions.onWorkflowTransitionUpdate) {
-            const payload = {workflow: {id: wid}, transition: {...transition, name: value}}
-
-            //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
-            //actions.onWorkflowStateUpdate(payload)
+            const payload = {workflow: {id: wid}, transition: {...transition, name: value, valid: true}}
 
             actions.workflowTransitionAsyncUpdate(payload)
                 .then(json=>console.log("WorkflowTransitionNameInput: ", json.data.workflowTransitionUpdate.msg))
@@ -34,7 +33,8 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
         }
     }
 
-
+    // when should I not include a transition in the table?
+    if(transition.valid === false) return
     return (
         <tr>
             <td>{index}: </td>
@@ -50,7 +50,7 @@ export const WorkflowTransitionTableRow = ({index, transition, actions, wid}) =>
                 </div>
             </td>
             <td>
-                <DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton><br/>
+                <DeleteButton onClick={onDeleteButtOnClick}><Trash /></DeleteButton><br/>
             </td>
         </tr>
     )

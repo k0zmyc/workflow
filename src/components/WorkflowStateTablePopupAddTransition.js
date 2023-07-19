@@ -1,10 +1,6 @@
 import { useState } from "react";
-import { TextInput } from "./TextInput.js";
 
-export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
-
-    // logs everytime I change transition name - does the component refresh? don't understand...
-    //console.log("WorkflowStateTablePopupAddTransition: ", state)
+export const WorkflowStateTablePopupAddTransition = ({state, actions, wid, addTransitionToState}) => {
 
     const [transition, setTransition] = useState({name: "", sourceId: state?.id, destinationId: ""})
 
@@ -17,8 +13,8 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
     }
 
     const addTransition = () => {
-        if (actions.onWorkflowStateUpdate) {
-            console.log("addTransition: ", transition)
+        if (actions.onWorkflowStateUpdate && transition.name != "" && transition.destinationId != "") {
+            //console.log("addTransition transition: ", transition)
             const payload = {
                 workflow: {id: wid}, 
                 transition: {
@@ -27,11 +23,17 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
                     destination: {id: transition.destinationId
             }}}
 
-            console.log("addTransition: ", payload)
-
             actions.workflowTransitionAsyncInsert(payload)
-                .then(json=>console.log("workflowStateAsyncInsert: ", json.data.workflowTransitionInsert.msg))
-                .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
+                .then((json) => {
+                    console.log("workflowStateAsyncInsert: ", json.data.workflowTransitionInsert.msg)
+                    const transitionToState = json.data.workflowTransitionInsert.transition
+                    if(json.data.workflowTransitionInsert.msg === "ok") addTransitionToState(transitionToState)    // if message ok add transition
+                })
+                .then(() => {
+                    actions.workflowFetch(wid)  // not ideal but better than nothing
+                    setTransition({name: "", sourceId: state?.id, destinationId: ""})
+                })   
+        
         }
     }
 
@@ -39,8 +41,22 @@ export const WorkflowStateTablePopupAddTransition = ({state, actions, wid}) => {
         <table className="table table-hover table-stripped">
             <tbody>
                 <tr>
-                    <th><TextInput placeholder={"Add transition name"} value={transition.name} onChange={addTransitionName} /></th>
-                    <th><TextInput placeholder={"Add destination state ID"} value={transition.destinationId} onChange={addTransitionDestinationId} /></th>
+                    <th>
+                        <input
+                            className="form-control"
+                            placeholder={"Add transition name"}
+                            value={transition.name}
+                            onChange={(e) => addTransitionName(e.target.value)}
+                        />
+                    </th>
+                    <th>
+                        <input
+                            className="form-control"
+                            placeholder={"Add destination ID"}
+                            value={transition.destinationId}
+                            onChange={(e) => addTransitionDestinationId(e.target.value)}
+                        />
+                    </th>
                     <th><button className='btn btn-sm btn-success' onClick={addTransition} >Add transition</button></th>
                 </tr> 
             </tbody>

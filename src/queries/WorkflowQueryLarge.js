@@ -1,18 +1,22 @@
 import { authorizedFetch } from './authorizedFetch'
 
-
 export const WorkflowQueryLargeJSON = (id) => ({
     "query":
         `query ($id: ID!) {
             workflowById(id: $id) {
-                id, name, lastchange
+                id
+                name 
+                lastchange
                 states{
                     id
                     name
                     lastchange
+                    valid
                     nextTransitions{
                         id
                         name
+                        valid
+                        lastchange
                         source{
                             id
                             name
@@ -27,6 +31,18 @@ export const WorkflowQueryLargeJSON = (id) => ({
                     previousTransitions{
                         id
                         name
+                        valid
+                        lastchange
+                        source{
+                            id
+                            name
+                            lastchange
+                        }
+                        destination{
+                            id
+                            name
+                            lastchange
+                        }
                     }
                     users{
                         id
@@ -51,6 +67,7 @@ export const WorkflowQueryLargeJSON = (id) => ({
                     id
                     name
                     lastchange
+                    valid
                     source{
                         id
                         name

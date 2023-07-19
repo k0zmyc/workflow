@@ -1,29 +1,31 @@
-import { TextInput } from "./TextInput.js";
+import { DeleteButton } from "./DeleteButton.js";
+import { Trash } from 'react-bootstrap-icons';
 
-export const WorkflowStateTablePopupRoletypeRow = ({index, roleType, actions, wid}) => {
+export const WorkflowStateTablePopupRoleTypeRow = ({index, roleType, actions, wid, stateId, setRoleTypesInState}) => {
     
-    //change state name callback
-    const onChangeRoleTypeName = (value) => {
-        console.log("onChangeRoleTypeName: ", value)
+    //delete button action
+    const onDeleteButtonClick = () => {
+        const payload = {workflow: {id: wid}, workflowstateId: stateId, roletypeId: roleType.roleType.id, }
+
         if (actions.onWorkflowStateUpdate) {
-        //     console.log("onChangeName: ", state, value)
-        //     const payload = {workflow: {id: wid}, state: {...state, name: value}}
-
-        //     //looks like I dont need this because its called in actions.workflowStateAsyncUpdate
-        //     //actions.onWorkflowStateUpdate(payload)
-
-        //     actions.workflowStateAsyncUpdate(payload)
-        //         .then(json=>console.log("WorkflowStateNameInput: ", json.data.workflowStateUpdate.msg))
+            //console.log("onDeleteButtonsClick payload: ", payload)
+            actions.workflowStateAsyncRemoveRoleType(payload)
+                .then(json => {
+                    console.log("workflowStateAsyncRemoveRoleType onDeleteButtonOnClick: ", json.data.workflowStateRemoveRole.msg)
+                    const roleTypes = json.data.workflowStateRemoveRole.state.roletypes
+                    if(json.data.workflowStateRemoveRole.msg === "ok") setRoleTypesInState(roleTypes)
+                })
+                .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
+        
         }
     }
 
-
     return(
-        <tr>
+        <tr key={roleType?.roleType?.id}>
             <th>{index}</th>
-            <th>{roleType.id}</th>
-            <th>{roleType.roleType.name}</th>
-            {/* <th><TextInput placeholder={"name"} value={roleType.roleType.name} onChange={onChangeRoleTypeName}/></th> */}
+            <th>{roleType?.roleType?.id}</th>
+            <th>{roleType?.roleType?.name}</th>
+            <th><DeleteButton onClick={onDeleteButtonClick}><Trash /></DeleteButton></th>
         </tr> 
     )
 }

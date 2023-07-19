@@ -2,12 +2,17 @@ import { WorkflowActions } from "./WorkflowReducers"
 import { 
     WorkflowFetch, 
     WorkflowAsyncUpdate, 
-    WorkflowStateAsyncUpdate, 
-    WorkflowTransitionAsyncUpdate , 
-    WorkflowStateAsyncInsert , 
-    WorkflowTransitionAsyncInsert
+    WorkflowStateAsyncUpdate,
+    WorkflowStateAsyncInsert,
+    WorkflowStateAsyncAddUser,
+    WorkflowStateAsyncRemoveUser,
+    WorkflowStateAsyncAddRoleType,
+    WorkflowStateAsyncRemoveRoleType,
+    WorkflowTransitionAsyncUpdate,
+    WorkflowTransitionAsyncInsert,
+    UserAsyncQuery,
+    RoleTypeAsyncQuery
 } from "./WorkflowAsyncActions"
-
 
 /**
  * vytvori actions, ktere pri volani uz vse radne provedou
@@ -26,10 +31,20 @@ export const bindWorkflowActions = (dispatch) => {
         onWorkflowTransitionUpdate: (payload) => dispatch(WorkflowActions.workflow_transitionUpdate(payload)),
     
         workflowFetch: (id) => dispatch(WorkflowFetch(id)),
-       
+
+        userAsyncQuery: () => dispatch(UserAsyncQuery()),
+        roleTypeAsyncQuery: () => dispatch(RoleTypeAsyncQuery()),
+
         workflowAsyncUpdate: (workflow) => dispatch(WorkflowAsyncUpdate(workflow)),
+
         workflowStateAsyncUpdate: (payload) => dispatch(WorkflowStateAsyncUpdate(payload)),
         workflowStateAsyncInsert: (payload) => dispatch(WorkflowStateAsyncInsert(payload)),
+
+        workflowStateAsyncAddUser: (payload) => dispatch(WorkflowStateAsyncAddUser(payload)),
+        workflowStateAsyncRemoveUser: (payload) => dispatch(WorkflowStateAsyncRemoveUser(payload)),
+
+        workflowStateAsyncAddRoleType: (payload) => dispatch(WorkflowStateAsyncAddRoleType(payload)),
+        workflowStateAsyncRemoveRoleType: (payload) => dispatch(WorkflowStateAsyncRemoveRoleType(payload)),
 
         workflowTransitionAsyncUpdate: (workflow) => dispatch(WorkflowTransitionAsyncUpdate(workflow)),
         workflowTransitionAsyncInsert: (workflow) => dispatch(WorkflowTransitionAsyncInsert(workflow))

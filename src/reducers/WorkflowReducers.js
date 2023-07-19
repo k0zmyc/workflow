@@ -27,17 +27,21 @@ const WorkflowStateRemove = (state, action) => {
  * @returns 
  */
 
-// more like WorkflowStateUpdate & WorkflowTransitionUpdate
 const WorkflowStateUpdate = (state, action) => {
-    const w = action.payload.workflow
-    const s = action.payload.state
-    const workflow = state[w.id]
-    workflow.states = workflow.states.map(state => state.id === s.id ? {...state, ...s} : state)
+    const oldWorkflow = action.payload.workflow
+    const newState = action.payload.state
+
+    const newWorkflow = state[oldWorkflow.id]
+    newWorkflow.states = newWorkflow.states.map(state => state.id === newState.id ? {...state, ...newState} : state)
+    // state[newWorkflow.id] = {...newWorkflow, states: newWorkflow.states}
+    WorkflowActions.workflow_update(newWorkflow)
+
+    //console.log("WorkflowStateUpdate: ", state[newWorkflow.id].states)
     return state
 }
 
 const WorkflowTransitionUpdate = (state, action) => {
-    console.log("WorkflowTransitionUpdate state, action", state, action)
+    //console.log("WorkflowTransitionUpdate state, action", state, action)
 
     const w = action.payload.workflow
     const t = action.payload.transition
@@ -45,7 +49,6 @@ const WorkflowTransitionUpdate = (state, action) => {
     workflow.transitions = workflow.transitions.map(transition => transition.id === t.id ? {...transition, ...t} : transition)
     return state
 }
-
 
 
 
@@ -63,8 +66,8 @@ export const WorkflowSlice = createSlice({
         workflow_update: UpdateItem,
         workflow_select: SelectItem,
 
-        workflow_stateRemove: WorkflowStateRemove,
         workflow_stateUpdate: WorkflowStateUpdate,
+        workflow_stateRemove: WorkflowStateRemove,
 
         workflow_transitionUpdate: WorkflowTransitionUpdate
     }

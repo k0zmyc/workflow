@@ -1,13 +1,8 @@
 import { WorkflowStateTableRow } from "./WorkflowStateTableRow.js"
-import { useState, useCallback  } from "react";
+import { useState } from "react";
 
 import ReactModal from 'react-modal';
-import { TextInput } from "./TextInput.js";
-import { WorkflowStateTablePopupUserRow } from "./WorkflowStateTablePopupUserRow.js";
-import { WorkflowStateTablePopupRoletypeRow } from "./WorkflowStateTablePopupRoletypeRow.js";
-import { WorkflowStateTablePopupTransitionRow } from "./WorkflowStateTablePopupTransitionRow.js";
-import { WorkflowStateTablePopupAddTransition } from "./WorkflowStateTablePopupAddTransition.js";
-import { DropDown } from "./DropDown.js";
+import { WorkflowStateTablePopup } from "./WorkflowStateTablePopup.js";
 
 
 const rootElement = document.getElementById('root');
@@ -24,48 +19,48 @@ ReactModal.setAppElement(rootElement);
  */
 export const WorkflowStatesTable = ({workflow, actions}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [modalStateData, setModalStateData] = useState(null);
+    const [modalState, setModalState] = useState(null);
     const [addStateName, setAddStateName] = useState("")
-    const [addStateTransition, setAddStateTransition] = useState(undefined)
 
-    const openModal = (data) => {
-        setModalStateData(data)
+    const openModal = (state) => {
+        //console.log("WorkflowStatesTable openModal data: ", data)
+        setModalState(state)
         setModalIsOpen(true);
     };
 
     const closeModal = () => {
-        setModalStateData(null)
+        setModalState(null)
         setModalIsOpen(false);
     };
 
-    const onChangeAddStateName = (value) => {
-        setAddStateName(value)
+    const addTransitionToState = (transition) => {
+        //console.log("addTransitionToState: ", [modalState.nextTransitions, transition])
+        setModalState({...modalState, nextTransitions: [...modalState.nextTransitions, transition]})
     }
 
-    const onChangeAddStateTransition = (value) => {
-        console.log("onChangeAddStateTransition: ", value)
-        setAddStateTransition(value)
+    const setUsersInState = (users) => {
+        //console.log("setUsersInState users: ", users)
+        setModalState({...modalState, users: users})
+    }
+
+    const setRoleTypesInState = (roleTypes) => {
+        //console.log("setUsersInState roleTypes: ", roleTypes)
+        setModalState({...modalState, roletypes: roleTypes})
     }
 
     const addState = () => {
         if (actions.onWorkflowStateUpdate && addStateName) {
             const wid = workflow.id
-            const payload = {workflow: {id: wid}, state: {name: addStateName}}
-            
+            const payload = {workflow: {id: wid}, state: {name: addStateName, valid: true}}
 
             actions.workflowStateAsyncInsert(payload)
                 .then(json => console.log("WorkflowStateNameInput: ", json.data.workflowStateInsert.msg))
                 .then(() => setAddStateName(""))
                 .then(() => {
-                    console.log("onChangeAddState: ", payload, addStateTransition)
-                    //actions.workflowStateAsyncInsert(payload)
+                    console.log("onChangeAddState: ", payload)
                 })
                 .then(() => actions.workflowFetch(wid))   // not ideal but better than nothing
         }
-    }
-
-    const addTransition = (value) => {
-        console.log("addTransition: ", value)
     }
 
     return (
@@ -88,94 +83,34 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                             index={index + 1} 
                             actions={actions} 
                             wid={workflow.id}
-                            openModal={openModal}
-                            setModalRowData={setModalStateData}
+                            onOpenModal={openModal}
+                            setModalRowData={setModalState}
+                            setUsersInState={setUsersInState}
                         />
                     ))}
                 </tbody>
             </table>
 
-            <TextInput placeholder={"Add state name"} value={addStateName} onChange={onChangeAddStateName}/>
+            <input
+                className="form-control"
+                placeholder={"Add state name"}
+                value={addStateName}
+                onChange={(e) => setAddStateName(e.target.value)}
+            />
+
             <button className='btn btn-sm btn-success' onClick={addState}>Add state</button>
             
             
-            {/*separate component*/}
-            <ReactModal isOpen={modalIsOpen}>
-                
-                <h2>State data: {modalStateData?.name}</h2>
-                <h4>Transitions</h4>
-                <table className="table table-hover table-stripped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Destination</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {modalStateData?.nextTransitions?.map((transition, index) => (
-                            <WorkflowStateTablePopupTransitionRow 
-                                key={transition.id}
-                                transition={transition}
-                                index={index + 1}
-                                actions={actions}
-                                wid={workflow.id}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-
-                <WorkflowStateTablePopupAddTransition state={modalStateData} actions={actions} wid={workflow.id}/>
-
-
-                
-                <h4>Users</h4>
-                <table className="table table-hover table-stripped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Surname</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {modalStateData?.users?.map((user, index) => (
-                            <WorkflowStateTablePopupUserRow 
-                                key={user.id}
-                                user={user}
-                                index={index + 1}
-                                actions={actions}
-                                wid={workflow.id}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-
-                <h4>Role types</h4>
-                <table className="table table-hover table-stripped">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>ID</th>
-                            <th>name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {modalStateData?.roletypes?.map((roleType, index) => (
-                            <WorkflowStateTablePopupRoletypeRow
-                                key={roleType.id}
-                                roleType={roleType}
-                                index={index + 1}
-                                actions={actions}
-                                wid={workflow.id}
-                            />
-                        ))}
-                    </tbody>
-                </table>
-                <button onClick={closeModal} className='btn btn-sm btn-danger'>Close</button>
-            </ReactModal>
+            <WorkflowStateTablePopup 
+                workflow={workflow}
+                actions={actions}
+                modalState={modalState}
+                modalIsOpen={modalIsOpen}
+                closeModal={closeModal}
+                addTransitionToState={addTransitionToState}
+                setUsersInState={setUsersInState}
+                setRoleTypesInState={setRoleTypesInState}
+            />
         </div>
     )
 }
