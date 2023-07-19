@@ -7,7 +7,7 @@ import { WorkflowStateTablePopupAddUser } from "./WorkflowStateTablePopupAddUser
 import { WorkflowStateTablePopupAddRoleType } from "./WorkflowStateTablePopupAddRoleType.js";
 
 export const WorkflowStateTablePopup = ({
-    workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState, setUsersInState}) => {
+    workflow, actions, modalState, modalIsOpen, closeModal, addTransitionToState, setUsersInState, setRoleTypesInState}) => {
 
 
     //console.log("WorkflowStateTablePopup users: ", modalState?.users)
@@ -101,12 +101,18 @@ export const WorkflowStateTablePopup = ({
                                 actions={actions}
                                 wid={workflow.id}
                                 stateId={modalState.id}
+                                setRoleTypesInState={setRoleTypesInState}
                             />
                         ))}
                     </tbody>
                 </table>
 
-                <WorkflowStateTablePopupAddRoleType state={modalState} actions={actions} wid={workflow.id}/>
+                <WorkflowStateTablePopupAddRoleType 
+                    state={modalState} 
+                    actions={actions} 
+                    wid={workflow.id} 
+                    setRoleTypesInState={setRoleTypesInState} 
+                />
 
                 <button onClick={closeModal} className='btn btn-sm btn-danger'>Close</button>
             </ReactModal>

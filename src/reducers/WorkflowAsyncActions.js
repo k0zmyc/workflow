@@ -683,6 +683,8 @@ const workflowStateAsyncAddRoleTypeMutationJSON = ({workflowstateId, roletypeId}
                         lastchange
                         name
                         roletypes {
+                            id
+                            lastchange
                             roleType {
                                 id
                                 name
@@ -756,6 +758,8 @@ const workflowStateAsyncRemoveRoleTypeMutationJSON = ({roletypeId, workflowstate
                         lastchange
                         name
                         roletypes {
+                            id
+                            lastchange
                             roleType {
                                 id
                                 name

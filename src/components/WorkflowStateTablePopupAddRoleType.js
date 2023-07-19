@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { WorkflowStateTablePopupAddRoleTypeModalTable } from "./WorkflowStateTablePopupAddRoleTypeModalTable.js";
 
-export const WorkflowStateTablePopupAddRoleType = ({state, actions, wid}) => {
+export const WorkflowStateTablePopupAddRoleType = ({state, actions, wid, setRoleTypesInState}) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -15,15 +15,6 @@ export const WorkflowStateTablePopupAddRoleType = ({state, actions, wid}) => {
         //actions.workflowFetch(wid)  // update page after change - not ideal but better than nothing
         setIsModalOpen(false);
     };
-
-
-    //const [modalData, setModalData] = useState({});
-
-    // Function to handle updating the modal data
-    // const updateModalData = (data) => {
-    //     setModalData(data);
-    // };
-
 
     return(
         <div>
@@ -41,6 +32,7 @@ export const WorkflowStateTablePopupAddRoleType = ({state, actions, wid}) => {
                 state={state} 
                 actions={actions} 
                 wid={wid}
+                setRoleTypesInState={setRoleTypesInState}
             />
 
         </div>

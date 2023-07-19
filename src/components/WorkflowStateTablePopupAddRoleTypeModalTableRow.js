@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const WorkflowStateTablePopupAddRoleTypeModalTableRow = ({ roleType, state, actions, wid, index, closeModal }) => {
+export const WorkflowStateTablePopupAddRoleTypeModalTableRow = ({ roleType, state, actions, wid, index, closeModal, setRoleTypesInState}) => {
 
     const onAddRoleType = () => {
         console.log(roleType)
@@ -9,7 +9,11 @@ export const WorkflowStateTablePopupAddRoleTypeModalTableRow = ({ roleType, stat
             const payload = {workflow: {id: wid}, state: state, roleType: roleType}
 
             actions.workflowStateAsyncAddRoleType(payload)
-                .then(json => console.log("workflowStateAsyncAddRoleType: ", json.data.workflowStateAddRole))
+                .then(json => {
+                    console.log("workflowStateAsyncAddRoleType: ", json.data.workflowStateAddRole)
+                    const roleTypes = json.data.workflowStateAddRole.state.roletypes
+                    setRoleTypesInState(roleTypes)
+                })
                 .then(() => actions.workflowFetch(wid))   // update page after change - not ideal but better than nothing
         }
         closeModal()

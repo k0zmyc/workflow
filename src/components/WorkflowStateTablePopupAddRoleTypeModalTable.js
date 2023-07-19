@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import ReactModal from 'react-modal';
 import { WorkflowStateTablePopupAddRoleTypeModalTableRow } from './WorkflowStateTablePopupAddRoleTypeModalTableRow';
 
-export const WorkflowStateTablePopupAddRoleTypeModalTable = ({state, actions, wid, isOpen, closeModal }) => {
+export const WorkflowStateTablePopupAddRoleTypeModalTable = ({state, actions, wid, isOpen, closeModal, setRoleTypesInState}) => {
 
     const [roleTypes, setRoleTypes] = useState(null);
 
@@ -35,6 +35,7 @@ export const WorkflowStateTablePopupAddRoleTypeModalTable = ({state, actions, wi
                             actions={actions} 
                             wid={wid}
                             closeModal={closeModal}
+                            setRoleTypesInState={setRoleTypesInState}
                         />
                     ))}
                 </tbody>

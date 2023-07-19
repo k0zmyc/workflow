@@ -34,13 +34,19 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
     };
 
     const addTransitionToState = (transition) => {
-        console.log("addTransitionToState: ", [modalState.nextTransitions, transition])
+        //console.log("addTransitionToState: ", [modalState.nextTransitions, transition])
         setModalState({...modalState, nextTransitions: [...modalState.nextTransitions, transition]})
     }
 
     const setUsersInState = (users) => {
-        console.log("setUsersInState users: ", users)
+        //console.log("setUsersInState users: ", users)
         setModalState({...modalState, users: users})
+    }
+
+    const setRoleTypesInState = (roleTypes) => {
+        console.log("setUsersInState roleTypes: ", roleTypes)
+        console.log("setUsersInState modalState: ", modalState)
+        setModalState({...modalState, roletypes: roleTypes})
     }
 
     const addState = () => {
@@ -105,6 +111,7 @@ export const WorkflowStatesTable = ({workflow, actions}) => {
                 closeModal={closeModal}
                 addTransitionToState={addTransitionToState}
                 setUsersInState={setUsersInState}
+                setRoleTypesInState={setRoleTypesInState}
             />
         </div>
     )
