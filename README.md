@@ -44,3 +44,6 @@
 
         Button (+select) pro vložení nové role ke stavu
         Button (+user+group) pro připojení ke stavu
+
+## NPM
+	workflow_raywhit
